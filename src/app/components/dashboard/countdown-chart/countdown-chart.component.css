@@ -1,0 +1,29 @@
+.timer-clock {
+   margin-left: auto;
+   margin-right: auto;
+    width: 410px;
+    position: relative;
+ }
+ 
+ .timer-clock .clock-circle {
+    width: 100px;
+    text-align: center;
+    display: inline-block;
+    float: left;
+    position: relative;
+    font-size: 20px;
+ }
+ 
+ .timer-clock .clock-circle canvas {
+    display: block;
+    width: 100px;
+ }
+ 
+ .timer-clock .clock-circle .clock-label {
+    position: absolute;
+    font-size: 30px;
+    text-align: center;
+    width: 235px;
+    top: 60px;
+    left: -68px;
+ }

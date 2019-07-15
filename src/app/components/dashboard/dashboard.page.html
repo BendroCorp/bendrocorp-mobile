@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-item class="user-info">
+        <img src="{{user.avatar}}" style="max-width: 75px; max-height: 75px; border-radius: 50%;" alt="">&nbsp;&nbsp;&nbsp;
+        <div><h3>{{user.first_name}} {{user.last_name}}</h3></div>
+      </ion-item>
+    </ion-card-header>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <event-countdown-chart *ngIf="showCountdown" [endTime]="nextEvent.start_date"></event-countdown-chart>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button *ngIf="showCountdown" color="dark" expand="block">Open Event</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>

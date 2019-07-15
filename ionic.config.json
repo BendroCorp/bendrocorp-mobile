@@ -1,0 +1,7 @@
+{
+  "name": "bendrocorp-mobile",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

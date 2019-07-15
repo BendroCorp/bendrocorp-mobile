@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{formAction}} Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Event Name -->
+  <ion-item>
+    <ion-label position="floating">Event Name</ion-label>
+    <ion-input placeholder="Name" [(ngModel)]="event.name"></ion-input>
+  </ion-item>
+  <!-- Description -->
+  <ion-item>
+    <ion-label position="floating">Event Description</ion-label>
+    <ion-input placeholder="Description" [(ngModel)]="event.description"></ion-input>
+  </ion-item>
+  <!-- Start Time -->
+  <ion-item>
+    <ion-label>Start Time</ion-label>
+    <ion-datetime placeholder="Starts" displayFormat="D MMM YYYY H:mm" [(ngModel)]="event.start_date"></ion-datetime>
+  </ion-item>
+  <!-- End Time -->
+  <ion-item>
+    <ion-label>End Time</ion-label>
+    <ion-datetime placeholder="Ends" displayFormat="D MMM YYYY H:mm" [(ngModel)]="event.end_date"></ion-datetime>
+  </ion-item>
+  <!-- Show on Dashboard -->
+  <ion-item>
+    <ion-label>Show on Dashboard</ion-label>
+    <ion-checkbox slot="start" [(ngModel)]="event.show_on_dashboard" [(ngModel)]="event.show_on_dashboard"></ion-checkbox>
+  </ion-item>
+  <!-- Recurrence -->
+  <ion-item>
+    <ion-label>Recurrence</ion-label>
+    <ion-select value="brown" okText="Select" cancelText="Cancel" [(ngModel)]="recurrenceId" (ionChange)="setRecurrence()">
+      <ion-select-option [value]="1" [selected]="recurrenceId == 1">Weekly</ion-select-option>
+      <ion-select-option [value]="2" [selected]="recurrenceId == 2">Monthly</ion-select-option>
+      <ion-select-option [value]="0" [selected]="recurrenceId == 0">None</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <!-- <ion-radio-group>
+    <ion-list-header>
+      <ion-label>Recurrence</ion-label>
+    </ion-list-header>   
+
+    <ion-item>
+      <ion-label>Weekly</ion-label>
+      <ion-radio slot="start" (ionSelect)="setRecurrence()" [(ngModel)]="recurWeekly"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Monthly</ion-label>
+      <ion-radio slot="start" (ionSelect)="setRecurrence()" [(ngModel)]="recurMonthly"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>None</ion-label>
+      <ion-radio slot="start" (ionSelect)="setRecurrence()" [(ngModel)]="neverRecur"></ion-radio>
+    </ion-item>
+  </ion-radio-group> -->
+  <ion-button expand="full" color="dark" (click)="addUpdateEvent()">{{formAction}} Event</ion-button>
+  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button>
+</ion-content>
