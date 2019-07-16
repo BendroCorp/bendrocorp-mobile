@@ -9,6 +9,7 @@ import { NavController, ModalController } from '@ionic/angular';
 import { EventAddUpdatePage } from './event-add-update/event-add-update.page';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
+import { CertifyEventPage } from './certify-event/certify-event.page';
 
 @Component({
   selector: 'app-event',
@@ -18,6 +19,7 @@ import { MessageService } from 'src/app/services/message.service';
 export class EventPage implements OnInit, OnDestroy {  
   detailsNav = EventDetailsPage;
   events: Event[] = [];
+  expiredEvents: Event[] = [];
   isAdmin: boolean = this.authService.hasClaim(19);
   eventSubscription: Subscription
 
@@ -30,15 +32,54 @@ export class EventPage implements OnInit, OnDestroy {
     private messageService: MessageService) { 
     this.eventSubscription = this.eventService.dataRefreshAnnounced$.subscribe(() => {
       this.fetchEvents();
+      if (this.isAdmin) {
+        this.fetchExpiredEvents();
+      }
     });
   }
 
-  fetchEvents() {
+  doRefresh(event: any) {
+    this.fetchEvents(event);
+    if (this.isAdmin) {
+      this.fetchExpiredEvents();
+    }
+  }
+
+  fetchEvents(event?: any) {
     this.eventService.list().subscribe((results) => {
       if (!(results instanceof HttpErrorResponse)) {
         this.events = results;
       }
+
+      if (event) {
+        event.target.complete();
+      }
     });
+  }
+
+  fetchExpiredEvents(event?: any) {
+    this.eventService.list_expired(10).subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+        this.expiredEvents = results;
+      }
+
+      if (event) {
+        event.target.complete();
+      }
+    });
+  }
+
+  fetchAttendenceString(event: Event)
+  {
+    return event.attendences.filter(x => x.attendence_type_id == 1).map(val => val.character.full_name).join(', ')
+  }
+
+  async certifyEvent(event: Event) {
+    this.eventService.setPassData(event);
+    const modal = await this.modalController.create({
+      component: CertifyEventPage
+    });
+    return await modal.present();
   }
 
   async addUpdateEvent(event?: Event) {
@@ -73,6 +114,9 @@ export class EventPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.fetchEvents();
+    if (this.isAdmin) {
+      this.fetchExpiredEvents();
+    }
   }
 
   ionViewDidLeave() {

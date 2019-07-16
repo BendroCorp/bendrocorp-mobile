@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Certify Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="attendences">
+    <ion-item *ngFor="let attendence of attendences">
+      {{attendence.character.full_name}}
+      <ion-select okText="Select" cancelText="Cancel" [(ngModel)]="attendence.attendence_type_id">
+        <ion-select-option *ngFor="let ty of attendenceTypes" [value]="ty.id">{{ty.title}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="full" color="primary" (click)="submitForCertification()" [disabled]="attendenceSubmitting">Submit Certification</ion-button>
+  <ion-button expand="full" color="medium" (click)="dismiss()" [disabled]="attendenceSubmitting">Cancel</ion-button>
+</ion-content>

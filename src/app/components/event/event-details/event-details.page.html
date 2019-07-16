@@ -6,7 +6,7 @@
 
 <ion-content>
   <h2>{{event.name}}</h2>
-  <p>{{event.start_date | date}}</p>
-  <p>{{event.end_date | date}}</p>
+  <p>{{event.start_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}</p>
+  <p>{{event.end_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}</p>
   <p>{{event.description}}</p>
 </ion-content>

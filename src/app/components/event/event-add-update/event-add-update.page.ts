@@ -76,58 +76,6 @@ export class EventAddUpdatePage implements OnInit {
     }
   }
 
-  // setRecurrence()
-  // {
-  //   if (this.recurWeekly) {
-  //     this.event.monthly_recurrence = false;
-  //     this.event.weekly_recurrence = true;
-
-  //     this.recurMonthly = false;
-  //     this.neverRecur = false;
-  //   } else if (this.recurMonthly) {
-  //     this.event.monthly_recurrence = true;
-  //     this.event.weekly_recurrence = false;
-
-  //     this.recurMonthly = false;
-  //     this.neverRecur = true;
-  //   } else {      
-  //     this.event.monthly_recurrence = false;
-  //     this.event.weekly_recurrence = false;
-
-  //     this.recurWeekly = false;
-  //     this.recurMonthly = false;
-  //   }
-
-  //   console.log(`set recurWeekly: ${this.recurWeekly}, recurMonthly: ${this.recurMonthly}, neverRecur: ${this.neverRecur}`);
-  // }
-
-  // getRecurrence()
-  // {
-  //   if (this.event && this.event.id) {
-  //     if (this.event.monthly_recurrence) {
-  //       this.recurWeekly = false;
-  //       this.recurMonthly = true;
-  //       this.neverRecur = false;
-  //     } else if(this.event.weekly_recurrence) {
-  //       this.recurWeekly = true;
-  //       this.recurMonthly = false;
-  //       this.neverRecur = false;
-  //     } else {
-  //       this.recurWeekly = false;
-  //       this.recurMonthly = false;
-  //       this.neverRecur = true;
-  //     }
-      
-  //   }else{
-  //     this.recurWeekly = false;
-  //     this.recurMonthly = false;
-  //     this.neverRecur = true;
-  //   }
-
-  //   console.log(`get recurWeekly: ${this.recurWeekly}, recurMonthly: ${this.recurMonthly}, neverRecur: ${this.neverRecur}`);
-    
-  // }
-
   ngOnInit() {
     this.event = this.eventService.fetchAndClearPassedData();
     this.getRecurrence();

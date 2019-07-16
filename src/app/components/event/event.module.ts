@@ -7,6 +7,7 @@ import { IonicModule, NavParams, NavController } from '@ionic/angular';
 
 import { EventPage } from './event.page';
 import { EventAddUpdatePage } from './event-add-update/event-add-update.page';
+import { CertifyEventPage } from './certify-event/certify-event.page';
 
 const routes: Routes = [
   {
@@ -43,7 +44,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   providers:[NavController],
-  declarations: [EventPage, EventAddUpdatePage],
-  entryComponents: [EventAddUpdatePage]
+  declarations: [EventPage, EventAddUpdatePage, CertifyEventPage],
+  entryComponents: [EventAddUpdatePage, CertifyEventPage]
 })
 export class EventPageModule {}

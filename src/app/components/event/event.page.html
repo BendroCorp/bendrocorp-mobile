@@ -5,20 +5,51 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingText="Pull to refresh"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
   <ion-list *ngIf="!isAdmin">
     <ion-item detail *ngFor="let item of events" (click)="openEvent(item)">
       <ion-label>{{item.name}}</ion-label>
+      <ion-label><small>{{event.start_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}</small></ion-label>
     </ion-item>    
   </ion-list>
 
   <ion-list *ngIf="isAdmin">
+    <ion-list-header>
+      <ion-label>Current Events</ion-label>
+    </ion-list-header>
     <ion-item-sliding *ngFor="let item of events" >
       <ion-item detail (click)="openEvent(item)">
-        <ion-label>{{item.name}}</ion-label>
+        <ion-label>
+          {{item.name}}
+          <p><small><ion-icon name="calendar"></ion-icon> Starts: {{item.start_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}</small></p>
+          <p><small>{{fetchAttendenceString(item)}}</small></p>
+        </ion-label>
       </ion-item>
       <ion-item-options side="end">
+        <!-- <ion-item-option color="primary" (click)="certifyEvent(item)"><ion-icon name="checkbox-outline"></ion-icon></ion-item-option> -->
         <ion-item-option color="medium" (click)="addUpdateEvent(item)"><ion-icon name="create"></ion-icon></ion-item-option>
         <ion-item-option color="danger" (click)="archiveEvent(item)"><ion-icon name="archive"></ion-icon></ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-list-header>
+      <ion-label>Past Events</ion-label>
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let item of expiredEvents" >
+      <ion-item detail (click)="openEvent(item)">
+        <ion-label>
+          {{item.name}}
+          <p><small><ion-icon name="calendar"></ion-icon> Ended: {{item.end_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}</small></p>
+          <p><small>{{fetchAttendenceString(item)}}</small></p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options *ngIf="!item.certified && !item.submitted_for_certification" side="end">
+        <ion-item-option color="primary" (click)="certifyEvent(item)"><ion-icon name="checkbox-outline"></ion-icon></ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

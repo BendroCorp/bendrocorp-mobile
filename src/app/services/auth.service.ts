@@ -32,7 +32,9 @@ export class AuthService {
   /** Log the user in. */
   login(email: string, password: string, code?: string): Observable<IdTokenResponse> {
     const device = 'Mobile';
-    return this.http.post<IdTokenResponse>(`${this.globals.baseUrlRoot}/auth`, { 'session': { email, password, code, device } }).pipe(
+    const session = { 'session': { email, password, code, device } }
+    
+    return this.http.post<IdTokenResponse>(`${this.globals.baseUrlRoot}auth`, session).pipe(
       tap(result => {
         this.messageService.toast('Login Successful! Welcome back!')
       }),
