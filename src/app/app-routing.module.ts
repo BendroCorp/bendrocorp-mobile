@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'job-details', loadChildren: './components/job/job-details/job-details.module#JobDetailsPageModule' },
   { path: 'event-add-update', loadChildren: './components/event/event-add-update/event-add-update.module#EventAddUpdatePageModule' },
   { path: 'certify-event', loadChildren: './components/event/certify-event/certify-event.module#CertifyEventPageModule' },
+  { path: 'add-update-job', loadChildren: './components/job/add-update-job/add-update-job.module#AddUpdateJobPageModule' },
   // { path: 'approval', loadChildren: './components/approval/approval.module#ApprovalPageModule' },
   // { path: 'approval-details', loadChildren: './components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule' }
 ];

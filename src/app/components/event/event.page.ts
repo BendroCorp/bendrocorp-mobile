@@ -16,7 +16,7 @@ import { CertifyEventPage } from './certify-event/certify-event.page';
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
 })
-export class EventPage implements OnInit, OnDestroy {  
+export class EventPage implements OnInit, OnDestroy {
   detailsNav = EventDetailsPage;
   events: Event[] = [];
   expiredEvents: Event[] = [];
@@ -27,7 +27,7 @@ export class EventPage implements OnInit, OnDestroy {
     private authService: AuthService, 
     private eventService: EventService, 
     private router: Router, 
-    private nav:NavController, 
+    private nav: NavController, 
     private modalController: ModalController,
     private messageService: MessageService) { 
     this.eventSubscription = this.eventService.dataRefreshAnnounced$.subscribe(() => {

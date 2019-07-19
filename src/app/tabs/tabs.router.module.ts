@@ -81,6 +81,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'job/add-update',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/job/add-update-job/add-update-job.module#AddUpdateJobPageModule'
+          }
+        ]
+      },
+      {
         path: 'more',
         children: [
           {

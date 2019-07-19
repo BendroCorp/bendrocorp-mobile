@@ -10,7 +10,11 @@ export class MessageService {
   constructor(private toastController: ToastController, private dialogs: Dialogs) { }
 
   alert(message: string, title: string = null) {
-    this.dialogs.alert(message, title)
+    this.dialogs.alert(message, title);
+  }
+
+  confirmation(message: string) : Promise<number> {
+    return this.dialogs.confirm(message);
   }
 
   async toast(message: string) {

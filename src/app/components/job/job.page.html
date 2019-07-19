@@ -1,9 +1,53 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Job</ion-title>
+    <ion-title>Jobs</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="!isAdmin">
+    <ion-list-header>
+      <ion-label>Available Jobs</ion-label>
+    </ion-list-header>
+    <ion-item *ngIf="jobs.length == 0">
+      <ion-label><small>There are currently no jobs posted check back later!</small></ion-label>
+    </ion-item>
+    <ion-item detail *ngFor="let job of jobs" (click)="openJob(item)">
+      <ion-label>{{job.name}}</ion-label>
+      <ion-label><small>{{job.completion_criteria.title}}</small></ion-label>
+      <ion-label *ngIf="job.expires_when"><small>Expires: {{(job.expires_when | date:'MM/dd/yyyy @ h:mma')}}</small></ion-label>
+    </ion-item>    
+  </ion-list>
 
+  <ion-list *ngIf="isAdmin">
+    <ion-list-header>
+      <ion-label>Available Jobs</ion-label>
+    </ion-list-header>
+    <ion-item *ngIf="jobs.length == 0">
+      <ion-label><small>There are currently no jobs posted check back later!</small></ion-label>
+    </ion-item>
+    <ion-item-sliding *ngFor="let job of jobs">
+      <ion-item detail (click)="openEvent(item)">
+          <ion-label>{{job.name}}</ion-label>
+          <ion-label><small>{{job.completion_criteria.title}}</small></ion-label>
+          <ion-label *ngIf="job.expires_when"><small>Expires: {{(job.expires_when | date:'MM/dd/yyyy @ h:mma')}}</small></ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="medium" (click)="addUpdateJob(item)"><ion-icon name="create"></ion-icon></ion-item-option>
+        <ion-item-option color="danger" (click)="archiveJob(item)"><ion-icon name="archive"></ion-icon></ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab *ngIf="isAdmin" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addUpdateJob()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

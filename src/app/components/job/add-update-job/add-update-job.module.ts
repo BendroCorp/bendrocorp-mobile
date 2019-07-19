@@ -5,14 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { JobPage } from './job.page';
-import { AddUpdateJobPage } from './add-update-job/add-update-job.page';
-import { JobDetailsPage } from './job-details/job-details.page';
+import { AddUpdateJobPage } from './add-update-job.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: JobPage
+    component: AddUpdateJobPage
   }
 ];
 
@@ -23,7 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [JobPage, AddUpdateJobPage, JobDetailsPage],
-  entryComponents: [AddUpdateJobPage, JobDetailsPage]
+  declarations: [AddUpdateJobPage]
 })
-export class JobPageModule {}
+export class AddUpdateJobPageModule {}

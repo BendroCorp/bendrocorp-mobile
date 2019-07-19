@@ -22,6 +22,10 @@ export class EventAddUpdatePage implements OnInit {
   constructor(private eventService: EventService, private modalController: ModalController) { }
 
   addUpdateEvent() {
+    // get the ms times for the event dates
+    this.event.start_date_ms = this.event.start_date.getTime();
+    this.event.end_date_ms = this.event.end_date.getTime();
+
     if (this.event && this.event.id) {
       this.eventService.update(this.event).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {

@@ -5,8 +5,34 @@
 </ion-header>
 
 <ion-content>
-  <h2>{{event.name}}</h2>
-  <p>{{event.start_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}</p>
-  <p>{{event.end_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}</p>
-  <p>{{event.description}}</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h2>{{event.name}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        {{event.start_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        {{event.end_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <small>Attending: {{fetchAttendenceString()}}</small>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        {{event.description}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 2) && !isExpired()" expand="full" color="success" (click)="setAttendence(1)">Attending</ion-button>
+  <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 1) && !isExpired()" expand="full" color="danger" (click)="setAttendence(2)">Not Attending</ion-button>
 </ion-content>

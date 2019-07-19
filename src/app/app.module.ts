@@ -18,6 +18,8 @@ import { EventService } from './services/event.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { AuthInterceptor } from './auth-interceptor';
+import { JobBoardService } from './services/job-board.service';
+import { JobsService } from './services/job.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +34,8 @@ import { AuthInterceptor } from './auth-interceptor';
     },
     Dialogs,
     MessageService,
+    JobBoardService,
+    JobsService,
     EventService,
     AuthService,
     AuthGuardService,

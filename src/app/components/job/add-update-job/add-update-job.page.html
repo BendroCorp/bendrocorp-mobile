@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons> -->
+    <ion-title>{{formAction}} Job</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Title -->
+  <ion-item>
+    <ion-label position="floating">Job Title</ion-label>
+    <ion-input placeholder="Title" [(ngModel)]="job.title"></ion-input>
+  </ion-item>
+  <!-- Description -->
+  <ion-item>
+    <ion-label position="floating">Job Description</ion-label>
+    <ion-input placeholder="Description" [(ngModel)]="job.description"></ion-input>
+  </ion-item>
+  <!-- Completion Criteria -->
+  <ion-item>
+    <ion-label>Completion Criteria</ion-label>
+    <ion-select placeholder="Criteria" okText="Select" cancelText="Cancel" [(ngModel)]="job.completion_criteria_id">
+      <ion-select-option *ngFor="let crit of criteria" [value]="crit.id">{{crit.title}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <!--  -->
+  <ion-item>
+    <ion-label position="floating">Maximum Acceptors</ion-label>
+    <ion-input placeholder="Acceptors" [(ngModel)]="job.max_acceptors"></ion-input>
+  </ion-item>
+  <!--  -->
+  <ion-item>
+    <ion-label position="floating">Operation Points Value</ion-label>
+    <ion-input placeholder="Operation Points" [(ngModel)]="job.op_value"></ion-input>
+  </ion-item>
+
+  <ion-button expand="full" color="dark" (click)="addUpdateJob()">{{formAction}} Job</ion-button>
+  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button>
+</ion-content>
