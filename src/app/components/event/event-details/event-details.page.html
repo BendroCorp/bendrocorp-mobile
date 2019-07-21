@@ -5,6 +5,12 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -23,7 +29,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <small>Attending: {{fetchAttendenceString()}}</small>
+        <small>Attendance: {{fetchAttendanceString()}}</small>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -33,6 +39,6 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 2) && !isExpired()" expand="full" color="success" (click)="setAttendence(1)">Attending</ion-button>
-  <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 1) && !isExpired()" expand="full" color="danger" (click)="setAttendence(2)">Not Attending</ion-button>
+  <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 2) && !isExpired()" expand="full" color="success" (click)="setAttendance(1)">Attending</ion-button>
+  <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 1) && !isExpired()" expand="full" color="danger" (click)="setAttendance(2)">Not Attending</ion-button>
 </ion-content>

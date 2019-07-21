@@ -18,8 +18,8 @@
     <ion-item *ngIf="jobs.length == 0">
       <ion-label><small>There are currently no jobs posted check back later!</small></ion-label>
     </ion-item>
-    <ion-item detail *ngFor="let job of jobs" (click)="openJob(item)">
-      <ion-label>{{job.name}}</ion-label>
+    <ion-item detail *ngFor="let job of jobs" (click)="openJob(job)">
+      <ion-label>{{job.title}}</ion-label>
       <ion-label><small>{{job.completion_criteria.title}}</small></ion-label>
       <ion-label *ngIf="job.expires_when"><small>Expires: {{(job.expires_when | date:'MM/dd/yyyy @ h:mma')}}</small></ion-label>
     </ion-item>    
@@ -33,8 +33,8 @@
       <ion-label><small>There are currently no jobs posted check back later!</small></ion-label>
     </ion-item>
     <ion-item-sliding *ngFor="let job of jobs">
-      <ion-item detail (click)="openEvent(item)">
-          <ion-label>{{job.name}}</ion-label>
+      <ion-item detail (click)="openJob(job)">
+          <ion-label>{{job.title}}</ion-label>
           <ion-label><small>{{job.completion_criteria.title}}</small></ion-label>
           <ion-label *ngIf="job.expires_when"><small>Expires: {{(job.expires_when | date:'MM/dd/yyyy @ h:mma')}}</small></ion-label>
       </ion-item>

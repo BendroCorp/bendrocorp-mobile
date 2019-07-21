@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Complete Job</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2 *ngIf="job">Completion Request: {{job.title}}</h2>
+  <!-- Title -->
+  <ion-item>
+    <ion-label position="floating">Job Title</ion-label>
+    <ion-select placeholder="Flight Log" okText="Select" cancelText="Cancel" [(ngModel)]="completion.flight_log_id">
+      <ion-select-option *ngFor="let fl of flightLogs" [value]="fl.id">{{fl.title}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <!-- Description -->
+  <ion-item>
+    <ion-label position="floating">Job Description</ion-label>
+    <ion-textarea placeholder="Completion Message" [(ngModel)]="completion.completion_message"></ion-textarea>
+  </ion-item>
+  <ion-button expand="full" color="dark" (click)="doComplete()">Complete Job</ion-button>
+  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button>
+</ion-content>

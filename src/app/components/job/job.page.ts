@@ -39,8 +39,13 @@ export class JobPage implements OnInit, OnDestroy {
   }
 
   openJob(job: JobBoardMission) {
-    this.jobBoardService.setPassData(job);
-    this.nav.navigateForward('/tabs/job/details')
+    try {
+      this.jobBoardService.setPassData(job);
+      this.nav.navigateForward(`/tabs/job/details/${job.id}`)
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   async addUpdateJob(job?: JobBoardMission) {

@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'event-add-update', loadChildren: './components/event/event-add-update/event-add-update.module#EventAddUpdatePageModule' },
   { path: 'certify-event', loadChildren: './components/event/certify-event/certify-event.module#CertifyEventPageModule' },
   { path: 'add-update-job', loadChildren: './components/job/add-update-job/add-update-job.module#AddUpdateJobPageModule' },
+  { path: 'complete-job', loadChildren: './components/job/complete-job/complete-job.module#CompleteJobPageModule' },
   // { path: 'approval', loadChildren: './components/approval/approval.module#ApprovalPageModule' },
   // { path: 'approval-details', loadChildren: './components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule' }
 ];

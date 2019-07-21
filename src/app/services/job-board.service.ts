@@ -50,6 +50,14 @@ export class JobBoardService {
     )
   }
 
+  fetch(missionId: number) : Observable<JobBoardMission>
+  {
+    return this.http.get<JobBoardMission>(`${this.globals.baseUrl}/job-board/${missionId}`).pipe(
+      tap(result => console.log(`Fetched mission # ${result.id}!`)),
+      catchError(this.errorService.handleError<any>('Fetch Job Board'))
+    )
+  }
+
   list_criteria() : Observable<JobBoardMissionCompletionCriteria[]>
   {
     return this.http.get<JobBoardMissionCompletionCriteria[]>(`${this.globals.baseUrl}/job-board/types`).pipe(

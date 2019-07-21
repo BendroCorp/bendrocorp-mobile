@@ -35,6 +35,6 @@ export class JobBoardMissionStatus
 export class JobBoardMissionCompletionRequest
 {
     mission_id:number
-    completion_message:string
+    completion_message?:string
     flight_log_id?:number
 }

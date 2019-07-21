@@ -10,6 +10,9 @@ import { Keyboard } from '@ionic-native/keyboard'
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  // NOTES: Push notifications
+  // https://medium.com/@ankushaggarwal/push-notifications-in-ionic-2-658461108c59
+  // https://ionicframework.com/docs/native/push
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,

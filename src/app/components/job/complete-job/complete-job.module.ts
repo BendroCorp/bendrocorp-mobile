@@ -5,23 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MoreMenuPage } from './more-menu.page';
+import { CompleteJobPage } from './complete-job.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: MoreMenuPage, 
-    children:[
-      // {
-      //   path: 'approval',
-      //   children: [
-      //     {
-      //       path: '',
-      //       loadChildren: '../../components/approval/approval.module#ApprovalPageModule'
-      //     }
-      //   ]
-      // },
-    ]
+    component: CompleteJobPage
   }
 ];
 
@@ -32,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MoreMenuPage]
+  declarations: [CompleteJobPage]
 })
-export class MoreMenuPageModule {}
+export class CompleteJobPageModule {}

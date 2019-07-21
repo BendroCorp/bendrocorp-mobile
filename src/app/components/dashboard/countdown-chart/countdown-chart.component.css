@@ -6,24 +6,24 @@
  }
  
  .timer-clock .clock-circle {
-    width: 100px;
+    width: 75px;
     text-align: center;
     display: inline-block;
     float: left;
     position: relative;
-    font-size: 20px;
+    font-size: 15px;
  }
  
  .timer-clock .clock-circle canvas {
     display: block;
-    width: 100px;
+    width: 75px;
  }
  
  .timer-clock .clock-circle .clock-label {
     position: absolute;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     width: 235px;
-    top: 60px;
-    left: -68px;
+    top: 48px;
+    left: -80px;
  }

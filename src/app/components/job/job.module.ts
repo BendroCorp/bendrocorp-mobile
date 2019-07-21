@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { JobPage } from './job.page';
 import { AddUpdateJobPage } from './add-update-job/add-update-job.page';
 import { JobDetailsPage } from './job-details/job-details.page';
+import { CompleteJobPage } from './complete-job/complete-job.page';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [JobPage, AddUpdateJobPage, JobDetailsPage],
-  entryComponents: [AddUpdateJobPage, JobDetailsPage]
+  declarations: [JobPage, AddUpdateJobPage],
+  entryComponents: [AddUpdateJobPage]
 })
 export class JobPageModule {}

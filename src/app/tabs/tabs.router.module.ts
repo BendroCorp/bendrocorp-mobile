@@ -97,7 +97,25 @@ const routes: Routes = [
             loadChildren: '../components/more-menu/more-menu.module#MoreMenuPageModule'
           }
         ]
-      }
+      },
+      {
+        path: 'more/approval',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/approval/approval.module#ApprovalPageModule'
+          }
+        ]
+      },
+      {
+        path: 'more/approval/details',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/approval/approval.module#ApprovalPageModule'
+          }
+        ]
+      },
     ]
   },
   {

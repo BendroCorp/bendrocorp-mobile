@@ -4,6 +4,13 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Welcome to</ion-card-subtitle>
+    <ion-card-title>BendroCorp</ion-card-title>
+  </ion-card-header>
+</ion-card>
+
 <ion-content>
   <ion-card>
     <ion-card-header>
@@ -13,6 +20,9 @@
       </ion-item>
     </ion-card-header>
     <ion-grid>
+      <ion-row>
+        <ion-col><ion-label>Next event in:</ion-label></ion-col>
+      </ion-row>
       <ion-row>
         <ion-col>
           <event-countdown-chart *ngIf="showCountdown" [endTime]="nextEvent.start_date"></event-countdown-chart>

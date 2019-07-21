@@ -1,9 +1,56 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>JobDetails</ion-title>
+    <ion-title>Job Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
 
+  <ion-grid *ngIf="job">
+    <!-- Title -->
+    <ion-row>
+      <ion-col>
+        <h2>{{job.title}}</h2>
+      </ion-col>
+    </ion-row>
+    <!-- Expires -->
+    <ion-row *ngIf="job.expires_when">
+      <ion-col>
+        <small>Expires: {{job.expires_when | date}}</small>
+      </ion-col>
+    </ion-row>
+    <!-- Max Acceptors -->
+    <ion-row>
+      <ion-col>
+        <small>Max Employees: {{job.max_acceptors}}</small>
+      </ion-col>
+    </ion-row>
+    <!-- OP Value -->
+    <ion-row>
+      <ion-col>
+        <small>Reward: {{job.op_value}}</small>
+      </ion-col>
+    </ion-row>
+    <!-- Description -->
+    <ion-row>
+      <ion-col>
+        {{job.description}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <small>On Mission: {{fetchAcceptors()}}</small>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button *ngIf="!isAcceptor() && !isExpired()" expand="full" color="success" (click)="acceptMission()">Accept Mission</ion-button>
+  <ion-button *ngIf="isAcceptor() && !isExpired()" expand="full" color="danger" (click)="abandonMission()">Abandon Mission</ion-button>
+  <ion-button *ngIf="isAcceptor() && !isExpired()" expand="full" color="dark" (click)="completeJob()">Complete</ion-button>
 </ion-content>

@@ -5,5 +5,20 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Your Approvals</ion-label>
+    </ion-list-header>
+    <ion-item detail *ngFor="let approval of myApprovals">
+      <ion-label>{{approval.approval_id}} | {{approval.approval.approval_kind.title}}</ion-label>
+      <ion-label><small>Status: {{approval.approval.approval_status}}</small></ion-label>
+    </ion-item>
+  </ion-list>
 
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more suffering...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

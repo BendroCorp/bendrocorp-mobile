@@ -24,7 +24,7 @@ export class EventDetailsPage implements OnInit {
     private authService: AuthService
   ) { }
 
-  setAttendence(typeId:number)
+  setAttendance(typeId:number)
   {
     if (this.event) {
       if (typeId === 1 || typeId === 2) {
@@ -52,7 +52,7 @@ export class EventDetailsPage implements OnInit {
     return this.event.attendences.find(x => x.user_id == this.authService.retrieveUserSession().id)
   }
 
-  fetchAttendenceString()
+  fetchAttendanceString()
   {
     if (this.event) {
       if (this.event.attendences && this.event.attendences.filter(x => x.attendence_type_id == 1).length > 0) {
@@ -67,10 +67,12 @@ export class EventDetailsPage implements OnInit {
     if (this.event) {
       const ts = TimeSpan.Subtract(new Date(), new Date(this.event.end_date));
       return (ts.totalSeconds < 0) ? true : false;
+    } else {
+      return false;
     }
   }
 
-  ngOnInit() {
+  fetchEvent(event?: any) {
     this.event = this.eventService.fetchAndClearPassedData();
     if (!this.event && this.eventId) {
       this.messageService.alert('event didnt load');
@@ -80,8 +82,19 @@ export class EventDetailsPage implements OnInit {
         } else {
           this.messageService.alert('Event not properly passed to event detail view!');
         }
+        if (event) {
+          event.target.complete();
+        }
       });
     } 
+  }
+
+  doRefresh(event: any) {
+    this.fetchEvent(event);
+  }
+
+  ngOnInit() {
+    this.fetchEvent();
   }
 
   ionViewWillEnter() {

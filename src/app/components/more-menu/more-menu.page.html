@@ -6,9 +6,13 @@
 
 <ion-content>
   <ion-list>
-    <ion-item detail>
+    <ion-item detail [routerLink]="['flight-log']">
+      <ion-icon name="recording"></ion-icon>
+      <ion-label>Flight Logs</ion-label>
+    </ion-item>
+    <ion-item detail [routerLink]="['approval']">
       <ion-icon name="today"></ion-icon>
-      <ion-label>Approvals</ion-label>
+      <ion-label>Approvals<span *ngIf="pendingApprovals > 0"><ion-badge color="danger">{{pendingApprovals}}</ion-badge></span></ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
