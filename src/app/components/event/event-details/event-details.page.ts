@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavParams } from '@ionic/angular';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NavParams, ModalController } from '@ionic/angular';
 import { Event } from 'src/app/models/event.model';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute } from '@angular/router';
@@ -7,21 +7,26 @@ import { MessageService } from 'src/app/services/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { TimeSpan } from 'ng-timespan';
+import { EventAddUpdatePage } from '../event-add-update/event-add-update.page';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.page.html',
   styleUrls: ['./event-details.page.scss'],
 })
-export class EventDetailsPage implements OnInit {
+export class EventDetailsPage implements OnInit, OnDestroy {
+  isAdmin: boolean = this.authService.hasClaim(19);
   eventId: number = parseInt(this.route.snapshot.paramMap.get('event_id'))
   event: Event;
+  eventSubscription: Subscription;
 
   constructor(
     private eventService: EventService, 
     private route: ActivatedRoute, 
     private messageService: MessageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalController: ModalController
   ) { }
 
   setAttendance(typeId:number)
@@ -47,9 +52,22 @@ export class EventDetailsPage implements OnInit {
     }
   }
 
+  async addUpdateEvent() {
+    if (this.event) {
+      this.eventService.setPassData(this.event);  
+    }
+
+    const modal = await this.modalController.create({
+      component: EventAddUpdatePage
+    });
+    return await modal.present();
+  }
+
   checkCurrentStatus()
   {
-    return this.event.attendences.find(x => x.user_id == this.authService.retrieveUserSession().id)
+    if (this.event && this.event.attendences) {
+      return this.event.attendences.find(x => x.user_id == this.authService.retrieveUserSession().id)
+    }
   }
 
   fetchAttendanceString()
@@ -73,15 +91,20 @@ export class EventDetailsPage implements OnInit {
   }
 
   fetchEvent(event?: any) {
-    this.event = this.eventService.fetchAndClearPassedData();
-    if (!this.event && this.eventId) {
-      this.messageService.alert('event didnt load');
+    // try to get the event from the service
+    if (!this.event) {
+      this.event = this.eventService.fetchAndClearPassedData();
+    }
+
+    // condition to call this
+    // if we get an event which we want a db refresh
+    //     
+    if ((!(this.event && this.event.id) && this.eventId) || event) {
       this.eventService.fetch(this.eventId).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.event = results
-        } else {
-          this.messageService.alert('Event not properly passed to event detail view!');
-        }
+        } 
+
         if (event) {
           event.target.complete();
         }
@@ -95,6 +118,12 @@ export class EventDetailsPage implements OnInit {
 
   ngOnInit() {
     this.fetchEvent();
+  }
+
+  ngOnDestroy() {
+    if (this.eventSubscription) {
+      this.eventSubscription.unsubscribe();
+    }
   }
 
   ionViewWillEnter() {

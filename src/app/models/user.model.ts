@@ -24,6 +24,7 @@ export class UserSessionResponse
     expires?: number;
     roles?: number[];
     tfa_enabled?:boolean;
+    job_title?: string;
 }
 
 // deprecated?

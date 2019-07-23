@@ -9,3 +9,19 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+ion-content {
+  --background: none;
+}
+
+body {
+  background: url('./assets/app-background.png') !important;
+  background-color: none;
+  background-size: cover !important;
+}
+
+ion-card {
+  background: #fff !important;
+}
+
+

@@ -45,6 +45,6 @@ const routes: Routes = [
   ],
   providers:[NavController],
   declarations: [EventPage, EventAddUpdatePage, CertifyEventPage],
-  entryComponents: [EventAddUpdatePage, CertifyEventPage]
+  entryComponents: [CertifyEventPage, EventAddUpdatePage]
 })
 export class EventPageModule {}

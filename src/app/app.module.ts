@@ -46,6 +46,6 @@ import { JobsService } from './services/job.service';
     Globals,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

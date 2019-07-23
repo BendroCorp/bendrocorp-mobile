@@ -26,8 +26,12 @@
   <ion-card>
     <ion-card-header>
       <ion-item class="user-info">
-        <img src="{{user.avatar}}" style="max-width: 75px; max-height: 75px; border-radius: 50%;" alt="">&nbsp;&nbsp;&nbsp;
-        <div><h3>{{user.first_name}} {{user.last_name}}</h3></div>
+        <img slot="end" src="{{user.avatar}}" style="max-width: 120px; max-height: 120px; border-radius: 50%; margin: 8px;" alt="">
+        <!-- <div><h3>{{user.first_name}} {{user.last_name}}</h3></div> -->
+        <ion-label>
+          <h1>{{user.first_name}} {{user.last_name}}</h1>
+          <p><small>{{user.job_title}}</small></p>
+        </ion-label>
       </ion-item>
     </ion-card-header>
     <ion-grid>

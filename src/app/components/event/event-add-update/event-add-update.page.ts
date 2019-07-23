@@ -22,9 +22,15 @@ export class EventAddUpdatePage implements OnInit {
   constructor(private eventService: EventService, private modalController: ModalController) { }
 
   addUpdateEvent() {
+    console.log(this.event);
+    
+
     // get the ms times for the event dates
-    this.event.start_date_ms = this.event.start_date.getTime();
-    this.event.end_date_ms = this.event.end_date.getTime();
+    this.event.start_date_ms = new Date(this.event.start_date).getTime();
+    this.event.end_date_ms = new Date(this.event.end_date).getTime();
+
+    // TODO: Only the "Operation" event type is supported from the app. Open it up more :)
+    this.event.event_type_id = 1;
 
     if (this.event && this.event.id) {
       this.eventService.update(this.event).subscribe((results) => {

@@ -149,6 +149,9 @@ export class AuthService {
     }
   }
 
+  /**
+   * Remove the user token from the store (ie log the user out)
+   */
   logout(): Observable<boolean> {
     // let didLogout = localStorage.removeItem('userObject') ? of(true) : of(false);
     // return didLogout
@@ -196,7 +199,8 @@ export class AuthService {
         avatar: decodedToken.avatar,
         expires: decodedToken.exp,
         tfa_enabled: decodedToken.tfa_enabled,
-        character_id: decodedToken.character_id
+        character_id: decodedToken.character_id,
+        job_title: decodedToken.job_title
       } as UserSessionResponse;
     }
   }

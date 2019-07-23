@@ -15,4 +15,7 @@
       <ion-label>Approvals<span *ngIf="pendingApprovals > 0"><ion-badge color="danger">{{pendingApprovals}}</ion-badge></span></ion-label>
     </ion-item>
   </ion-list>
+
+  <!-- logout button -->
+  <ion-button color="dark" expand="full" (click)="doLogout()">Logout</ion-button>
 </ion-content>

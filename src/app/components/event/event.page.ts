@@ -109,10 +109,10 @@ export class EventPage implements OnInit, OnDestroy {
   archiveEvent(event: Event) {
     this.messageService.toast('Events cannot be deleted yet!');
   }
-
+ 
   openEvent(event: Event) {
     this.eventService.setPassData(event);
-    this.nav.navigateForward('/tabs/event/details');
+    this.nav.navigateForward(`/tabs/event/details/${event.id}`);
   }
 
   async ngOnInit() {
