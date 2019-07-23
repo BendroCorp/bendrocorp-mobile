@@ -13,7 +13,7 @@ import { MyApproval } from '../models/approval.model';
 })
 export class RequestsService {
 
-  constructor(private http:HttpClient, private errorService:ErrorService, private globals:Globals) { }
+  constructor(private http: HttpClient, private errorService: ErrorService, private globals: Globals) { }
 
   private dataRefreshSource = new Subject();
   dataRefreshAnnounced$ = this.dataRefreshSource.asObservable();
@@ -47,6 +47,13 @@ export class RequestsService {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/requests/position-change`, { position_change_request }).pipe(
       tap(results => console.log(`Submitted Remove Role Request `)),
       catchError(this.errorService.handleError<any>('Remove Role Request '))
+    )
+  }
+
+  fetch_approval(approval_approver_id: number): Observable<MyApproval> {
+    return this.http.get<MyApproval>(`${this.globals.baseUrl}/user/approval/${approval_approver_id}`).pipe(
+      tap(results => console.log(`Fetched approval approver record # ${results.id}`)),
+      catchError(this.errorService.handleError<any>('Fetch Single Approval Approver'))
     )
   }
 

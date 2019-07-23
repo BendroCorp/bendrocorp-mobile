@@ -4,6 +4,75 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="approval">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
 
+  <!-- Approval Details -->
+  <ion-grid>
+    <!-- Type -->
+    <ion-row>
+      <ion-col>
+        Type: {{approval.approval.approval_kind.title}}
+      </ion-col>
+    </ion-row>
+    <!-- Submitted -->
+    <ion-row>
+      <ion-col>
+        Submitted by: {{approval.approval.approval_source_character_name}}
+      </ion-col>
+    </ion-row>
+    <!-- On Behalf of -->
+    <ion-row *ngIf="approval.approval.approval_source_on_behalf_of">
+      <ion-col>
+        On Behalf of: {{approval.approval.approval_source_on_behalf_of}}
+      </ion-col>
+    </ion-row>
+    <!--  -->
+    <ion-row *ngIf="approval.approval.approval_link">
+      <ion-col>
+        <ion-button (click)="openLinkedItem(approval.approval.approval_link)" expand="full">Open Linked Item (Browser)</ion-button>
+      </ion-col>
+    </ion-row>
+    <!--  -->
+    <ion-row *ngIf="approval.approval.approval_source_requested_item">
+      <ion-col>
+        Requested Item: {{approval.approval.approval_source_requested_item}}
+      </ion-col>
+    </ion-row>
+    <!-- Created -->
+    <ion-row>
+      <ion-col>
+        Created at: {{approval.approval.created_at | date: 'MM/dd/yyyy hh:mm a '}}
+      </ion-col>
+    </ion-row>
+    <!-- Status -->
+    <ion-row>
+      <ion-col>
+        Status: {{approval.approval.approval_status}}
+      </ion-col>
+    </ion-row>
+    <!-- Your approval status -->
+    <ion-row>
+      <ion-col>
+        Your Approval: {{approval.approval_type.title}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- User Controls -->
+  <ion-button *ngIf="approval.approval_type.id < 4" expand="full" color="success" (click)="submitApproval(4)">Approve</ion-button>
+  <ion-button *ngIf="approval.approval_type.id < 4" expand="full" color="danger" (click)="submitApproval(5)">Deny</ion-button>  
+  
+  <!-- Approver List -->
+  <ion-list>
+    <ion-item *ngFor="let approver of approval.approval.approval_approvers">
+      <ion-label>{{approver.character_name}}</ion-label>
+      <ion-label slot="end"><small>{{approver.approver_response}}</small></ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

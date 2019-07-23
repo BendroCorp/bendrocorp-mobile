@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="initialDataLoaded">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingText="Pull to refresh"
@@ -52,7 +52,7 @@
     <ion-item-sliding *ngFor="let item of expiredEvents" >
       <ion-item detail (click)="openEvent(item)">
         <ion-label>
-          {{item.name}}
+          <span>{{item.name}}</span><span *ngIf="!item.submitted_for_certification && !item.certified"> (<strong>Needs Certification</strong>)</span>
           <p><small><ion-icon name="calendar"></ion-icon> Ended: {{item.end_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}</small></p>
           <p><small>{{fetchAttendenceString(item)}}</small></p>
         </ion-label>

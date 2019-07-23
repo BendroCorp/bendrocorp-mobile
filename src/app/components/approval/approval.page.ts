@@ -3,6 +3,7 @@ import { UserService } from 'src/app/services/user.service';
 import { RequestsService } from 'src/app/services/requests.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MyApproval } from 'src/app/models/approval.model';
+import { NavController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-approval',
@@ -15,8 +16,13 @@ export class ApprovalPage implements OnInit {
   dataLoadTake: number = 15;
   baseIncrease: number = 15;
   totalApprovalCount: number;
+  initialDataLoaded: boolean;
+  loadingIndicator: any;
 
-  constructor(private userService: UserService, private requestService: RequestsService) { }
+  constructor(private userService: UserService,
+    private requestService: RequestsService,
+    private nav: NavController,
+    private loading: LoadingController) { }
 
   loadData(event) {
     // do the increases
@@ -28,10 +34,15 @@ export class ApprovalPage implements OnInit {
   }
 
   fetchApprovalRange(count: number, skip?: number, event?: any) {
-    this.requestService.list_approvals(count, skip).subscribe((results) => {
+    this.requestService.list_approvals(count, skip).subscribe(async (results) => {
       if (!(results instanceof HttpErrorResponse)) {
         // hmmm...
         this.myApprovals = this.myApprovals.concat(results)
+      }
+
+      if (!this.initialDataLoaded) {
+        this.initialDataLoaded = true;
+        await this.loadingIndicator.dismiss();
       }
 
       if (event) {
@@ -44,6 +55,10 @@ export class ApprovalPage implements OnInit {
     });
   };
 
+  openEvent(my_approval: MyApproval) {
+    this.nav.navigateForward(`/tabs/event/details/${my_approval.id}`);
+  }
+
   doRefresh(event: any) {
     // reset everything
     this.dataLoadSkip = 0;
@@ -51,7 +66,7 @@ export class ApprovalPage implements OnInit {
     this.baseIncrease = 15;
 
     // refresh data
-    this.requestService.list_approvals(15, 0).subscribe((results) => {
+    this.requestService.list_approvals(15).subscribe((results) => {
       if (!(results instanceof HttpErrorResponse)) {
         this.myApprovals = results;
       }
@@ -62,7 +77,12 @@ export class ApprovalPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.loadingIndicator = await this.loading.create({
+      message: 'Loading'
+    });
+    await this.loadingIndicator.present();
+
     this.userService.fetchTotalApprovalCount().subscribe((results) => {
       if (!isNaN(results)) {
         this.totalApprovalCount = results;

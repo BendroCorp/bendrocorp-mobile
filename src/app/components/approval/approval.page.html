@@ -1,17 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Approval</ion-title>
+    <ion-title>My Approvals</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="initialDataLoaded">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <ion-list-header>
       <ion-label>Your Approvals</ion-label>
     </ion-list-header>
-    <ion-item detail *ngFor="let approval of myApprovals">
+    <ion-item detail *ngFor="let approval of myApprovals" routerLink="details/{{approval.id}}">
       <ion-label>{{approval.approval_id}} | {{approval.approval.approval_kind.title}}</ion-label>
-      <ion-label><small>Status: {{approval.approval.approval_status}}</small></ion-label>
+      <ion-label slot="end"><small>Status: {{approval.approval.approval_status}}</small></ion-label>
     </ion-item>
   </ion-list>
 

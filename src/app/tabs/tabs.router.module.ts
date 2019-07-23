@@ -108,11 +108,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'more/approval/details',
+        path: 'more/approval/details/:approval_id',
         children: [
           {
             path: '',
-            loadChildren: '../components/approval/approval.module#ApprovalPageModule'
+            loadChildren: '../components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule'
           }
         ]
       },

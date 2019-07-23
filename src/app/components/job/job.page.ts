@@ -6,7 +6,7 @@ import { JobBoardMission } from 'src/app/models/job-board.model';
 import { JobBoardService } from 'src/app/services/job-board.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, LoadingController } from '@ionic/angular';
 import { AddUpdateJobPage } from './add-update-job/add-update-job.page';
 
 @Component({
@@ -23,12 +23,16 @@ export class JobPage implements OnInit, OnDestroy {
   isAdmin: boolean = this.authService.hasClaim(28);
   initialDataLoad: boolean;
 
+  //
+  loadingIndicator: any;
+
   constructor(
     private jobBoardService: JobBoardService, 
     private authService: AuthService,
     private nav: NavController, 
     private modalController: ModalController,
-    private messageService: MessageService) { 
+    private messageService: MessageService,
+    private loading: LoadingController) { 
       this.jobSubscription = this.jobBoardService.dataRefreshAnnounced$.subscribe(() => {
         this.fetchJobs();
       });
@@ -60,11 +64,11 @@ export class JobPage implements OnInit, OnDestroy {
   }
 
   fetchJobs(event?: any) {
-    this.jobBoardService.list().subscribe((results) => {
+    this.jobBoardService.list().subscribe(async (results) => {
       if (!(results instanceof HttpErrorResponse)) {
         this.jobs = results;
         this.initialDataLoad = true;
-
+        await this.loadingIndicator.dismiss();
         if (event) {
           event.target.complete();
         }
@@ -88,7 +92,12 @@ export class JobPage implements OnInit, OnDestroy {
   ionViewDidLeave() {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.loadingIndicator = await this.loading.create({
+      message: 'Loading'
+    });
+    await this.loadingIndicator.present();
+
     this.fetchJobs();
   }
 

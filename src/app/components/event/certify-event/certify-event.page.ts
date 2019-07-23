@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event.service';
 import { MessageService } from 'src/app/services/message.service';
 import { EventAttendence, AttendenceType, Event } from 'src/app/models/event.model';
@@ -15,12 +15,16 @@ export class CertifyEventPage implements OnInit {
   attendences: EventAttendence[];
   attendenceTypes: AttendenceType[];
   debriefingText: string;
+  initialDataLoaded: boolean = false;
   attendenceSubmitting: boolean = false;
   certificationPassed: boolean = false;
+  loadingIndicator: any;
+
   constructor(
     private modalController: ModalController, 
     private eventService: EventService, 
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private loading: LoadingController) { }
 
   submitForCertification()
   {
@@ -40,15 +44,17 @@ export class CertifyEventPage implements OnInit {
     }
   }
 
-  fetchAttendences()
+  async fetchAttendences()
   {
     this.eventService.startCertification(this.event).subscribe(
-      (results) =>
+      async (results) =>
       {
         if (!(results instanceof HttpErrorResponse)) {
           this.attendences = results.sort((a,b) => {
             return ('' + a.character.full_name).localeCompare(b.character.full_name);
           })
+          this.initialDataLoaded = true;
+          await this.loadingIndicator.dismiss();
         }
       }
     )
@@ -62,7 +68,12 @@ export class CertifyEventPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.loadingIndicator = await this.loading.create({
+      message: 'Loading'
+    });
+    await this.loadingIndicator.present();
+
     this.eventService.list_attendence_types().subscribe(
       (results) =>
       {

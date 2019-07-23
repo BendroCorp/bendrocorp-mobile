@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ApprovalDetailsPage } from './approval-details.page';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ApprovalDetailsPage]
+  declarations: [ApprovalDetailsPage],
+  providers: [InAppBrowser]
 })
 export class ApprovalDetailsPageModule {}

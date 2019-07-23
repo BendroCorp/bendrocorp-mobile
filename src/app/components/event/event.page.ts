@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Event } from 'src/app/models/event.model';
 import { Router } from '@angular/router';
 import { EventDetailsPage } from './event-details/event-details.page';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, LoadingController } from '@ionic/angular';
 import { EventAddUpdatePage } from './event-add-update/event-add-update.page';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
@@ -22,6 +22,8 @@ export class EventPage implements OnInit, OnDestroy {
   expiredEvents: Event[] = [];
   isAdmin: boolean = this.authService.hasClaim(19);
   eventSubscription: Subscription
+  initialDataLoaded: boolean = false;
+  loadingIndicator: any;
 
   constructor(
     private authService: AuthService, 
@@ -29,7 +31,8 @@ export class EventPage implements OnInit, OnDestroy {
     private router: Router, 
     private nav: NavController, 
     private modalController: ModalController,
-    private messageService: MessageService) { 
+    private messageService: MessageService,
+    private loading: LoadingController) { 
     this.eventSubscription = this.eventService.dataRefreshAnnounced$.subscribe(() => {
       this.fetchEvents();
       if (this.isAdmin) {
@@ -46,9 +49,14 @@ export class EventPage implements OnInit, OnDestroy {
   }
 
   fetchEvents(event?: any) {
-    this.eventService.list().subscribe((results) => {
+    this.eventService.list().subscribe(async (results) => {
       if (!(results instanceof HttpErrorResponse)) {
         this.events = results;
+      }
+
+      if (!this.initialDataLoaded && !this.isAdmin) {
+        this.initialDataLoaded = true;
+        await this.loading.dismiss();
       }
 
       if (event) {
@@ -57,10 +65,15 @@ export class EventPage implements OnInit, OnDestroy {
     });
   }
 
-  fetchExpiredEvents(event?: any) {
-    this.eventService.list_expired(10).subscribe((results) => {
+  async fetchExpiredEvents(event?: any) {
+    this.eventService.list_expired(10).subscribe(async (results) => {
       if (!(results instanceof HttpErrorResponse)) {
         this.expiredEvents = results;
+      }
+
+      if (!this.initialDataLoaded && this.isAdmin) {
+        this.initialDataLoaded = true;
+        await this.loading.dismiss();
       }
 
       if (event) {
@@ -98,12 +111,15 @@ export class EventPage implements OnInit, OnDestroy {
   }
 
   openEvent(event: Event) {
-    console.log('event pressed');
     this.eventService.setPassData(event);
     this.nav.navigateForward('/tabs/event/details');
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.loadingIndicator = await this.loading.create({
+      message: 'Loading'
+    });
+    await this.loadingIndicator.present();
   }
 
   ngOnDestroy() {
