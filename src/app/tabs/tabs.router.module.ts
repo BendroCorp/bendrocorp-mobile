@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { DashboardPage } from '../components/dashboard/dashboard.page';
+import { AuthGuardService } from '../guards/auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/dashboard/dashboard.module#DashboardPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'event',
@@ -24,7 +26,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/event/event.module#EventPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'event/add-update',
@@ -33,7 +36,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/event/event-add-update/event-add-update.module#EventAddUpdatePageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'event/details',
@@ -42,7 +46,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/event/event-details/event-details.module#EventDetailsPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'event/details/:event_id',
@@ -51,7 +56,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/event/event-details/event-details.module#EventDetailsPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'job',
@@ -60,7 +66,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/job/job.module#JobPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'job/details',
@@ -69,7 +76,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/job/job-details/job-details.module#JobDetailsPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'job/details/:job_id',
@@ -78,7 +86,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/job/job-details/job-details.module#JobDetailsPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'job/add-update',
@@ -87,7 +96,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/job/add-update-job/add-update-job.module#AddUpdateJobPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'more',
@@ -96,7 +106,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/more-menu/more-menu.module#MoreMenuPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'more/approval',
@@ -105,7 +116,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/approval/approval.module#ApprovalPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'more/approval/details/:approval_id',
@@ -114,7 +126,8 @@ const routes: Routes = [
             path: '',
             loadChildren: '../components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
     ]
   },

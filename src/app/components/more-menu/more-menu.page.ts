@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, IonNav } from '@ionic/angular';
 import { RequestsService } from 'src/app/services/requests.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -28,7 +28,7 @@ export class MoreMenuPage implements OnInit {
 
   doLogout() {
     this.authService.logout();
-    this.router.navigateByUrl('/tabs')
+    this.router.navigateByUrl('/');
   }
 
 }
