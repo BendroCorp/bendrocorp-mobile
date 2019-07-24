@@ -19,6 +19,8 @@ ionic cordova build ios --prod
 
 From here, open the `.xcworkspace` file in `./platforms/ios/` to start Xcode.
 
+Once open, ensure that the correct certificate is selected, then select `Archive` from the `Product > Archive` menu.
+
 #### Android
 https://ionicframework.com/docs/publishing/play-store
 ```
