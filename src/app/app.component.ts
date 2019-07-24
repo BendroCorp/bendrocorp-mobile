@@ -124,7 +124,7 @@ export class AppComponent {
           }
         }
       } else {
-        
+        console.warn('Something went wrong and the device could not be registered!');
       }
     });
 
