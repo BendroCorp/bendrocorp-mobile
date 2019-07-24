@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [EventAddUpdatePage]
+  declarations: []
 })
 export class EventAddUpdatePageModule {}
