@@ -6,6 +6,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ErrorService } from './error.service';
 import { Globals } from '../globals';
+import { StatusMessage } from '../models/misc.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,12 @@ export class UserService {
       tap(result => console.log(`You have ${result} total approvals!`)),
       catchError(this.errorService.handleError<any>('Fetch Job Board'))
     )
+  }
+
+  registerForPushNotifications(token: string, user_device_type_id: 1|2) {
+    return this.http.post<StatusMessage>(``, { token, user_device_type_id }).pipe(
+      tap(result => console.log(`Added push notification!`)),
+      catchError(this.errorService.handleError<any>('Push Notification Registration'))
+    );
   }
 }

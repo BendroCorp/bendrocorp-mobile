@@ -20,6 +20,7 @@ import { Dialogs } from '@ionic-native/dialogs/ngx';
 import { AuthInterceptor } from './auth-interceptor';
 import { JobBoardService } from './services/job-board.service';
 import { JobsService } from './services/job.service';
+import { Push } from '@ionic-native/push/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,6 +45,7 @@ import { JobsService } from './services/job.service';
     StatusBar,
     SplashScreen,
     Globals,
+    Push,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
