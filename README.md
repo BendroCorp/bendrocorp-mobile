@@ -10,6 +10,8 @@ The BendroCorp mobile applications repository. Currently we use Ionic Framework 
 To use in a simulator you have to create a more full fledged native build of the Cordova application. Most of the steps here are primarily for reference. Only certain team members have the credentials and ability to make app store releases.
 
 #### iOS
+https://ionicframework.com/docs/publishing/app-store
+
 ```
 ionic cordova platform add ios
 ionic cordova build ios --prod
@@ -18,6 +20,7 @@ ionic cordova build ios --prod
 From here, open the `.xcworkspace` file in `./platforms/ios/` to start Xcode.
 
 #### Android
+https://ionicframework.com/docs/publishing/play-store
 ```
 ionic cordova build android --prod --release
 ```
