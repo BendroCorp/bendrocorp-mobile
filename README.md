@@ -14,7 +14,7 @@ https://ionicframework.com/docs/publishing/app-store
 
 ```
 ionic cordova platform add ios
-ionic cordova build ios --prod
+ionic cordova build ios --prod --verbose
 ```
 
 From here, open the `.xcworkspace` file in `./platforms/ios/` to start Xcode.
