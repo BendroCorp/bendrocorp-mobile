@@ -54,12 +54,12 @@ export class PushRegistarService {
           badge: true,
           sound: 'false'
       }
-    }
+    };
 
     const pushObject: PushObject = this.push.init(options);
 
     pushObject.on('notification').subscribe((notification: any) => {
-      console.log('Received a notification', notification)
+      console.log('Received a notification', notification);
       // data.message,
       // data.title,
       // data.count,
@@ -75,7 +75,7 @@ export class PushRegistarService {
       // this.platform.is("android");
 
       if (registration && registration.registrationId) {
-        const regId = (registration.registrationId as string).replace('<', '').replace('>','');
+        const regId = (registration.registrationId as string).replace('<', '').replace('>', '');
         const storedRegId = localStorage.getItem('pushRegistrationId');
 
         // dont re-register if this device is already registered
@@ -84,8 +84,8 @@ export class PushRegistarService {
             this.userService.registerForPushNotifications(regId, 1).subscribe((results) => {
               if (!(results instanceof HttpErrorResponse)) {
                 // save back in local storage
-                localStorage.setItem('pushRegistrationId', regId)
-                console.log('Device registered with BendroCorp API', registration)
+                localStorage.setItem('pushRegistrationId', regId);
+                console.log('Device registered with BendroCorp API', registration);
               }
             });
           } else if (this.platform.is('android')) {

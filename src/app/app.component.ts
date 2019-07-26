@@ -8,6 +8,7 @@ import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PushRegistarService } from './services/push-registar.service';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +22,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private push: Push,
     private authService: AuthService,
-    private userService: UserService
+    private pushRegistar: PushRegistarService
   ) {
     this.initializeApp();
   }
@@ -33,6 +33,9 @@ export class AppComponent {
       Keyboard.hideFormAccessoryBar(false);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      if (this.authService.isLoggedIn()) {
+        this.pushRegistar.initPushNotifications();
+      }
     });
   }
 

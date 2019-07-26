@@ -31,8 +31,7 @@ export class DashboardPage implements OnInit {
     private authService: AuthService,
     private eventService: EventService,
     private newsService: NewsService,
-    private loading: LoadingController,
-    private push: PushRegistarService) { }
+    private loading: LoadingController) { }
 
   fetchEvents(event?: any) {
     this.eventsFetched = false;
@@ -145,8 +144,6 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // try to register for pushes
-    this.push.initPushNotifications();
 
     if (this.nextEvent) {
       this.showCountdown = true;
