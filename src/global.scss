@@ -18,6 +18,8 @@ body {
   background: url('./assets/app-background.png') !important;
   background-color: none;
   background-size: cover !important;
+
+  font-family: 'Univia Pro', sans-serif !important;
 }
 
 ion-card {
@@ -27,5 +29,4 @@ ion-card {
 ion-refresher-content, .refresher-active {
   color: #fff !important;
 }
-
 
