@@ -34,7 +34,6 @@
     "cordova-ios": "^5.0.1",
     "cordova-plugin-app-preferences": "^0.99.3",
     "cordova-plugin-inappbrowser": "^3.1.0",
-    "cordova-plugin-secure-storage": "^3.0.2",
     "core-js": "^2.5.4",
     "moment": "^2.24.0",
     "ng-timespan": "^1.2.1",
@@ -85,8 +84,7 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-inappbrowser": {},
-      "phonegap-plugin-push": {},
-      "cordova-plugin-secure-storage": {}
+      "phonegap-plugin-push": {}
     },
     "platforms": [
       "ios"
