@@ -3,11 +3,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from 'src/app/services/event.service';
 import { UserSessionResponse } from 'src/app/models/user.model';
 import { Subscription, interval } from 'rxjs';
-import { Event }  from 'src/app/models/event.model';
+import { Event } from 'src/app/models/event.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ILNewsStory } from 'src/app/models/news.model';
 import { NewsService } from 'src/app/services/news.service';
 import { LoadingController } from '@ionic/angular';
+import { PushRegistarService } from 'src/app/services/push-registar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,10 +27,14 @@ export class DashboardPage implements OnInit {
   user: UserSessionResponse;
   loadingIndicator: any;
 
-  constructor(private authService: AuthService, private eventService: EventService, private newsService: NewsService, private loading: LoadingController) { }
+  constructor(
+    private authService: AuthService,
+    private eventService: EventService,
+    private newsService: NewsService,
+    private loading: LoadingController,
+    private push: PushRegistarService) { }
 
-  fetchEvents(event?: any)
-  {
+  fetchEvents(event?: any) {
     this.eventsFetched = false;
     this.showCountdown = false;
     this.eventService.list().subscribe(
@@ -37,11 +42,11 @@ export class DashboardPage implements OnInit {
         if (!(results instanceof HttpErrorResponse)) {
           console.log(results);
           if (results.length > 0) {
-            this.nextEvent = results.slice(0,1)[0]
-            console.log(this.nextEvent)            
-            this.events = results.splice(0,1)
-            console.log(this.events)
-            
+            this.nextEvent = results.slice(0, 1)[0];
+            console.log(this.nextEvent);
+            this.events = results.splice(0, 1);
+            console.log(this.events);
+
             this.eventsFetched = true;
 
             if (event) {
@@ -50,30 +55,29 @@ export class DashboardPage implements OnInit {
                 event.target.complete();
               }
             }
-            
+
             if (this.newsFetched && this.eventsFetched) {
               this.loadingIndicator.dismiss();
             } else {
-              console.log(`e n ${this.newsFetched} e ${this.eventsFetched}`);              
+              console.log(`e n ${this.newsFetched} e ${this.eventsFetched}`);
             }
 
             if (this.nextEvent) {
               this.eventStartedSubscription = interval(500).subscribe(
                 () => {
-                  
                   // if the start date is less than now
-                  let eventStart = new Date(this.nextEvent.start_date).getTime()
-                  let current = new Date().getTime()
+                  const eventStart = new Date(this.nextEvent.start_date).getTime();
+                  const current = new Date().getTime();
                   if (eventStart > current) {
                     this.showCountdown = true;
-                    
-                  }else{
+
+                  } else {
                     this.showCountdown = false;
                     this.eventStartedSubscription.unsubscribe();
                   }
                   this.checkerStarted = true;
                 }
-              )
+              );
             }
           } else {
             this.eventsFetched = true;
@@ -88,13 +92,13 @@ export class DashboardPage implements OnInit {
             if (this.newsFetched && this.eventsFetched) {
               this.loadingIndicator.dismiss();
             } else {
-              console.log(`en n ${this.newsFetched} e ${this.eventsFetched}`);              
+              console.log(`en n ${this.newsFetched} e ${this.eventsFetched}`);
             }
           }
-        }        
+        }
       }
-    )
-  }  
+    );
+  }
 
   async fetchUser() {
     this.user = this.authService.retrieveUserSession();
@@ -106,19 +110,19 @@ export class DashboardPage implements OnInit {
     this.newsFetched = false;
     this.newsService.list().subscribe((results) => {
       if (!(results instanceof HttpErrorResponse)) {
-        this.news = results.slice(0,3);
+        this.news = results.slice(0, 3);
         this.newsFetched = true;
 
         if (event) {
           if (this.newsFetched && this.eventsFetched) {
             event.target.complete();
-          }  
+          }
         }
-        
+
         if (this.newsFetched && this.eventsFetched) {
           this.loadingIndicator.dismiss();
         } else {
-          console.log(`n n ${this.newsFetched} e ${this.eventsFetched}`);              
+          console.log(`n n ${this.newsFetched} e ${this.eventsFetched}`);
         }
       }
     });
@@ -141,6 +145,9 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    // try to register for pushes
+    this.push.initPushNotifications();
+
     if (this.nextEvent) {
       this.showCountdown = true;
     }

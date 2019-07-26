@@ -21,6 +21,7 @@ import { AuthInterceptor } from './auth-interceptor';
 import { JobBoardService } from './services/job-board.service';
 import { JobsService } from './services/job.service';
 import { Push } from '@ionic-native/push/ngx';
+import { PushRegistarService } from './services/push-registar.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,6 +47,7 @@ import { Push } from '@ionic-native/push/ngx';
     SplashScreen,
     Globals,
     Push,
+    PushRegistarService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
