@@ -18,29 +18,31 @@
     <ion-card-header>
       <ion-card-title>{{event.name}}</ion-card-title>
     </ion-card-header>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          Starts: {{event.start_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          Ends: {{event.end_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <small>Attendance: {{fetchAttendanceString()}}</small>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <h6>Description</h6>
-          {{event.description}}
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            Starts: {{event.start_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Ends: {{event.end_date | date: 'MM/dd/yyyy hh:mm a (Z)'}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <small>Attendance: {{fetchAttendanceString()}}</small>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <h6>Description</h6>
+            {{event.description}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
   
     <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 2) && !isExpired()" expand="full" color="success" (click)="setAttendance(1)">Attending</ion-button>
     <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 1) && !isExpired()" expand="full" color="danger" (click)="setAttendance(2)">Not Attending</ion-button>
