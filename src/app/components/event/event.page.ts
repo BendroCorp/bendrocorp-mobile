@@ -105,6 +105,17 @@ export class EventPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  async publishEvent(event: Event) {
+    if (await this.messageService.confirmation('Are you sure that you want publish this event? All current members will be notified.') === 1) {
+      this.eventService.publish(event).subscribe((results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.messageService.toast('Event published!');
+          this.eventService.refreshData();
+        }
+      });
+    }
+  }
+
   archiveEvent(event: Event) {
     this.messageService.toast('Events cannot be deleted yet!');
   }
