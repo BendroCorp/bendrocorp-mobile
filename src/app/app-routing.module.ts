@@ -12,6 +12,10 @@ const routes: Routes = [
   { path: 'certify-event', loadChildren: './components/event/certify-event/certify-event.module#CertifyEventPageModule' },
   { path: 'add-update-job', loadChildren: './components/job/add-update-job/add-update-job.module#AddUpdateJobPageModule' },
   { path: 'complete-job', loadChildren: './components/job/complete-job/complete-job.module#CompleteJobPageModule' },
+  // { path: 'flight-log-details', loadChildren: './flight-log/flight-log-details/flight-log-details.module#FlightLogDetailsPageModule' },
+  // { path: 'add-update-flight-log', loadChildren: './flight-log/add-update-flight-log/add-update-flight-log.module#AddUpdateFlightLogPageModule' },
+  // { path: 'flight-log-details', loadChildren: './components/flight-log/flight-log-details/flight-log-details.module#FlightLogDetailsPageModule' },
+  { path: 'add-update-flight-log', loadChildren: './components/flight-log/add-update-flight-log/add-update-flight-log.module#AddUpdateFlightLogPageModule' },
   // { path: 'approval', loadChildren: './components/approval/approval.module#ApprovalPageModule' },
   // { path: 'approval-details', loadChildren: './components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule' }
 ];

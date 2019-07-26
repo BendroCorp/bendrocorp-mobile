@@ -129,6 +129,36 @@ const routes: Routes = [
         ],
         canActivate: [AuthGuardService]
       },
+      {
+        path: 'more/flight-log',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/flight-log/flight-log.module#FlightLogPageModule'
+          }
+        ],
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'more/flight-log/add-update',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/flight-log/add-update-flight-log/add-update-flight-log.module#AddUpdateFlightLogPageModule'
+          }
+        ],
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'more/flight-log/details/:flight_log_id',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/flight-log/flight-log-details/flight-log-details.module#FlightLogDetailsPageModule'
+          }
+        ],
+        canActivate: [AuthGuardService]
+      },
     ]
   },
   {

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{formAction}} Flight Log</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Title -->
+  <ion-item>
+    <ion-label position="floating">Job Title</ion-label>
+    <ion-input placeholder="Title" [(ngModel)]="flightLog.title"></ion-input>
+  </ion-item>
+  <!-- Text -->
+  <ion-item>
+    <ion-label position="floating">Job Description</ion-label>
+    <ion-input placeholder="Text" [(ngModel)]="flightLog.text"></ion-input>
+  </ion-item>
+  <!-- Ship Used -->
+  <!-- <ion-label position="floating">Completion Criteria</ion-label> -->
+  <ion-select placeholder="Ship Used" okText="Select" cancelText="Cancel" [(ngModel)]="flightLog.owned_ship_id">
+    <ion-select-option *ngFor="let ship of playerShips" [value]="ship.id">{{ship.title}}</ion-select-option>
+  </ion-select>
+
+  <ion-button expand="full" color="dark" (click)="addUpdateFlightLog()">{{formAction}} Flight Log</ion-button>
+  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button>
+</ion-content>

@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Flight Log Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="initialDataLoaded">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>{{flightLog.updated_at | date}}</ion-card-subtitle>
+      <ion-card-title>{{flightLog.title}}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{flightLog.text}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>

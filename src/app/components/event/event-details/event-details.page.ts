@@ -17,13 +17,13 @@ import { Subscription } from 'rxjs';
 })
 export class EventDetailsPage implements OnInit, OnDestroy {
   isAdmin: boolean = this.authService.hasClaim(19);
-  eventId: number = parseInt(this.route.snapshot.paramMap.get('event_id'))
+  eventId: number = parseInt(this.route.snapshot.paramMap.get('event_id'));
   event: Event;
   eventSubscription: Subscription;
 
   constructor(
-    private eventService: EventService, 
-    private route: ActivatedRoute, 
+    private eventService: EventService,
+    private route: ActivatedRoute,
     private messageService: MessageService,
     private authService: AuthService,
     private modalController: ModalController

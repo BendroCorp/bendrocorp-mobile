@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { FlightLogPage } from './flight-log.page';
+import { AddUpdateFlightLogPage } from './add-update-flight-log/add-update-flight-log.page';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [FlightLogPage]
+  declarations: [FlightLogPage, AddUpdateFlightLogPage],
+  entryComponents: [AddUpdateFlightLogPage]
 })
 export class FlightLogPageModule {}

@@ -21,18 +21,18 @@ export class EventPage implements OnInit, OnDestroy {
   events: Event[] = [];
   expiredEvents: Event[] = [];
   isAdmin: boolean = this.authService.hasClaim(19);
-  eventSubscription: Subscription
+  eventSubscription: Subscription;
   initialDataLoaded: boolean = false;
   loadingIndicator: any;
 
   constructor(
-    private authService: AuthService, 
-    private eventService: EventService, 
-    private router: Router, 
-    private nav: NavController, 
+    private authService: AuthService,
+    private eventService: EventService,
+    private router: Router,
+    private nav: NavController,
     private modalController: ModalController,
     private messageService: MessageService,
-    private loading: LoadingController) { 
+    private loading: LoadingController) {
     this.eventSubscription = this.eventService.dataRefreshAnnounced$.subscribe(() => {
       this.fetchEvents();
       if (this.isAdmin) {
@@ -82,9 +82,8 @@ export class EventPage implements OnInit, OnDestroy {
     });
   }
 
-  fetchAttendenceString(event: Event)
-  {
-    return event.attendences.filter(x => x.attendence_type_id == 1).map(val => val.character.full_name).join(', ')
+  fetchAttendenceString(event: Event) {
+    return event.attendences.filter(x => x.attendence_type_id === 1).map(val => val.character.full_name).join(', ');
   }
 
   async certifyEvent(event: Event) {
@@ -97,7 +96,7 @@ export class EventPage implements OnInit, OnDestroy {
 
   async addUpdateEvent(event?: Event) {
     if (event) {
-      this.eventService.setPassData(event);  
+      this.eventService.setPassData(event);
     }
 
     const modal = await this.modalController.create({
@@ -109,7 +108,7 @@ export class EventPage implements OnInit, OnDestroy {
   archiveEvent(event: Event) {
     this.messageService.toast('Events cannot be deleted yet!');
   }
- 
+
   openEvent(event: Event) {
     this.eventService.setPassData(event);
     this.nav.navigateForward(`/tabs/event/details/${event.id}`);

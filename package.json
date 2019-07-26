@@ -33,6 +33,7 @@
     "chart.js": "^2.8.0",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-app-preferences": "^0.99.3",
+    "cordova-plugin-dialogs": "^2.0.2",
     "cordova-plugin-inappbrowser": "^3.1.0",
     "core-js": "^2.5.4",
     "moment": "^2.24.0",
@@ -84,7 +85,8 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-inappbrowser": {},
-      "phonegap-plugin-push": {}
+      "phonegap-plugin-push": {},
+      "cordova-plugin-dialogs": {}
     },
     "platforms": [
       "ios"

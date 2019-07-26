@@ -74,4 +74,9 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  // https://stackoverflow.com/questions/51298721/ionic-customize-color-of-ionic-refresher-spinner-icon
+  --refresher-icon-color: #fff;
+  --refresher-text-color: #fff;
+  --refresher-border-color: #fff;
 }

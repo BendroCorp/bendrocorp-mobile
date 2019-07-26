@@ -32,7 +32,7 @@ export class UserService {
   }
 
   registerForPushNotifications(token: string, user_device_type_id: 1|2) {
-    return this.http.post<StatusMessage>(``, { token, user_device_type_id }).pipe(
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/user/push-token`, { token, user_device_type_id }).pipe(
       tap(result => console.log(`Added push notification!`)),
       catchError(this.errorService.handleError<any>('Push Notification Registration'))
     );
