@@ -116,8 +116,17 @@ export class EventPage implements OnInit, OnDestroy {
     }
   }
 
-  archiveEvent(event: Event) {
-    this.messageService.toast('Events cannot be deleted yet!');
+  async archiveEvent(event: Event) {
+    if (event && !event.certified && !event.submitted_for_certification) {
+      if (await this.messageService.confirmation('Are you sure you want to archive this event?') === 1) {
+        this.eventService.archive(event).subscribe((results) => {
+          if (!(results instanceof HttpErrorResponse)) {
+            this.messageService.toast('Event archived!');
+            this.events.splice(this.events.findIndex(x => x.id === event.id), 1);
+          }
+        });
+      }
+    }
   }
 
   openEvent(event: Event) {
