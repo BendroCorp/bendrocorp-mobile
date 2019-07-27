@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController, LoadingController } from '@ionic/angular';
 import { Event } from 'src/app/models/event.model';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute } from '@angular/router';
@@ -20,32 +20,33 @@ export class EventDetailsPage implements OnInit, OnDestroy {
   eventId: number = parseInt(this.route.snapshot.paramMap.get('event_id'));
   event: Event;
   eventSubscription: Subscription;
+  initialDataLoaded: boolean = false;
+  loadingIndicator: any;
 
   constructor(
     private eventService: EventService,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private authService: AuthService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private loading: LoadingController
   ) { }
 
-  setAttendance(typeId:number)
-  {
+  setAttendance(typeId: number) {
     if (this.event) {
       if (typeId === 1 || typeId === 2) {
         this.eventService.setAttendence(this.event.id, typeId).subscribe(
-          (result) => 
-          {
+          (result) => {
             if (!(result instanceof HttpErrorResponse)) {
-              if (this.event.attendences.find(x => x.id == result.id)) {
-                this.event.attendences[this.event.attendences.findIndex(x => x.id == result.id)] = result
+              if (this.event.attendences.find(x => x.id === result.id)) {
+                this.event.attendences[this.event.attendences.findIndex(x => x.id === result.id)] = result;
               } else {
-                this.event.attendences.push(result)
+                this.event.attendences.push(result);
               }
             }
           }
-        )
-      }else{
+        );
+      } else {
         console.error(`Provided attendence type ${typeId} out of accepted range!`)
         this.messageService.alert("Something went wrong. Please try again later!")
       }
@@ -54,7 +55,7 @@ export class EventDetailsPage implements OnInit, OnDestroy {
 
   async addUpdateEvent() {
     if (this.event) {
-      this.eventService.setPassData(this.event);  
+      this.eventService.setPassData(this.event);
     }
 
     const modal = await this.modalController.create({
@@ -63,18 +64,16 @@ export class EventDetailsPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  checkCurrentStatus()
-  {
+  checkCurrentStatus() {
     if (this.event && this.event.attendences) {
-      return this.event.attendences.find(x => x.user_id == this.authService.retrieveUserSession().id)
+      return this.event.attendences.find(x => x.user_id === this.authService.retrieveUserSession().id);
     }
   }
 
-  fetchAttendanceString()
-  {
+  fetchAttendanceString() {
     if (this.event) {
-      if (this.event.attendences && this.event.attendences.filter(x => x.attendence_type_id == 1).length > 0) {
-        return this.event.attendences.filter(x => x.attendence_type_id == 1).map(val => val.character.full_name).join(', ');
+      if (this.event.attendences && this.event.attendences.filter(x => x.attendence_type_id === 1).length > 0) {
+        return this.event.attendences.filter(x => x.attendence_type_id === 1).map(val => val.character.full_name).join(', ');
       } else {
         return 'None';
       }
@@ -98,25 +97,37 @@ export class EventDetailsPage implements OnInit, OnDestroy {
 
     // condition to call this
     // if we get an event which we want a db refresh
-    //     
+    //
     if ((!(this.event && this.event.id) && this.eventId) || event) {
       this.eventService.fetch(this.eventId).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
-          this.event = results
-        } 
+          this.event = results;
+        }
 
         if (event) {
           event.target.complete();
         }
+
+        if (!this.initialDataLoaded) {
+          this.initialDataLoaded = true;
+        }
+
+        if (this.loadingIndicator) {
+          this.loadingIndicator.dismiss();
+        }
       });
-    } 
+    }
   }
 
   doRefresh(event: any) {
     this.fetchEvent(event);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.loadingIndicator = await this.loading.create({
+      message: 'Loading'
+    });
+    await this.loadingIndicator.present();
     this.fetchEvent();
   }
 

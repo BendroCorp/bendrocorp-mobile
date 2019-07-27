@@ -26,6 +26,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   checkerStarted: boolean;
   user: UserSessionResponse;
   loadingIndicator: any;
+  initialDataLoaded: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -51,12 +52,18 @@ export class DashboardPage implements OnInit, OnDestroy {
 
             if (event) {
               if (this.newsFetched && this.eventsFetched) {
+                if (!this.initialDataLoaded) {
+                  this.initialDataLoaded = true;
+                }
                 this.loadingIndicator.dismiss();
                 event.target.complete();
               }
             }
 
             if (this.newsFetched && this.eventsFetched) {
+              if (!this.initialDataLoaded) {
+                this.initialDataLoaded = true;
+              }
               this.loadingIndicator.dismiss();
             } else {
               console.log(`e n ${this.newsFetched} e ${this.eventsFetched}`);
@@ -84,12 +91,18 @@ export class DashboardPage implements OnInit, OnDestroy {
 
             if (event) {
               if (this.newsFetched && this.eventsFetched) {
+                if (!this.initialDataLoaded) {
+                  this.initialDataLoaded = true;
+                }
                 this.loadingIndicator.dismiss();
                 event.target.complete();
               }
             }
 
             if (this.newsFetched && this.eventsFetched) {
+              if (!this.initialDataLoaded) {
+                this.initialDataLoaded = true;
+              }
               this.loadingIndicator.dismiss();
             } else {
               console.log(`en n ${this.newsFetched} e ${this.eventsFetched}`);
@@ -116,7 +129,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.newsFetched = false;
     this.newsService.list().subscribe((results) => {
       if (!(results instanceof HttpErrorResponse)) {
-        this.news = results.slice(0, 3);
+        this.news = results.filter(x => x.published).slice(0, 3);
         this.newsFetched = true;
 
         if (event) {
@@ -126,6 +139,9 @@ export class DashboardPage implements OnInit, OnDestroy {
         }
 
         if (this.newsFetched && this.eventsFetched) {
+          if (!this.initialDataLoaded) {
+            this.initialDataLoaded = true;
+          }
           this.loadingIndicator.dismiss();
         } else {
           console.log(`n n ${this.newsFetched} e ${this.eventsFetched}`);
