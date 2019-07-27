@@ -45,7 +45,7 @@
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="warning" (click)="publishEvent(item)"><ion-icon name="megaphone"></ion-icon></ion-item-option>
+        <ion-item-option *ngIf="!item.published" color="warning" (click)="publishEvent(item)"><ion-icon name="megaphone"></ion-icon></ion-item-option>
         <ion-item-option color="medium" (click)="addUpdateEvent(item)"><ion-icon name="create"></ion-icon></ion-item-option>
         <ion-item-option color="danger" (click)="archiveEvent(item)"><ion-icon name="archive"></ion-icon></ion-item-option>
       </ion-item-options>
