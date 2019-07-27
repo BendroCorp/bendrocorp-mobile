@@ -51,7 +51,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button *ngIf="showCountdown" color="dark" expand="block">Open Event</ion-button>
+          <ion-button *ngIf="showCountdown" color="dark" expand="block" (click)="openNextEvent()">Open Event</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

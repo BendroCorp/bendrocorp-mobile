@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from 'src/app/services/event.service';
 import { UserSessionResponse } from 'src/app/models/user.model';
@@ -7,7 +7,7 @@ import { Event } from 'src/app/models/event.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ILNewsStory } from 'src/app/models/news.model';
 import { NewsService } from 'src/app/services/news.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { PushRegistarService } from 'src/app/services/push-registar.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { PushRegistarService } from 'src/app/services/push-registar.service';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit, OnDestroy {
   nextEvent: Event;
   news: ILNewsStory[] = [];
   events: Event[];
@@ -31,7 +31,8 @@ export class DashboardPage implements OnInit {
     private authService: AuthService,
     private eventService: EventService,
     private newsService: NewsService,
-    private loading: LoadingController) { }
+    private loading: LoadingController,
+    private nav: NavController) { }
 
   fetchEvents(event?: any) {
     this.eventsFetched = false;
@@ -99,6 +100,12 @@ export class DashboardPage implements OnInit {
     );
   }
 
+  openNextEvent() {
+    if (this.nextEvent) {
+      this.nav.navigateForward(`/tabs/event/details/${this.nextEvent.id}`);
+    }
+  }
+
   async fetchUser() {
     this.user = this.authService.retrieveUserSession();
     // this.user.avatar
@@ -136,6 +143,12 @@ export class DashboardPage implements OnInit {
     await this.loadingIndicator.present();
     this.fetchEvents();
     this.fetchNews();
+  }
+
+  ngOnDestroy() {
+    if (this.eventStartedSubscription) {
+      this.eventStartedSubscription.unsubscribe();
+    }
   }
 
   doRefresh(event: any) {
