@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
 import { MessageService } from 'src/app/services/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MyApproval } from 'src/app/models/approval.model';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-approval-details',
@@ -43,30 +43,32 @@ export class ApprovalDetailsPage implements OnInit {
   }
 
   openLinkedItem(uri: string) {
-    const browser = this.iab.create(`https://my.bendrocorp.com/${uri}`);
+    const options: InAppBrowserOptions = {
+      location: 'no'
+    };
+    const browser = this.iab.create(`https://my.bendrocorp.com/${uri}`, '_system', options);
   }
 
-  submitApproval(typeId:number) {
+  submitApproval(typeId: number) {
     if (this.approval) {
-      let appDen:string = "..."
+      let appDen: string = '...';
       if (typeId === 4) {
-        appDen = "approve"
+        appDen = 'approve';
       }
 
-      if (typeId == 5) {
-        appDen = "deny"
+      if (typeId === 5) {
+        appDen = 'deny';
       }
       if (this.messageService.confirmation(`Are you sure you want to ${appDen} approval #${this.approval.approval_id}?`)) {
-        this.approvalSubmitting = true
+        this.approvalSubmitting = true;
         this.requestService.submit_approval(this.approval.approval_id, typeId).subscribe(
           (results) => {
-            if (!(results instanceof HttpErrorResponse))
-            {
-              this.fetchApprovalDetails()
+            if (!(results instanceof HttpErrorResponse)) {
+              this.fetchApprovalDetails();
             }
-            this.approvalSubmitting = false
+            this.approvalSubmitting = false;
           }
-        )
+        );
       }
     }
   }

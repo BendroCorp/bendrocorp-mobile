@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavParams, ModalController, LoadingController } from '@ionic/angular';
 import { Event } from 'src/app/models/event.model';
 import { EventService } from 'src/app/services/event.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
@@ -26,6 +26,7 @@ export class EventDetailsPage implements OnInit, OnDestroy {
   constructor(
     private eventService: EventService,
     private route: ActivatedRoute,
+    private router: Router,
     private messageService: MessageService,
     private authService: AuthService,
     private modalController: ModalController,
@@ -47,8 +48,8 @@ export class EventDetailsPage implements OnInit, OnDestroy {
           }
         );
       } else {
-        console.error(`Provided attendence type ${typeId} out of accepted range!`)
-        this.messageService.alert("Something went wrong. Please try again later!")
+        console.error(`Provided attendence type ${typeId} out of accepted range!`);
+        this.messageService.alert('Something went wrong. Please try again later!');
       }
     }
   }
@@ -91,17 +92,15 @@ export class EventDetailsPage implements OnInit, OnDestroy {
 
   fetchEvent(event?: any) {
     // try to get the event from the service
-    if (!this.event) {
-      this.event = this.eventService.fetchAndClearPassedData();
-    }
-
-    // condition to call this
-    // if we get an event which we want a db refresh
-    //
-    if ((!(this.event && this.event.id) && this.eventId) || event) {
+    if (this.eventId) {
       this.eventService.fetch(this.eventId).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.event = results;
+        } else {
+          this.router.navigateByUrl('/tabs/event');
+          if (this.loadingIndicator) {
+            this.loadingIndicator.dismiss();
+          }
         }
 
         if (event) {
@@ -116,7 +115,41 @@ export class EventDetailsPage implements OnInit, OnDestroy {
           this.loadingIndicator.dismiss();
         }
       });
+    } else {
+      this.messageService.toast('Event not found!');
+      this.router.navigateByUrl('/tabs/event');
+
+      if (this.loadingIndicator) {
+        this.loadingIndicator.dismiss();
+      }
     }
+
+    // if (!this.event) {
+    //   this.event = this.eventService.fetchAndClearPassedData();
+    // }
+
+    // condition to call this
+    // if we get an event which we want a db refresh
+    //
+    // if ((!(this.event && this.event.id) && this.eventId) || event) {
+    //   this.eventService.fetch(this.eventId).subscribe((results) => {
+    //     if (!(results instanceof HttpErrorResponse)) {
+    //       this.event = results;
+    //     }
+
+    //     if (event) {
+    //       event.target.complete();
+    //     }
+
+    //     if (!this.initialDataLoaded) {
+    //       this.initialDataLoaded = true;
+    //     }
+
+    //     if (this.loadingIndicator) {
+    //       this.loadingIndicator.dismiss();
+    //     }
+    //   });
+    // }
   }
 
   doRefresh(event: any) {
