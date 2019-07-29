@@ -11,7 +11,7 @@ import { NavController, LoadingController } from '@ionic/angular';
   styleUrls: ['./approval.page.scss'],
 })
 export class ApprovalPage implements OnInit {
-  myApprovals: MyApproval[] = []
+  myApprovals: MyApproval[] = [];
   dataLoadSkip: number = 0;
   dataLoadTake: number = 15;
   baseIncrease: number = 15;
@@ -19,15 +19,19 @@ export class ApprovalPage implements OnInit {
   initialDataLoaded: boolean;
   loadingIndicator: any;
 
-  constructor(private userService: UserService,
+  constructor(
+    private userService: UserService,
     private requestService: RequestsService,
     private nav: NavController,
     private loading: LoadingController) { }
 
   loadData(event) {
     // do the increases
-    this.dataLoadSkip = this.dataLoadTake; // skip the previous number that we took
+    this.dataLoadSkip = this.dataLoadTake + this.dataLoadSkip; // skip the previous number that we took
     this.dataLoadTake = this.dataLoadTake + this.baseIncrease;
+
+    console.log(event);
+    console.log(`Take: ${this.dataLoadTake}, Skip: ${this.dataLoadSkip}`);
 
     // fetch
     this.fetchApprovalRange(this.dataLoadTake, this.dataLoadSkip, event);
@@ -37,7 +41,7 @@ export class ApprovalPage implements OnInit {
     this.requestService.list_approvals(count, skip).subscribe(async (results) => {
       if (!(results instanceof HttpErrorResponse)) {
         // hmmm...
-        this.myApprovals = this.myApprovals.concat(results)
+        this.myApprovals = this.myApprovals.concat(results);
       }
 
       if (!this.initialDataLoaded) {
@@ -48,7 +52,7 @@ export class ApprovalPage implements OnInit {
       if (event) {
         event.target.complete();
 
-        if (this.myApprovals.length == this.totalApprovalCount) {
+        if (this.myApprovals.length === this.totalApprovalCount) {
           event.target.disabled = true;
         }
       }

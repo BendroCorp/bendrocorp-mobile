@@ -30,3 +30,18 @@ ion-refresher-content, .refresher-active {
   color: #fff !important;
 }
 
+ion-infinite-scroll {
+  color: #fff !important;
+}
+
+.infinite-loading-spinner > .ion-spinner {
+  --color: #fff !important;
+  fill: #fff !important;
+  stroke: #fff !important;
+}
+
+.infinite-loading-text, .refresher-pulling-text, .refresher-refreshing-text {
+  color: #fff !important;
+  padding-bottom: 8px;
+}
+
