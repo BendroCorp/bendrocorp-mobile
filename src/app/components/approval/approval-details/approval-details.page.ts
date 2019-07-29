@@ -17,9 +17,10 @@ export class ApprovalDetailsPage implements OnInit {
   approval: MyApproval;
   approvalSubmitting: boolean;
 
-  constructor(private requestService: RequestsService, 
-    private route: ActivatedRoute, 
-    private nav:NavController, 
+  constructor(
+    private requestService: RequestsService,
+    private route: ActivatedRoute,
+    private nav: NavController,
     private messageService: MessageService,
     private iab: InAppBrowser) { }
 

@@ -9,6 +9,7 @@ import { ILNewsStory } from 'src/app/models/news.model';
 import { NewsService } from 'src/app/services/news.service';
 import { LoadingController, NavController } from '@ionic/angular';
 import { PushRegistarService } from 'src/app/services/push-registar.service';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,7 +34,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     private eventService: EventService,
     private newsService: NewsService,
     private loading: LoadingController,
-    private nav: NavController) { }
+    private nav: NavController,
+    private iab: InAppBrowser) { }
 
   fetchEvents(event?: any) {
     this.eventsFetched = false;
@@ -148,6 +150,11 @@ export class DashboardPage implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  openDiscord() {
+    // https://discord.gg/daeYKRS
+    const browser = this.iab.create('https://discord.gg/daeYKRS', '_system');
   }
 
   async ngOnInit() {
