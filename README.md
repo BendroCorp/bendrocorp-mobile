@@ -26,11 +26,11 @@ https://ionicframework.com/docs/publishing/play-store
 ```
 ionic cordova build android --prod --release
 ```
-This will produce an unsigned .apk which must be signed. For reference if these credentials did not exist you would produce them with the following command:
+This will produce an unsigned .apk which must be signed. For reference only, if these credentials did not exist you would produce them with the following command:
 ```
 keytool -genkey -v -keystore bendrocorp-anroid-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 ```
-(But in reality this credentials are safely stored for when we make releases)
+(But in reality these credentials are safely stored for when we make releases)
 
 Creating the signed release .apk by running the jarsigner tool which is also included in the Android SDK:
 ```
