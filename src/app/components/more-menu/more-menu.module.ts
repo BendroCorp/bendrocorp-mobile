@@ -7,6 +7,7 @@ import { IonicModule, IonNav } from '@ionic/angular';
 
 import { MoreMenuPage } from './more-menu.page';
 import { AuthGuardService } from 'src/app/guards/auth-guard.guard';
+import { SettingsPage } from '../settings/settings.page';
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MoreMenuPage],
-  providers: []
+  declarations: [MoreMenuPage, SettingsPage],
+  providers: [],
+  entryComponents: [SettingsPage]
 })
 export class MoreMenuPageModule {}

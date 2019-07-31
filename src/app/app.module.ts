@@ -22,6 +22,9 @@ import { JobBoardService } from './services/job-board.service';
 import { JobsService } from './services/job.service';
 import { Push } from '@ionic-native/push/ngx';
 import { PushRegistarService } from './services/push-registar.service';
+import { TouchID } from '@ionic-native/touch-id/ngx';
+import { SecureStorage } from '@ionic-native/secure-storage/ngx';
+import { SettingsService } from './services/settings.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,11 +38,13 @@ import { PushRegistarService } from './services/push-registar.service';
       multi: true
     },
     Dialogs,
+    TouchID,
     MessageService,
     JobBoardService,
     JobsService,
     EventService,
     AuthService,
+    SettingsService,
     AuthGuardService,
     NoAuthGuardGuard,
     MemberGuard,
@@ -48,6 +53,7 @@ import { PushRegistarService } from './services/push-registar.service';
     Globals,
     Push,
     PushRegistarService,
+    SecureStorage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

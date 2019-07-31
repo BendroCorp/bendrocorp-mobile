@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+    <ion-button slot="end" (click)="dismiss()">Close</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Change Password</ion-card-subtitle>
+    </ion-card-header>
+    <!-- Original Password -->
+    <ion-item>
+      <ion-label position="floating">Current Password</ion-label>
+      <ion-input type="password" placeholder="Current" [(ngModel)]="passwordChange.original_password"></ion-input>
+    </ion-item>
+    <!-- New Password -->
+    <ion-item>
+      <ion-label position="floating">New Password</ion-label>
+      <ion-input type="password" placeholder="New" [(ngModel)]="passwordChange.password"></ion-input>
+    </ion-item>
+    <!-- Confirmation Password -->
+    <ion-item>
+      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-input type="password" placeholder="Confirm" [(ngModel)]="passwordChange.password_confirmation"></ion-input>
+    </ion-item>
+    <ion-button expand="full" color="dark" (click)="doUpdatePassword()">Change Password</ion-button>
+  </ion-card>
+  <ion-card *ngIf="touchIdAvailable">
+    <ion-card-header>
+      <ion-card-title>Touch ID</ion-card-title>
+    </ion-card-header>
+    <ion-item>
+      <ion-label>Enable Touch ID</ion-label>
+      <ion-toggle [(ngModel)]="touchIdStatus" (click)="changeTouchIdStatus()"></ion-toggle>
+    </ion-item>
+  </ion-card>
+</ion-content>

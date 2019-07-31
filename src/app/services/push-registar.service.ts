@@ -94,7 +94,7 @@ export class PushRegistarService {
 
             // });
           } else {
-            console.warn('Device not currently supported for push notifications.')
+            console.warn('Device not currently supported for push notifications.');
           }
         }
       } else {

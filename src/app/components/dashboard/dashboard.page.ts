@@ -35,7 +35,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     private newsService: NewsService,
     private loading: LoadingController,
     private nav: NavController,
-    private iab: InAppBrowser) { }
+    private iab: InAppBrowser,
+    private pushRegistar: PushRegistarService) { }
 
   fetchEvents(event?: any) {
     this.eventsFetched = false;
@@ -153,7 +154,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   openDiscord() {
-    // https://discord.gg/daeYKRS
+    // Open our private Discord link
     const browser = this.iab.create('https://discord.gg/daeYKRS', '_system');
   }
 
@@ -166,6 +167,11 @@ export class DashboardPage implements OnInit, OnDestroy {
     await this.loadingIndicator.present();
     this.fetchEvents();
     this.fetchNews();
+
+    // Init push notifications
+    if (this.authService.isLoggedIn()) {
+      this.pushRegistar.initPushNotifications();
+    }
   }
 
   ngOnDestroy() {

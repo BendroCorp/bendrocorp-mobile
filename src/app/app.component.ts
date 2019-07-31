@@ -33,9 +33,9 @@ export class AppComponent {
       Keyboard.hideFormAccessoryBar(false);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      if (this.authService.isLoggedIn()) {
-        this.pushRegistar.initPushNotifications();
-      }
+      // if (this.authService.isLoggedIn()) {
+      //   this.pushRegistar.initPushNotifications();
+      // }
     });
   }
 
