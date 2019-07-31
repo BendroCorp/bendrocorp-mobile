@@ -4,8 +4,6 @@
   </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
@@ -39,6 +37,9 @@
       <ion-row>
         <ion-col *ngIf="nextEvent">
           <ion-label>Next event in:</ion-label>
+        </ion-col>
+        <ion-col text-center *ngIf="nextEvent && !showCountdown">
+          <ion-label>{{nextEvent.title}} is in-progress!</ion-label>
         </ion-col>
         <ion-col text-center *ngIf="!nextEvent">
           <ion-label>No events scheduled!</ion-label>

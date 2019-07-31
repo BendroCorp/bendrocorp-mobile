@@ -10,6 +10,7 @@ import { NewsService } from 'src/app/services/news.service';
 import { LoadingController, NavController } from '@ionic/angular';
 import { PushRegistarService } from 'src/app/services/push-registar.service';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { TimeSpan } from 'ng-timespan';
 
 @Component({
   selector: 'app-dashboard',
@@ -77,12 +78,18 @@ export class DashboardPage implements OnInit, OnDestroy {
                 () => {
                   // if the start date is less than now
                   const eventStart = new Date(this.nextEvent.start_date).getTime();
+                  const eventEnd = new Date(this.nextEvent.end_date).getTime();
+
                   const current = new Date().getTime();
-                  if (eventStart > current) {
+                  if (eventStart > current && eventEnd > current) { // event is still upcoming
                     this.showCountdown = true;
 
-                  } else {
+                  } else if (eventStart <= current && eventEnd > current) { // event is happening now
                     this.showCountdown = false;
+                    // this.eventStartedSubscription.unsubscribe();
+                  } else if (eventStart <= current && eventEnd <= current) { // event has ended and we need to see if there is a new event
+                    this.showCountdown = false;
+                    this.fetchEvents();
                     this.eventStartedSubscription.unsubscribe();
                   }
                   this.checkerStarted = true;
@@ -151,6 +158,11 @@ export class DashboardPage implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  eventIsStarted(event: Event) {
+    const ts = TimeSpan.Subtract(new Date(event.start_date), new Date());
+    return (ts.totalSeconds <= 0) ? true : false;
   }
 
   openDiscord() {
