@@ -4,7 +4,8 @@ The BendroCorp mobile applications repository. Currently we use Ionic Framework 
 ## INSTALLATION
 1. Clone the repo
 2. cd && npm i
-3. Fiddle on :smile:
+3. ionic serve
+4. Fiddle on :smile:
 
 ## APP TESTING
 To use in a simulator you have to create a more full fledged native build of the Cordova application. Most of the steps here are primarily for reference. Only certain team members have the credentials and ability to make app store releases.
