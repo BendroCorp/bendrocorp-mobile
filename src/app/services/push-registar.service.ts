@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 import { Push, PushOptions, PushObject } from '@ionic-native/push/ngx';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from './user.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +74,12 @@ export class PushRegistarService {
       // registration.registrationId
       // this.platform.is("ios");
       // this.platform.is("android");
+      console.log('Push registration recieved');
+      console.log(registration);
+      console.log('Registration id:');
+      console.log(registration.registrationId);
+      console.log('reg type:');
+      console.log(registration.registrationType);
 
       if (registration && registration.registrationId) {
         const regId = (registration.registrationId as string).replace('<', '').replace('>', '');
@@ -81,7 +88,9 @@ export class PushRegistarService {
         // dont re-register if this device is already registered
         if (regId !== storedRegId) {
           if (this.platform.is('ios')) {
-            this.userService.registerForPushNotifications(regId, 1).subscribe((results) => {
+            // iOS = 1 for dev, 2 = prod
+            const envId = (environment.production) ? 2 : 1;
+            this.userService.registerForPushNotifications(regId, envId, registration).subscribe((results) => {
               if (!(results instanceof HttpErrorResponse)) {
                 // save back in local storage
                 localStorage.setItem('pushRegistrationId', regId);
@@ -89,6 +98,7 @@ export class PushRegistarService {
               }
             });
           } else if (this.platform.is('android')) {
+            // Android will eventually by 3 for dev, 4 for prod
             console.error('Android is currently not supported.');
             // this.userService.registerForPushNotifications(registration.registrationId, 2).subscribe((results) => {
 
