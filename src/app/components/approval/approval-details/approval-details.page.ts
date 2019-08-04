@@ -52,7 +52,7 @@ export class ApprovalDetailsPage implements OnInit {
     const browser = this.iab.create(`https://my.bendrocorp.com/${uri}`, '_system', options);
   }
 
-  submitApproval(typeId: number) {
+  async submitApproval(typeId: number) {
     if (this.approval) {
       let appDen: string = '...';
       if (typeId === 4) {
@@ -62,7 +62,7 @@ export class ApprovalDetailsPage implements OnInit {
       if (typeId === 5) {
         appDen = 'deny';
       }
-      if (this.messageService.confirmation(`Are you sure you want to ${appDen} approval #${this.approval.approval_id}?`)) {
+      if (await this.messageService.confirmation(`Are you sure you want to ${appDen} approval #${this.approval.approval_id}?`) === 1) {
         this.approvalSubmitting = true;
         this.requestService.submit_approval(this.approval.approval_id, typeId).subscribe(
           (results) => {
