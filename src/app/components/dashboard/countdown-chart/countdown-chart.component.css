@@ -1,12 +1,16 @@
+/* The outer wrapper */
 .timer-clock {
    margin-left: auto;
    margin-right: auto;
-    width: 372px;
-    position: relative;
+   width: 380px;
+   height: 92px;
+   max-width: 100%;
+   min-width: 270px;
+   position: relative;
  }
  
  .timer-clock .clock-circle {
-    width: 92px;
+    width: 25%;
     text-align: center;
     display: inline-block;
     float: left;
@@ -16,15 +20,54 @@
  
  .timer-clock .clock-circle canvas {
     display: block;
-    width: 92px;
-    height: 92px;
+    width: 100% !important;
+    /* height: 150px !important; */
  }
  
- .timer-clock .clock-circle .clock-label {
-    position: absolute;
-    font-size: 28px;
-    text-align: center;
-    width: 235px;
-    top: 49px;
-    left: -71px;
+ .timer-clock .clock-circle .clock-label { 
+   display: inline-block;
+   position: absolute; 
+   text-align: center;
+   /* font-size: 2em; 28px */
+   
+   /* width: 75px;  */
+   /* height: 100%; */
+   /* top: 42%; 49px */
+   /* left: 11%; -71px */
  }
+/* 431px */
+ @media screen and (min-width: 431px) {
+   .timer-clock .clock-circle .clock-label { 
+      font-size: 2em;
+      width: 75px;
+      top: 42.5%;
+      left: 11%;
+    }
+ }
+
+ @media screen and (min-width: 351px) and (max-width: 431px) {
+   .timer-clock .clock-circle .clock-label { 
+      font-size: 1.25em;
+      width: 75px;
+      top: 50%;
+      left: calc(9% - 2px); /* 9% */
+    } 
+}
+
+@media screen and (min-width: 331px) and (max-width: 350px) {
+   .timer-clock .clock-circle .clock-label { 
+      font-size: 1.25em;
+      width: 75px;
+      top: 50%;
+      left: calc(9% - 5px); /* 9% */
+    } 
+}
+
+@media screen and (max-width: 330px) {
+   .timer-clock .clock-circle .clock-label { 
+      font-size: 1.25em;
+      width: 75px;
+      top: 50%;
+      left: calc(9% - 8px); /* 9% */
+    } 
+}

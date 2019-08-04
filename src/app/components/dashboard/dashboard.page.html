@@ -24,14 +24,20 @@
   <!-- User Info -->
   <ion-card *ngIf="initialDataLoaded">
     <ion-card-header>
-      <ion-item class="user-info">
+      <ion-item class="user-info-regular">
         <img slot="end" src="{{user.avatar}}" style="max-width: 120px; max-height: 120px; border-radius: 50%; margin: 8px;" alt="">
-        <!-- <div><h3>{{user.first_name}} {{user.last_name}}</h3></div> -->
         <ion-label>
           <h1>{{user.first_name}} {{user.last_name}}</h1>
           <p>{{user.job_title}}</p>
         </ion-label>
       </ion-item>
+      <div class="user-info-small">
+        <img src="{{user.avatar}}" style="max-width: 120px; max-height: 120px; border-radius: 50%;" alt="">
+        <div>
+          <h1>{{user.first_name}} {{user.last_name}}</h1>
+          <p>{{user.job_title}}</p>
+        </div>
+      </div>
     </ion-card-header>
     <ion-grid>
       <ion-row>
