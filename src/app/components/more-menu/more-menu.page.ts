@@ -21,10 +21,17 @@ export class MoreMenuPage implements OnInit {
     private router: Router,
     private modalController: ModalController) { }
 
-  ngOnInit() {
+  fetchPendingApprovalCount() {
     this.userService.fetchPendingApprovalsCount().subscribe((result) => {
       this.pendingApprovals = result;
     });
+  }
+
+  ionViewWillEnter() {
+    this.fetchPendingApprovalCount();
+  }
+
+  ngOnInit() {
   }
 
   openMenuItem(uri: string) {
