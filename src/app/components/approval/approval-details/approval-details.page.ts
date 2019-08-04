@@ -6,6 +6,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MyApproval } from 'src/app/models/approval.model';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-approval-details',
@@ -19,6 +20,7 @@ export class ApprovalDetailsPage implements OnInit {
 
   constructor(
     private requestService: RequestsService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private nav: NavController,
     private messageService: MessageService,
@@ -66,6 +68,7 @@ export class ApprovalDetailsPage implements OnInit {
           (results) => {
             if (!(results instanceof HttpErrorResponse)) {
               this.fetchApprovalDetails();
+              this.userService.refreshData();
             }
             this.approvalSubmitting = false;
           }
