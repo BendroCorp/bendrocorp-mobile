@@ -21,8 +21,8 @@ export class CertifyEventPage implements OnInit {
   loadingIndicator: any;
 
   constructor(
-    private modalController: ModalController, 
-    private eventService: EventService, 
+    private modalController: ModalController,
+    private eventService: EventService,
     private messageService: MessageService,
     private loading: LoadingController) { }
 

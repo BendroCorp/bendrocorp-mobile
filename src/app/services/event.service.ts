@@ -11,7 +11,11 @@ import { StatusMessage } from '../models/misc.model';
 @Injectable()
 export class EventService {
 
-  constructor(private http:HttpClient, private messageService:MessageService, private errorService:ErrorService, private globals:Globals) { }
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService,
+    private errorService: ErrorService,
+    private globals: Globals) { }
   private passedData = {} as Event;
 
   private dataRefreshSource = new Subject();
@@ -21,7 +25,7 @@ export class EventService {
    */
   refreshData()
   {
-    console.log("Auth service data refresh called!");    
+    console.log("Auth service data refresh called!");
     this.dataRefreshSource.next();
   }
 
