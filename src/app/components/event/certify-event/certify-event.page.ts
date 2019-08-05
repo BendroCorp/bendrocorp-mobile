@@ -26,21 +26,22 @@ export class CertifyEventPage implements OnInit {
     private messageService: MessageService,
     private loading: LoadingController) { }
 
-  submitForCertification()
-  {
-    if (this.event) {
-      this.attendenceSubmitting = true;
-      this.eventService.certification(this.event.id, this.attendences, this.debriefingText).subscribe(
-        (results) =>
-        {
-          this.attendenceSubmitting = false;
-          if (!(results instanceof HttpErrorResponse)) {
-            this.eventService.refreshData();
-            this.certificationPassed = true;
-            this.dismiss();
+  async submitForCertification() {
+    if (await this.messageService.confirmation('Are you sure you want to vertify this event?') === 1) {
+      if (this.event) {
+        this.attendenceSubmitting = true;
+        this.eventService.certification(this.event.id, this.attendences, this.debriefingText).subscribe(
+          (results) =>
+          {
+            this.attendenceSubmitting = false;
+            if (!(results instanceof HttpErrorResponse)) {
+              this.eventService.refreshData();
+              this.certificationPassed = true;
+              this.dismiss();
+            }
           }
-        }
-      )
+        );
+      }
     }
   }
 

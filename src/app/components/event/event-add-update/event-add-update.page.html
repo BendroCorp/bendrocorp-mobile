@@ -1,31 +1,34 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-button color="dark" (click)="addUpdateEvent()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
     </ion-buttons>
-    <ion-title>{{formAction}} Event</ion-title>
+    <ion-title slot="">{{formAction}} Event</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!-- Event Name -->
   <ion-item>
-    <ion-label position="floating">Event Name</ion-label>
+    <ion-label position="floating">Event Name <span color="danger">*</span></ion-label>
     <ion-input placeholder="Name" [(ngModel)]="event.name"></ion-input>
   </ion-item>
   <!-- Description -->
   <ion-item>
-    <ion-label position="floating">Event Description</ion-label>
+    <ion-label position="floating">Event Description <span color="danger">*</span></ion-label>
     <ion-textarea rows="6" placeholder="Description" [(ngModel)]="event.description"></ion-textarea>
   </ion-item>
   <!-- Start Time -->
   <ion-item>
-    <ion-label>Start Time</ion-label>
+    <ion-label>Start Time <span color="danger">*</span></ion-label>
     <ion-datetime placeholder="Starts" displayFormat="D MMM YYYY H:mm" [(ngModel)]="event.start_date"></ion-datetime>
   </ion-item>
   <!-- End Time -->
   <ion-item>
-    <ion-label>End Time</ion-label>
+    <ion-label>End Time <span color="danger">*</span></ion-label>
     <ion-datetime placeholder="Ends" displayFormat="D MMM YYYY H:mm" [(ngModel)]="event.end_date"></ion-datetime>
   </ion-item>
   <!-- Show on Dashboard -->
@@ -42,6 +45,6 @@
       <ion-select-option [value]="0" [selected]="recurrenceId == 0">None</ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-button expand="full" color="dark" (click)="addUpdateEvent()">{{formAction}} Event</ion-button>
-  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button>
+  <!-- <ion-button expand="full" color="dark" (click)="addUpdateEvent()">{{formAction}} Event</ion-button>
+  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button> -->
 </ion-content>

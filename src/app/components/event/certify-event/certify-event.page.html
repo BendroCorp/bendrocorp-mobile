@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="submitForCertification()" [disabled]="attendenceSubmitting">Submit</ion-button>
+    </ion-buttons>
     <ion-title>Certify Event</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()" [disabled]="attendenceSubmitting">Close</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,6 +19,6 @@
       </ion-select>
     </ion-item>
   </ion-list>
-  <ion-button expand="full" color="primary" (click)="submitForCertification()" [disabled]="attendenceSubmitting">Submit Certification</ion-button>
-  <ion-button expand="full" color="medium" (click)="dismiss()" [disabled]="attendenceSubmitting">Cancel</ion-button>
+  <!-- <ion-button expand="full" color="primary" (click)="submitForCertification()" [disabled]="attendenceSubmitting">Submit Certification</ion-button>
+  <ion-button expand="full" color="medium" (click)="dismiss()" [disabled]="attendenceSubmitting">Cancel</ion-button> -->
 </ion-content>
