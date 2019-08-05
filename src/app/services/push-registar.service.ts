@@ -58,7 +58,7 @@ export class PushRegistarService {
       ios: {
           alert: 'true',
           badge: true,
-          sound: 'false'
+          sound: 'true'
       }
     };
 

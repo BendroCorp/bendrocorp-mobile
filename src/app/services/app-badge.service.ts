@@ -12,8 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class AppBadgeService implements OnDestroy {
   // https://ionicframework.com/docs/native/badge
-  approvalSubscription: Subscription;
-  eventSubscription: Subscription;
+  private approvalSubscription: Subscription;
+  private eventSubscription: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -32,6 +32,9 @@ export class AppBadgeService implements OnDestroy {
       });
     }
 
+    /**
+     * Tally the total number of badgable items and set the app badge
+     */
     fetchBadgeCount() {
       // get the events
       this.eventService.list().subscribe((eventsList) => {
@@ -45,7 +48,9 @@ export class AppBadgeService implements OnDestroy {
           // subtract the number of events that the user is attending from the total number of upcoming events
           const unansweredEvents = eventsList.length - userAttending.length;
 
+          // fetch the pending approvals count
           this.userService.fetchPendingApprovalsCount().subscribe((pendingApprovalCount) => {
+            // add them together and set the badge
             this.badge.set(unansweredEvents + pendingApprovalCount);
           });
         }

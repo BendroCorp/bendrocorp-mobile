@@ -23,8 +23,7 @@ export class EventService {
   /**
    * Call this to signal all subscribers to refresh their data
    */
-  refreshData()
-  {
+  refreshData() {
     console.log("Auth service data refresh called!");
     this.dataRefreshSource.next();
   }
@@ -44,6 +43,13 @@ export class EventService {
     const ret = this.passedData;
     this.passedData = {} as Event;
     return ret;
+  }
+
+  /**
+   * Clear out any stored pass data
+   */
+  clearPassData() {
+    this.passedData = {} as Event;
   }
 
   list(): Observable<Event[]> {

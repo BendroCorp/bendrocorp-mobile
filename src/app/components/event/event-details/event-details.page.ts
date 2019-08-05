@@ -174,6 +174,7 @@ export class EventDetailsPage implements OnInit, OnDestroy {
   }
 
   ionViewDidLeave() {
+    this.eventService.clearPassData();
   }
 
 }
