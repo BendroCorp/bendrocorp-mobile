@@ -50,6 +50,7 @@ export class TabsPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchPendingApprovalCount();
+    this.fetchUnAnsweredEventCount();
   }
   ngOnDestroy(): void {
     if (this.approvalSubscription) {

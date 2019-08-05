@@ -44,6 +44,7 @@ export class EventDetailsPage implements OnInit, OnDestroy {
               } else {
                 this.event.attendences.push(result);
               }
+              this.eventService.refreshData();
             }
           }
         );

@@ -26,6 +26,7 @@ import { TouchID } from '@ionic-native/touch-id/ngx';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
 import { SettingsService } from './services/settings.service';
 import { AppBadgeService } from './services/app-badge.service';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,6 +54,7 @@ import { AppBadgeService } from './services/app-badge.service';
     SplashScreen,
     Globals,
     Push,
+    Badge,
     PushRegistarService,
     SecureStorage,
     AppBadgeService,

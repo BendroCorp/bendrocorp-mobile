@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { Chart } from 'chart.js'
+import { Chart } from 'chart.js';
 import { TimeSpan } from 'ng-timespan';
 import { interval, Observable } from 'rxjs';
 
@@ -24,21 +24,21 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
   eventSeconds: number;
 
   // options
-  chartOptions = { animation: { duration: 0 } }
+  chartOptions = { animation: { duration: 0 } };
 
   //
   eventStarted: boolean;
 
-  ticker: Observable<number> = interval(500)
+  ticker: Observable<number> = interval(500);
 
   constructor() { }
 
   updateDays(ts: TimeSpan) {
-    const canvasEl: HTMLCanvasElement = this.canvasDays.nativeElement
-    const context = canvasEl.getContext('2d')
+    const canvasEl: HTMLCanvasElement = this.canvasDays.nativeElement;
+    const context = canvasEl.getContext('2d');
 
     const completeCircle = 30;
-    const daMath = Math.round(completeCircle - ts.days)
+    const daMath = Math.round(completeCircle - ts.days);
 
     const pieOptions = {
       animation: false
@@ -54,16 +54,16 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       type: 'doughnut',
       data: chartData,
       options: this.chartOptions
-    })
-    this.eventDays = Math.abs(ts.days)
+    });
+    this.eventDays = Math.abs(ts.days);
   }
 
   updateHours(ts: TimeSpan) {
-    const canvasEl: HTMLCanvasElement = this.canvasHours.nativeElement
-    const context = canvasEl.getContext('2d')
+    const canvasEl: HTMLCanvasElement = this.canvasHours.nativeElement;
+    const context = canvasEl.getContext('2d');
 
     const completeCircle = 24;
-    const daMath = Math.round(completeCircle - ts.hours)
+    const daMath = Math.round(completeCircle - ts.hours);
 
     const pieOptions = {
       animation: false
@@ -78,16 +78,16 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       type: 'doughnut',
       data: chartData,
       options: this.chartOptions
-    })
-    this.eventHours = Math.abs(ts.hours)
+    });
+    this.eventHours = Math.abs(ts.hours);
   }
 
   updateMinutes(ts: TimeSpan) {
-    const canvasEl: HTMLCanvasElement = this.canvasMinutes.nativeElement
-    const context = canvasEl.getContext('2d')
+    const canvasEl: HTMLCanvasElement = this.canvasMinutes.nativeElement;
+    const context = canvasEl.getContext('2d');
 
     const completeCircle = 60;
-    const daMath = Math.round(completeCircle - ts.minutes)
+    const daMath = Math.round(completeCircle - ts.minutes);
 
     const pieOptions = {
       animation: false
@@ -103,16 +103,16 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       type: 'doughnut',
       data: chartData,
       options: this.chartOptions
-    })
-    this.eventMinutes = Math.abs(ts.minutes)
+    });
+    this.eventMinutes = Math.abs(ts.minutes);
   }
 
   updateSeconds(ts: TimeSpan) {
-    const canvasEl: HTMLCanvasElement = this.canvasSeconds.nativeElement
-    const context = canvasEl.getContext('2d')
+    const canvasEl: HTMLCanvasElement = this.canvasSeconds.nativeElement;
+    const context = canvasEl.getContext('2d');
 
     const completeCircle = 60;
-    const daMath = Math.round(completeCircle - ts.seconds)
+    const daMath = Math.round(completeCircle - ts.seconds);
 
     const pieOptions = {
       animation: false
@@ -129,8 +129,8 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       type: 'doughnut',
       data: chartData,
       options: this.chartOptions
-    })
-    this.eventSeconds = Math.abs(ts.seconds)
+    });
+    this.eventSeconds = Math.abs(ts.seconds);
   }
 
   ngOnInit() {
@@ -143,14 +143,13 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
         () => {
           // for every tick update the chart
 
-          const timespan = TimeSpan.Subtract(new Date().getTime(), new Date(this.endTime).getTime())
-          // console.log(`Time till expiration: ${timespan.days} days, ${timespan.hours} hours, ${timespan.hours} minutes, ${timespan.seconds}`);
-          this.updateDays(timespan)
-          this.updateHours(timespan)
-          this.updateMinutes(timespan)
-          this.updateSeconds(timespan)
+          const timespan = TimeSpan.Subtract(new Date().getTime(), new Date(this.endTime).getTime());
+          this.updateDays(timespan);
+          this.updateHours(timespan);
+          this.updateMinutes(timespan);
+          this.updateSeconds(timespan);
         }
-      )
+      );
     } else {
       console.error('End time not passed to countdown widget. Countdown will not start.');
     }
