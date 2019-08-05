@@ -25,6 +25,7 @@ import { PushRegistarService } from './services/push-registar.service';
 import { TouchID } from '@ionic-native/touch-id/ngx';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
 import { SettingsService } from './services/settings.service';
+import { AppBadgeService } from './services/app-badge.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -54,6 +55,7 @@ import { SettingsService } from './services/settings.service';
     Push,
     PushRegistarService,
     SecureStorage,
+    AppBadgeService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

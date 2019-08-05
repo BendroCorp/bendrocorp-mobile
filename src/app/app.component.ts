@@ -9,6 +9,7 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PushRegistarService } from './services/push-registar.service';
+import { AppBadgeService } from './services/app-badge.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    private pushRegistar: PushRegistarService
+    private pushRegistar: PushRegistarService,
+    private badgeService: AppBadgeService
   ) {
     this.initializeApp();
   }

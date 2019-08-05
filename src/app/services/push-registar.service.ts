@@ -4,13 +4,18 @@ import { Push, PushOptions, PushObject } from '@ionic-native/push/ngx';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment.prod';
+import { AppBadgeService } from './app-badge.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PushRegistarService {
 
-  constructor(private platform: Platform, private push: Push, private userService: UserService) { }
+  constructor(
+    private platform: Platform,
+    private push: Push,
+    private userService: UserService,
+    private appBadgeService: AppBadgeService) { }
 
   initPushNotifications() {
     // check to see if this is a physical device if not "Eject, Eject, Eject!"
@@ -61,6 +66,7 @@ export class PushRegistarService {
 
     pushObject.on('notification').subscribe((notification: any) => {
       console.log('Received a notification', notification);
+      this.appBadgeService.fetchBadgeCount();
       // data.message,
       // data.title,
       // data.count,
