@@ -12,7 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 import { Globals } from '../globals';
 import { MessageService } from './message.service';
-import { UserSessionResponse, IdTokenResponse, Login, NewPassword } from '../models/user.model';
+import { UserSessionResponse, IdTokenResponse, Login, NewPassword, StoredToken } from '../models/user.model';
 import { resolve } from 'q';
 import { StatusMessage } from '../models/misc.model';
 
@@ -36,9 +36,10 @@ export class AuthService {
   }
 
   /** Log the user in. */
-  login(email: string, password: string, code?: string): Observable<IdTokenResponse> {
+  login(email: string, password: string, code?: string, perpetual?: boolean): Observable<IdTokenResponse> {
     const device = 'Mobile';
-    const session = { email, password, code, device };
+    const offline_access = (perpetual) ? true : null;
+    const session = { email, password, code, device, offline_access };
 
     return this.http.post<IdTokenResponse>(`${this.globals.baseUrlRoot}auth`, { session }).pipe(
       tap(result => {
@@ -48,21 +49,42 @@ export class AuthService {
     );
   }
 
-  async secureStoreLogin(login: Login) {
+  refreshLogin(refreshToken: StoredToken): Observable<IdTokenResponse> {
+    const grant_type = 'refresh_token';
+    const refresh_token = refreshToken.refresh_token;
+    const session = { grant_type, refresh_token };
+
+    return this.http.post<IdTokenResponse>(`${this.globals.baseUrlRoot}auth`, { session }).pipe(
+      tap(result => {
+        this.messageService.toast('Login Successful! Welcome back!');
+      }),
+      // catchError(this.err.handleError<any>('Login'))
+    );
+  }
+
+  async trySecureStorage() {
+    try {
+      return await this.secureStorage.create('bendrocorp');
+    } catch (error) {
+      // do nothing
+    }
+  }
+
+  async secureStoreLogin(login: StoredToken) {
     try {
       const store = await this.secureStorage.create('bendrocorp');
       const data = await store.set('loginStore', JSON.stringify(login));
-      return JSON.parse(data) as Login;
+      // return JSON.parse(data) as StoredToken;
     } catch (error) {
       console.error(error);
     }
   }
 
-  async retrieveSecureStoreLogin(): Promise<Login> {
+  async retrieveSecureStoreLogin(): Promise<StoredToken> {
     try {
       const store = await this.secureStorage.create('bendrocorp');
       const data = await store.get('loginStore');
-      return JSON.parse(data) as Login;
+      return JSON.parse(data) as StoredToken;
     } catch (error) {
       console.error(error);
     }

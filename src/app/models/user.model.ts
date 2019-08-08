@@ -6,6 +6,10 @@ export class Login {
     code?: string;
 }
 
+export class StoredToken {
+    refresh_token: string;
+}
+
 export class UserSessionResponseOld {
     id?: number;
     character?: Character;
@@ -17,6 +21,7 @@ export class UserSessionResponseOld {
 
 export class IdTokenResponse {
     id_token: string;
+    refresh_token?: string;
 }
 
 export class UserSessionResponse

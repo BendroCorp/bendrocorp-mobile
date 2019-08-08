@@ -32,12 +32,14 @@ export class SettingsPage implements OnInit {
         this.authService.changePassword(this.passwordChange).subscribe(async (results) => {
           if (!(results instanceof HttpErrorResponse)) {
             this.messageService.toast('Password change successful!');
-            if (this.settingsService.touchIdEnabled()) {
-              let storedLogin = await this.authService.retrieveSecureStoreLogin();
-              storedLogin.password = this.passwordChange.password;
-              await this.authService.secureStoreLogin(storedLogin);
-              storedLogin = null;
-            }
+            // if (this.settingsService.touchIdEnabled()) {
+            //   let storedLogin = await this.authService.retrieveSecureStoreLogin();
+            //   storedLogin.password = this.passwordChange.password;
+            //   await this.authService.secureStoreLogin(storedLogin);
+            //   storedLogin = null;
+            // }
+
+            // clear out the stored value
             this.passwordChange = { } as NewPassword;
           }
         });
