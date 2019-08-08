@@ -56,9 +56,9 @@ export class AuthService {
 
     return this.http.post<IdTokenResponse>(`${this.globals.baseUrlRoot}auth`, { session }).pipe(
       tap(result => {
-        this.messageService.toast('Login Successful! Welcome back!');
+        // this.messageService.toast('Login Successful! Welcome back!');
       }),
-      // catchError(this.err.handleError<any>('Login'))
+      catchError(this.err.handleError<any>('Login', null, true))
     );
   }
 

@@ -10,49 +10,53 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class ErrorService {
-  msg:Message = new Message; 
+  msg: Message = new Message;
   constructor(
-    private messageService: MessageService, 
-    private route: ActivatedRoute, 
-    private router:Router, 
-    private http:HttpClient, 
-    private globals:Globals) { }
-  handleError<T> (operation = 'operation', result?: T, skipMessage?:boolean) {
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private globals: Globals) { }
+  handleError<T> (operation = 'operation', result?: T, skipMessage?: boolean) {
     return (error: any): Observable<T> => {
-  
+
       // TODO: send the error to remote logging infrastructure
-      
+
       console.error(error); // log to console instead
-      this.msg.type = 2 // error
+      this.msg.type = 2; // error
       if (error instanceof HttpErrorResponse) {
-        if (error.error && error.error.message) {
-          this.msg.message = `${operation}: ${error.error.message}`
+        if (error.statusText !== 'Unknown Error') {
+          if (error.error && error.error.message) {
+            this.msg.message = `${operation}: ${error.error.message}`;
+          } else {
+            this.msg.message = `${operation}: ${error.message}`;
+          }
+
+          // if we get a 401 that means that we need to be logged in
+          // forward to the login page
+          if (error.status === 401) {
+            localStorage.removeItem('userObject');
+            // localStorage.setItem("authRedirect", error.url)
+            this.router.navigateByUrl('/'); // forces the page to actually reload
+            this.fourZeroOneError();
+            // need to handle telling the menu that an auth error happened
+            this.announceAuthError();
+          }
+
+
+      // this.createLog({ severity: 'ERROR', module: operation, message: error.message } as LogItem) 
+          if (!skipMessage) {
+            this.messageService.alert(this.msg.message);
+          }
         } else {
-          this.msg.message = `${operation}: ${error.message}`
+         this.messageService.toast('An internet connection error has occured.');
         }
-
-        // if we get a 401 that means that we need to be logged in
-        // forward to the login page
-        if (error.status == 401) {
-          localStorage.removeItem('userObject')
-          //localStorage.setItem("authRedirect", error.url)
-          this.router.navigateByUrl('/'); //forces the page to actually reload
-          this.fourZeroOneError()   
-          // need to handle telling the menu that an auth error happened
-          this.announceAuthError()
-        }
-
       } else {
-        this.msg.message = `${operation} failed: ${error.message}`
+        this.msg.message = `${operation} failed: ${error.message}`;
       }
 
       console.log(this.msg.message);
 
-      // this.createLog({ severity: 'ERROR', module: operation, message: error.message } as LogItem) 
-      if (!skipMessage) {
-        this.messageService.alert(this.msg.message);
-      }
-           
       return of(error as T);
     };
   }
@@ -60,11 +64,11 @@ export class ErrorService {
   handleHttpError<T> (result?: T) {
     return (error: any): Observable<T> => {
       // right now all we are trying to address here is if this is a 401 error
-      if (error.status == 401) {
-        console.log("401 received - forwarding to login...")
+      if (error.status === 401) {
+        console.log('401 received - forwarding to login...');
         // this.authService.logout();
         // this.authService.setOnAuthRedirect(err.url);
-        this.fourZeroOneError()        
+        this.fourZeroOneError();
       }
       return of(error as T);
     }
@@ -74,7 +78,7 @@ export class ErrorService {
   authErrorAnnounced$ = this.authErrorSource.asObservable();
   announceAuthError()
   {
-    console.log("Error service data refresh called!");    
+    console.log("Error service data refresh called!");
     this.authErrorSource.next();
   }
 
@@ -85,32 +89,31 @@ export class ErrorService {
   //   )
   // }
 
-  fourZeroOneError()
-  {
+  fourZeroOneError() {
     // get the base path
-    let path = `/${this.route.snapshot.url.join('/')}`
+    let path = `/${this.route.snapshot.url.join('/')}`;
 
     // handle params
     let params = this.route.snapshot.queryParams;
-    let paramLength = Object.keys(params).length
+    let paramLength = Object.keys(params).length;
     if (paramLength > 0) {
-      path = `${path}?`
+      path = `${path}?`;
     }
 
     // Iterate through any params which may also be in the url
     let i = 0
     for (var key in params) {
       if (params.hasOwnProperty(key)) {
-        i++
-        let param = key + "=" + params[key]
-        path = `${path}${param}`
+        i++;
+        let param = key + "=" + params[key];
+        path = `${path}${param}`;
         if (i < paramLength) {
-          path = `${path}&`
+          path = `${path}&`;
         }
       }
     }
-    localStorage.setItem("authRedirect", path)
-    localStorage.removeItem('userObject')
-    this.router.navigateByUrl('/auth')
+    localStorage.setItem('authRedirect', path);
+    localStorage.removeItem('userObject');
+    this.router.navigateByUrl('/auth');
   }
 }
