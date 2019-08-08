@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{formAction}} Flight Log</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="addUpdateFlightLog()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
+    </ion-buttons>
+    <ion-title slot="">{{formAction}} Flight Log</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -21,6 +27,6 @@
     <ion-select-option *ngFor="let ship of playerShips" [value]="ship.id">{{ship.title}}</ion-select-option>
   </ion-select>
 
-  <ion-button expand="full" color="dark" (click)="addUpdateFlightLog()">{{formAction}} Flight Log</ion-button>
-  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button>
+  <!-- <ion-button expand="full" color="dark" (click)="addUpdateFlightLog()">{{formAction}} Flight Log</ion-button>
+  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button> -->
 </ion-content>
