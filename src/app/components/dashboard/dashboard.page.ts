@@ -7,10 +7,11 @@ import { Event } from 'src/app/models/event.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ILNewsStory } from 'src/app/models/news.model';
 import { NewsService } from 'src/app/services/news.service';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, ModalController } from '@ionic/angular';
 import { PushRegistarService } from 'src/app/services/push-registar.service';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { TimeSpan } from 'ng-timespan';
+import { NewsDetailPage } from '../news-detail/news-detail.page';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,7 +40,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     private loading: LoadingController,
     private nav: NavController,
     private iab: InAppBrowser,
-    private pushRegistar: PushRegistarService) { }
+    private pushRegistar: PushRegistarService,
+    private modalController: ModalController) { }
 
   fetchEvents(event?: any) {
     this.eventsFetched = false;
@@ -147,6 +149,16 @@ export class DashboardPage implements OnInit, OnDestroy {
     if (this.nextEvent) {
       this.nav.navigateForward(`/tabs/event/details/${this.nextEvent.id}`);
     }
+  }
+
+  async openNewsModal(newsItem: ILNewsStory) {
+    const modal = await this.modalController.create({
+      component: NewsDetailPage,
+      componentProps: {
+        newsItem
+      }
+    });
+    return await modal.present();
   }
 
   async fetchUser() {

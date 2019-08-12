@@ -87,7 +87,7 @@
     </ion-card-header>
     <ion-list>
       <ion-item *ngIf="news.length == 0">No recent news!</ion-item>
-      <ion-item *ngFor="let item of news">
+      <ion-item detail (click)="openNewsModal(item)" *ngFor="let item of news">
         {{item.title}}
       </ion-item>
     </ion-list>

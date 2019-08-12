@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{newsItem.title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-label>
+    <ion-grid>
+      <!-- title -->
+      <ion-row>
+        <ion-col>
+          <div>
+            <h2>{{newsItem.title}}</h2>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="news-item-text">
+            {{newsItem.text}}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>    
+  </ion-label>
+</ion-content>
