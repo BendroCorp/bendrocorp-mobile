@@ -20,21 +20,19 @@ export class RequestsService {
   /**
    * Call this to signal all subscribers to refresh their data
    */
-  refreshData()
-  {
-    console.log("Requests service data refresh called!");    
+  refreshData() {
+    console.log("Requests service data refresh called!");
     this.dataRefreshSource.next();
   }
 
-  addRoleRequest(role_request:AddRoleRequest) : Observable<StatusMessage>
-  {
+  addRoleRequest(role_request: AddRoleRequest): Observable<StatusMessage> {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/requests/add-role`, { role_request }).pipe(
       tap(results => console.log(`Submitted Add Role Request `)),
       catchError(this.errorService.handleError<any>('Add Role Request '))
-    )
+    );
   }
 
-  removeRoleRequest(role_removal_request:RemoveRoleRequest) : Observable<StatusMessage>
+  removeRoleRequest(role_removal_request: RemoveRoleRequest): Observable<StatusMessage>
   {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/requests/remove-role`, { role_removal_request }).pipe(
       tap(results => console.log(`Submitted Remove Role Request `)),
@@ -42,48 +40,45 @@ export class RequestsService {
     )
   }
 
-  positionChangeRequest(position_change_request:PositionChangeRequest) : Observable<StatusMessage>
-  {
+  positionChangeRequest(position_change_request: PositionChangeRequest): Observable<StatusMessage> {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/requests/position-change`, { position_change_request }).pipe(
       tap(results => console.log(`Submitted Remove Role Request `)),
       catchError(this.errorService.handleError<any>('Remove Role Request '))
-    )
+    );
   }
 
   fetch_approval(approval_approver_id: number): Observable<MyApproval> {
     return this.http.get<MyApproval>(`${this.globals.baseUrl}/user/approval/${approval_approver_id}`).pipe(
       tap(results => console.log(`Fetched approval approver record # ${results.id}`)),
       catchError(this.errorService.handleError<any>('Fetch Single Approval Approver'))
-    )
+    );
   }
 
-  list_approvals(count:number = null, skip: number = null) : Observable<MyApproval[]>
-  {
+  list_approvals(count: number = null, skip: number = null): Observable<MyApproval[]> {
     if (count && !isNaN(count)) {
       if (skip && !isNaN(skip)) {
         return this.http.get<MyApproval[]>(`${this.globals.baseUrl}/user/approvals/${count}/${skip}`).pipe(
           tap(results => console.log(`Retrieved approvals`)),
           catchError(this.errorService.handleError('Fetch User Approvals', []))
-        )
+        );
       } else {
         return this.http.get<MyApproval[]>(`${this.globals.baseUrl}/user/approvals/${count}`).pipe(
           tap(results => console.log(`Retrieved approvals`)),
           catchError(this.errorService.handleError('Fetch User Approvals', []))
-        )
+        );
       }
     } else {
       return this.http.get<MyApproval[]>(`${this.globals.baseUrl}/user/approvals`).pipe(
         tap(results => console.log(`Retrieved approvals`)),
         catchError(this.errorService.handleError('Fetch User Approvals', []))
-      )
+      );
     }
   }
 
-  submit_approval(approval_id:number, approval_type_id:number) : Observable<StatusMessage>
-  {
+  submit_approval(approval_id: number, approval_type_id: number): Observable<StatusMessage> {
     return this.http.get<StatusMessage>(`${this.globals.baseUrl}/approvals/${approval_id}/${approval_type_id}`).pipe(
       tap(results => console.log(`Submitted approval change for approval #${approval_id}`)),
       catchError(this.errorService.handleError<any>('Submit Approval'))
-    )
+    );
   }
 }

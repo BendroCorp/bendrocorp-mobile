@@ -35,6 +35,7 @@ export class ErrorService {
           // if we get a 401 that means that we need to be logged in
           // forward to the login page
           if (error.status === 401) {
+            // TODO: Silently handle the relogin rather than forcing navigation back to the login screen
             localStorage.removeItem('userObject');
             // localStorage.setItem("authRedirect", error.url)
             this.router.navigateByUrl('/'); // forces the page to actually reload

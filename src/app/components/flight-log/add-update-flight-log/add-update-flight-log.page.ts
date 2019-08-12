@@ -14,6 +14,7 @@ export class AddUpdateFlightLogPage implements OnInit {
   @Input() flightLog: FlightLog;
   formAction: string;
   playerShips: OwnedShip[];
+  dataSubmitted: boolean;
 
   constructor(private flightLogService: FlightLogService, private modalController: ModalController) { }
 

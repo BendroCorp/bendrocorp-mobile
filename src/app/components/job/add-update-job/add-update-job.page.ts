@@ -13,6 +13,7 @@ export class AddUpdateJobPage implements OnInit {
   formAction: string;
   job: JobBoardMission;
   criteria: JobBoardMissionCompletionCriteria[];
+  dataSubmitted: boolean;
 
   constructor(private jobBoardService: JobBoardService, private modalController: ModalController) { }
 
