@@ -9,6 +9,7 @@ import { DashboardPage } from './dashboard.page';
 import { CountdownChartComponent } from './countdown-chart/countdown-chart.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NewsDetailPage } from '../news-detail/news-detail.page';
+import { EventDetailsModalPage } from '../event/event-details-modal/event-details-modal.page';
 
 const routes: Routes = [
   {
@@ -24,8 +25,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DashboardPage, CountdownChartComponent, NewsDetailPage],
+  declarations: [DashboardPage, CountdownChartComponent, NewsDetailPage, EventDetailsModalPage],
   providers: [InAppBrowser],
-  entryComponents: [NewsDetailPage]
+  entryComponents: [NewsDetailPage, EventDetailsModalPage]
 })
 export class DashboardPageModule {}

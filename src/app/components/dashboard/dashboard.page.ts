@@ -12,6 +12,8 @@ import { PushRegistarService } from 'src/app/services/push-registar.service';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { TimeSpan } from 'ng-timespan';
 import { NewsDetailPage } from '../news-detail/news-detail.page';
+import { EventDetailsPage } from '../event/event-details/event-details.page';
+import { EventDetailsModalPage } from '../event/event-details-modal/event-details-modal.page';
 
 @Component({
   selector: 'app-dashboard',
@@ -149,6 +151,16 @@ export class DashboardPage implements OnInit, OnDestroy {
     if (this.nextEvent) {
       this.nav.navigateForward(`/tabs/event/details/${this.nextEvent.id}`);
     }
+  }
+
+  async openEventModal(event: Event) {
+    const modal = await this.modalController.create({
+      component: EventDetailsModalPage,
+      componentProps: {
+        event
+      }
+    });
+    return await modal.present();
   }
 
   async openNewsModal(newsItem: ILNewsStory) {

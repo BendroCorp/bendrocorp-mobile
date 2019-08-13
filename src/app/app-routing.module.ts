@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'add-update-flight-log', loadChildren: './components/flight-log/add-update-flight-log/add-update-flight-log.module#AddUpdateFlightLogPageModule' },
   { path: 'settings', loadChildren: './components/settings/settings.module#SettingsPageModule' },
   { path: 'news-detail', loadChildren: './components/news-detail/news-detail.module#NewsDetailPageModule' },
+  { path: 'event-details-modal', loadChildren: './components/event/event-details-modal/event-details-modal.module#EventDetailsModalPageModule' },
   // { path: 'approval', loadChildren: './components/approval/approval.module#ApprovalPageModule' },
   // { path: 'approval-details', loadChildren: './components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule' }
 ];

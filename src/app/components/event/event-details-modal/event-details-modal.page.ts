@@ -1,27 +1,27 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavParams, ModalController, LoadingController } from '@ionic/angular';
-import { Event } from 'src/app/models/event.model';
+import { Subscription, from } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
-import { TimeSpan } from 'ng-timespan';
+import { ModalController, LoadingController } from '@ionic/angular';
+import { HttpErrorResponse } from '@angular/common/http';
 import { EventAddUpdatePage } from '../event-add-update/event-add-update.page';
-import { Subscription } from 'rxjs';
+import { TimeSpan } from 'ng-timespan';
+import { Event } from 'src/app/models/event.model';
 
 @Component({
-  selector: 'app-event-details',
-  templateUrl: './event-details.page.html',
-  styleUrls: ['./event-details.page.scss'],
+  selector: 'app-event-details-modal',
+  templateUrl: './event-details-modal.page.html',
+  styleUrls: ['./event-details-modal.page.scss'],
 })
-export class EventDetailsPage implements OnInit, OnDestroy {
+export class EventDetailsModalPage implements OnInit, OnDestroy {
+
   isAdmin: boolean = this.authService.hasClaim(19);
   eventId: number = parseInt(this.route.snapshot.paramMap.get('event_id'));
   event: Event;
   eventSubscription: Subscription;
   initialDataLoaded: boolean = false;
-  openedAsModal: boolean = false;
   loadingIndicator: any;
 
   constructor(
@@ -54,17 +54,6 @@ export class EventDetailsPage implements OnInit, OnDestroy {
         this.messageService.alert('Something went wrong. Please try again later!');
       }
     }
-  }
-
-  async addUpdateEvent() {
-    if (this.event) {
-      this.eventService.setPassData(this.event);
-    }
-
-    const modal = await this.modalController.create({
-      component: EventAddUpdatePage
-    });
-    return await modal.present();
   }
 
   checkCurrentStatus() {
@@ -134,36 +123,18 @@ export class EventDetailsPage implements OnInit, OnDestroy {
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    if (this.openedAsModal) {
-      this.modalController.dismiss({
-        dismissed: true
-      });
-    }
+    this.modalController.dismiss({
+      dismissed: true
+    });
   }
 
   async ngOnInit() {
-    if (!this.event) {
-      this.loadingIndicator = await this.loading.create({
-        message: 'Loading'
-      });
-      await this.loadingIndicator.present();
-      this.fetchEvent();
-    } else {
-      this.openedAsModal = true;
-    }
   }
 
   ngOnDestroy() {
     if (this.eventSubscription) {
       this.eventSubscription.unsubscribe();
     }
-  }
-
-  ionViewWillEnter() {
-  }
-
-  ionViewDidLeave() {
-    this.eventService.clearPassData();
   }
 
 }

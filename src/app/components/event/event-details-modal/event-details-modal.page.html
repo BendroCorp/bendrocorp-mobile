@@ -4,13 +4,13 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Event Details</ion-title>
-    <ion-buttons *ngIf="openedAsModal" slot="end">
-      <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="dismiss()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="event && initialDataLoaded">
+<ion-content *ngIf="event">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingText="Pull to refresh"
@@ -49,6 +49,5 @@
   
     <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 2) && !isExpired()" expand="full" color="success" (click)="setAttendance(1)">Attending</ion-button>
     <ion-button *ngIf="(!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 1) && !isExpired()" expand="full" color="danger" (click)="setAttendance(2)">Not Attending</ion-button>
-    <!-- <ion-button *ngIf="!event.submitted_for_certification && !event.certified && isAdmin" expand="full" color="dark" (click)="addUpdateEvent()">Update Event</ion-button> -->
   </ion-card>  
 </ion-content>
