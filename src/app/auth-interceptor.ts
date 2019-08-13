@@ -59,29 +59,17 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(cloned);
 
         } else {
-            if (this.platform.is('cordova')) {
-                this.secureStorage.create('bendrocorp').then((storageObject) => {
-                    storageObject.get('loginStore').then((valueResult) => {
-                        if (valueResult) {
-                            const refreshToken = JSON.parse(valueResult) as StoredToken;
-                            this.authService.refreshLogin(refreshToken).subscribe((results) => {
-                                const cloned = request.clone({
-                                    headers: request.headers.set('Authorization', `Bearer ${refreshToken}`)
-                                });
-                                return next.handle(cloned);
-                            });
-                        } else { // there was not stored refresh_token
-                            // remove the stored item
-                            storageObject.remove('loginStore').then(() => {});
-                            return next.handle(request);
-                        }
-                    }).catch(() => { // failed to get login store
-                        // remove the stored item
-                        storageObject.remove('loginStore').then(() => {});
-                        return next.handle(request);
+            const reqParts = request.url.split('/');
+
+            if (reqParts[reqParts.length - 1] !== 'auth') {
+                console.log('Cordova present checking for store...');
+                const refreshToken = this.authService.retrieveSecureStoreLogin();
+                this.authService.refreshLogin(refreshToken).subscribe((results) => {
+                    this.authService.setSession(results.id_token);
+                    const cloned = request.clone({
+                        headers: request.headers.set('Authorization', `Bearer ${refreshToken}`)
                     });
-                }).catch(() => { // SecureStorage doesn't work here
-                    return next.handle(request);
+                    return next.handle(cloned);
                 });
             } else { // this is not Cordova so ¯\_(ツ)_/¯
                 return next.handle(request);

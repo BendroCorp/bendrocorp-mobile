@@ -63,28 +63,34 @@ export class AuthService {
   }
 
   async trySecureStorage() {
-    try {
-      return await this.secureStorage.create('bendrocorp');
-    } catch (error) {
-      // do nothing
-    }
+    // try {
+    //   console.log('Trying to load the store...');
+    //   return await this.secureStorage.create('bendrocorp');
+    // } catch (error) {
+    //   // do nothing
+    //   console.error(error);
+    // }
+    return;
   }
 
-  async secureStoreLogin(login: StoredToken) {
+  secureStoreLogin(login: StoredToken) {
     try {
-      const store = await this.secureStorage.create('bendrocorp');
-      const data = await store.set('loginStore', JSON.stringify(login));
+      // const store = await this.secureStorage.create('bendrocorp');
+      // const data = await store.set('loginStore', JSON.stringify(login));
       // return JSON.parse(data) as StoredToken;
+      localStorage.setItem('loginStore', JSON.stringify(login));
     } catch (error) {
       console.error(error);
     }
   }
 
-  async retrieveSecureStoreLogin(): Promise<StoredToken> {
+  retrieveSecureStoreLogin(): StoredToken {
     try {
-      const store = await this.secureStorage.create('bendrocorp');
-      const data = await store.get('loginStore');
-      return JSON.parse(data) as StoredToken;
+      // const store = await this.secureStorage.create('bendrocorp');
+      // const data = await store.get('loginStore');
+      if (localStorage.getItem('loginStore')) {
+        return JSON.parse(localStorage.getItem('loginStore')) as StoredToken;
+      }
     } catch (error) {
       console.error(error);
     }

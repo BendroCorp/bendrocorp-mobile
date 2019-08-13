@@ -29,16 +29,24 @@ export class AuthPage implements OnInit {
 
   async doLogin() {
     if (this.sessionEmail && this.sessionPassword) {
-      const stayLoggedIn = (await this.authService.trySecureStorage()) ? true : false;
+      // let stayLoggedIn;
+      // try {
+      //   // await this.platform.ready();
+      //   stayLoggedIn = (await this.authService.trySecureStorage()) ? true : false;
+      // } catch (error) {
+      //   console.error(error);
+      // }
 
-      if (!stayLoggedIn) {
-        console.warn('For some reason we can\'t keep you logged in. Probably because SecureStorage is not available!');
-      }
+      // if (!stayLoggedIn) {
+      //   console.warn('For some reason we can\'t keep you logged in. Probably because SecureStorage is not available!');
+      // }
 
-      this.authService.login(this.sessionEmail, this.sessionPassword, this.sessionCode, stayLoggedIn).subscribe(async (results) => {
+      this.authService.login(this.sessionEmail, this.sessionPassword, this.sessionCode, true).subscribe(async (results) => {
         if (!(results instanceof HttpErrorResponse)) {
+          console.log('Login successful');
           this.authService.setSession(results.id_token);
 
+          console.log('Trying to set token');
           // securely store the refresh_token
           await this.authService.secureStoreLogin({
             refresh_token: results.refresh_token
@@ -105,7 +113,7 @@ export class AuthPage implements OnInit {
 
   async ionViewDidEnter() {
     if (this.authService.isLoggedOut()) {
-      const existingLogin = await this.authService.retrieveSecureStoreLogin();
+      const existingLogin = this.authService.retrieveSecureStoreLogin();
       if (existingLogin) {
         if (this.platform.is('ios') && localStorage.getItem('useTouchId') === 'true') {
           try {
@@ -130,7 +138,7 @@ export class AuthPage implements OnInit {
             this.messageService.alert('We could not log you in biometrically at this time. Please login via the form.');
             this.showLogin = true;
           }
-        } else { // not iOS
+        } else { // not iOS or not protected by touch id
           this.authService.refreshLogin(existingLogin).subscribe((results) => {
             if (!(results instanceof HttpErrorResponse)) {
               this.authService.setSession(results.id_token);

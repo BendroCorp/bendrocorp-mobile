@@ -20,16 +20,18 @@ export class AppBadgeService implements OnDestroy {
     private eventService: EventService,
     private userService: UserService,
     private badge: Badge) {
-      // get the inital value here
-      this.fetchBadgeCount();
-
-      this.eventSubscription = this.eventService.dataRefreshAnnounced$.subscribe(() => {
+      if (this.authService.isLoggedIn()) {
+        // get the inital value here
         this.fetchBadgeCount();
-      });
 
-      this.approvalSubscription = this.userService.approvalsDataRefreshAnnounced$.subscribe(() => {
-        this.fetchBadgeCount();
-      });
+        this.eventSubscription = this.eventService.dataRefreshAnnounced$.subscribe(() => {
+          this.fetchBadgeCount();
+        });
+
+        this.approvalSubscription = this.userService.approvalsDataRefreshAnnounced$.subscribe(() => {
+          this.fetchBadgeCount();
+        });
+      }
     }
 
     /**
