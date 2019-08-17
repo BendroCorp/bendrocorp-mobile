@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.bendrocorp.bendromobile" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.bendrocorp.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>BendroCorp</name>
     <description>Welcome to BendroCorp! BendroCorp is a community of gamers for the game Star Citizen (we also play a few others too). Our app allows BendroCorp members to use various parts of our services right from their mobile device. Please note you must currently be a member of BendroCorp to use this app.</description>
     <author email="dale@daleslab.com" href="https://bendrocorp.com/">BendroCorp Team</author>

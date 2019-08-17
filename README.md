@@ -24,12 +24,26 @@ Once open, ensure that the correct certificate is selected, then select `Archive
 
 #### Android
 https://ionicframework.com/docs/publishing/play-store
+
+Ensure that JAVA_HOME is populated
+```
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+```
+Build for production release
+```
+```
+ionic cordova platform add android
+```
+Ensure that the Google Services JSON is copied over to `platforms/android/app` (this file is not publically available)
+```
+cp ~/google-services.json ./platforms/android
+```
 ```
 ionic cordova build android --prod --release
 ```
 This will produce an unsigned .apk which must be signed. For reference only, if these credentials did not exist you would produce them with the following command:
 ```
-keytool -genkey -v -keystore bendrocorp-anroid-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+keytool -genkey -v -keystore bendrocorp-android-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
 ```
 (But in reality these credentials are safely stored for when we make releases)
 
