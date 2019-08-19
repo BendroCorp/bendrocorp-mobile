@@ -7,6 +7,7 @@ import { MessageService } from '../services/message.service';
 import { Platform } from '@ionic/angular';
 import { Login, StoredToken } from '../models/user.model';
 import { SettingsService } from '../services/settings.service';
+import { AppBadgeService } from '../services/app-badge.service';
 
 @Component({
   selector: 'app-auth',
@@ -25,7 +26,10 @@ export class AuthPage implements OnInit {
     private messageService: MessageService,
     private settingsService: SettingsService,
     private platform: Platform,
-    private touchId: TouchID) { }
+    private badgeService: AppBadgeService,
+    private touchId: TouchID) {
+      this.badgeService.fetchBadgeCount();
+    }
 
   async doLogin() {
     if (this.sessionEmail && this.sessionPassword) {

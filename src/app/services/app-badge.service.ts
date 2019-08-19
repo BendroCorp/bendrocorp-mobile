@@ -31,6 +31,8 @@ export class AppBadgeService implements OnDestroy {
         this.approvalSubscription = this.userService.approvalsDataRefreshAnnounced$.subscribe(() => {
           this.fetchBadgeCount();
         });
+      } else {
+        this.badge.clear();
       }
     }
 
@@ -39,24 +41,33 @@ export class AppBadgeService implements OnDestroy {
      */
     fetchBadgeCount() {
       // get the events
-      this.eventService.list().subscribe((eventsList) => {
-        if (!(eventsList instanceof HttpErrorResponse)) {
-          // get the attendence arrays from all of the events
-          const attends = eventsList.map(x => x.attendences);
-          // flatten the array of arrays to a single array
-          const merged = [].concat.apply([], attends) as EventAttendence[];
-          // filter for the total number of events the authorized user is ATTENDING
-          const userAttending = merged.filter(x => x.user_id === this.authService.retrieveUserSession().id);
-          // subtract the number of events that the user is attending from the total number of upcoming events
-          const unansweredEvents = eventsList.length - userAttending.length;
+      if (this.authService.isLoggedIn()) {
+        this.eventService.list().subscribe((eventsList) => {
+          if (!(eventsList instanceof HttpErrorResponse)) {
+            // get the attendence arrays from all of the events
+            const attends = eventsList.map(x => x.attendences);
+            // flatten the array of arrays to a single array
+            const merged = [].concat.apply([], attends) as EventAttendence[];
+            // filter for the total number of events the authorized user is ATTENDING
+            const userAttending = merged.filter(x => x.user_id === this.authService.retrieveUserSession().id);
+            // subtract the number of events that the user is attending from the total number of upcoming events
+            const unansweredEvents = eventsList.length - userAttending.length;
 
-          // fetch the pending approvals count
-          this.userService.fetchPendingApprovalsCount().subscribe((pendingApprovalCount) => {
-            // add them together and set the badge
-            this.badge.set(unansweredEvents + pendingApprovalCount);
-          });
-        }
-      });
+            // fetch the pending approvals count
+            this.userService.fetchPendingApprovalsCount().subscribe((pendingApprovalCount) => {
+              // add them together and set the badge
+              const badgeCount = unansweredEvents + pendingApprovalCount;
+              if (badgeCount > 0) {
+                this.badge.set(badgeCount);
+              } else {
+                this.badge.clear();
+              }
+            });
+          }
+        });
+      } else {
+        this.badge.clear();
+      }
     }
 
     ngOnDestroy() {

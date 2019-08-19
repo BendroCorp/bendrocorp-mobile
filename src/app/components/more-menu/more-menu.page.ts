@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { SettingsPage } from '../settings/settings.page';
 import { Subscription } from 'rxjs';
+import { AppBadgeService } from 'src/app/services/app-badge.service';
 
 @Component({
   selector: 'app-more-menu',
@@ -21,6 +22,7 @@ export class MoreMenuPage implements OnInit, OnDestroy {
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
+    private badgeService: AppBadgeService,
     private modalController: ModalController) {
       this.approvalCountSubscription = this.userService.approvalsDataRefreshAnnounced$.subscribe(() => {
         this.fetchPendingApprovalCount();
@@ -54,6 +56,7 @@ export class MoreMenuPage implements OnInit, OnDestroy {
 
   doLogout() {
     this.authService.logout();
+    this.badgeService.fetchBadgeCount();
     this.router.navigateByUrl('/');
   }
 

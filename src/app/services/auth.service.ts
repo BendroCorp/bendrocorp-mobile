@@ -98,8 +98,9 @@ export class AuthService {
 
   async removeSecureStoreLogin() {
     try {
-      const store = await this.secureStorage.create('bendrocorp');
-      const data = await store.remove('loginStore');
+      // const store = await this.secureStorage.create('bendrocorp');
+      // const data = await store.remove('loginStore');
+      localStorage.removeItem('loginStore');
     } catch (error) {
       console.error(error);
     }

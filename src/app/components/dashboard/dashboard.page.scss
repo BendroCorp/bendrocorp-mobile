@@ -1,3 +1,9 @@
+ion-content {
+    --background: url('../../../assets/app-background.png') !important;
+    background-color: none;
+    background-size: cover !important;
+}
+
 .dashboard-topper {
     background: url('../../../assets/imgs/dashboard.jpg');
     background-size: cover;
@@ -7,11 +13,16 @@
 
 .user-info-small {
     text-align: center;
+    display: none;
 }
 
 .user-info-small > img {
     margin-left: auto;
     margin-right: auto;
+}
+
+.user-info-regular {
+    display: none;
 }
 
 // user-info-regular
