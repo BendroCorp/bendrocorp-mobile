@@ -13,7 +13,7 @@ ion-content {
 
 .user-info-small {
     text-align: center;
-    display: none;
+    // display: none;
 }
 
 .user-info-small > img {
@@ -27,22 +27,22 @@ ion-content {
 
 // user-info-regular
 
-@media (min-width: 431px) {
-    .user-info-regular {
-        display: inherit;
-    }
+// @media (min-width: 431px) {
+//     .user-info-regular {
+//         display: inherit;
+//     }
 
-    .user-info-small {
-        display: none;
-    }
-}
+//     .user-info-small {
+//         display: none;
+//     }
+// }
 
-@media (max-width: 430px) {
-    .user-info-regular {
-        display: none;
-    }
+// @media (max-width: 430px) {
+//     .user-info-regular {
+//         display: none;
+//     }
 
-    .user-info-small {
-        display: inherit;
-    }
-}
+//     .user-info-small {
+//         display: inherit;
+//     }
+// }
