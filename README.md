@@ -54,7 +54,7 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ./bendrocorp-an
 ```
 Finally, the zip align tool must be ran to optimize the APK. The `zipalign` tool can be found in `/path/to/Android/sdk/build-tools/VERSION/zipalign`. For example, on macOS with Android Studio installed, `zipalign` is in `~/Library/Android/sdk/build-tools/VERSION/zipalign`
 ```
-~/Library/Android/sdk/build-tools/VERSION/zipalign -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk bendrocorp.apk
+~/Library/Android/sdk/build-tools/29.0.2/zipalign -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk bendrocorp.apk
 ```
 ## CONTRIBUTING
 Due to the nature of the mobile application world we generally do not allow non-staff pull requests for the mobile application. This may change in the future. The intention is that over time the mobile applications will have parity with the web application.
