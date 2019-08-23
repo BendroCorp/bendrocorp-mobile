@@ -25,6 +25,7 @@ Once open, ensure that the correct certificate is selected, then select `Archive
 #### Android
 https://ionicframework.com/docs/publishing/play-store
 
+Ensure v1.8 of the JDK is installed
 Ensure that JAVA_HOME is populated
 ```
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
