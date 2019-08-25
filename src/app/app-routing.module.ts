@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'news-detail', loadChildren: './components/news-detail/news-detail.module#NewsDetailPageModule' },
   { path: 'event-details-modal', loadChildren: './components/event/event-details-modal/event-details-modal.module#EventDetailsModalPageModule' },
   { path: 'profile-update-background', loadChildren: './components/profile/profile-update-background/profile-update-background.module#ProfileUpdateBackgroundPageModule' },
+  { path: 'profile-ships-add-update', loadChildren: './components/profile/profile-ships-add-update/profile-ships-add-update.module#ProfileShipsAddUpdatePageModule' },
   // { path: 'approval', loadChildren: './components/approval/approval.module#ApprovalPageModule' },
   // { path: 'approval-details', loadChildren: './components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule' }
 ];

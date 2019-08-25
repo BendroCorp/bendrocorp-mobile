@@ -20,7 +20,7 @@ export class AppComponent implements OnDestroy {
   // NOTES: Push notifications
   // https://medium.com/@ankushaggarwal/push-notifications-in-ionic-2-658461108c59
   // https://ionicframework.com/docs/native/push
-  authRefreshTicker: Observable<number> = interval(1000 * 60 * 3); // every 3 minutes. Access token expires every 6
+  authRefreshTicker: Observable<number> = interval(1000 * 60 * 2); // every 2 minutes. Access token expires every 6
   authRefreshSubscription: Subscription;
 
   constructor(

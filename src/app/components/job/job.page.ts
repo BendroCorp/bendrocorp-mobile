@@ -54,9 +54,9 @@ export class JobPage implements OnInit, OnDestroy {
 
   async addUpdateJob(job?: JobBoardMission) {
     if (job) {
-      this.jobBoardService.setPassData(job);  
+      this.jobBoardService.setPassData(job);
     }
-    
+
     const modal = await this.modalController.create({
       component: AddUpdateJobPage
     });

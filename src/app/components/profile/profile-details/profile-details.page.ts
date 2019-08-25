@@ -68,6 +68,17 @@ export class ProfileDetailsPage implements OnInit, OnDestroy{
     this.router.navigate(['profile-service-record'], navigationExtras);
   }
 
+  openProfileShips() {
+    const navigationExtras: NavigationExtras = {
+      relativeTo: this.route,
+      state: {
+        character: this.character
+      }
+    };
+
+    this.router.navigate(['profile-ships'], navigationExtras);
+  }
+
   async advanceApplication() {
     if (await this.messageService.confirmation_alt('Are you sure you want advance this application?')) {
       this.applicationService.advanceApplication(this.character).subscribe((results) => {

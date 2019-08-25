@@ -19,8 +19,8 @@
       <ion-label>Your Approvals</ion-label>
     </ion-list-header>
     <ion-item detail *ngFor="let approval of myApprovals" routerLink="details/{{approval.id}}">
-      <ion-label><span *ngIf="approval.approval_type_id < 4"><ion-badge>!</ion-badge></span>{{approval.approval_id}} | {{approval.approval.approval_kind.title}}</ion-label>
-      <ion-label slot="end"><small>Status: {{approval.approval.approval_status}}</small></ion-label>
+      <ion-label>{{approval.approval_id}} | {{approval.approval.approval_kind.title}}</ion-label>
+      <ion-label slot="end"><small>{{approval.approval.approval_status}}</small><span *ngIf="approval.approval_type_id < 4"><ion-badge color="danger">!</ion-badge></span></ion-label>
     </ion-item>
   </ion-list>
 

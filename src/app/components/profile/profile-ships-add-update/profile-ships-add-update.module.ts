@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProfileShipsPage } from './profile-ships.page';
-import { ProfileShipsAddUpdatePage } from '../profile-ships-add-update/profile-ships-add-update.page';
+import { ProfileShipsAddUpdatePage } from './profile-ships-add-update.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfileShipsPage
+    component: ProfileShipsAddUpdatePage
   }
 ];
 
@@ -22,7 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ProfileShipsPage, ProfileShipsAddUpdatePage],
-  entryComponents: [ProfileShipsAddUpdatePage]
+  declarations: []
 })
-export class ProfileShipsPageModule {}
+export class ProfileShipsAddUpdatePageModule {}
