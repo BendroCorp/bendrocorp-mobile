@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content text-center *ngIf="character">
+  <div class="basic-info-wrapper">
+    <img class="profile-avatar" src="{{character.avatar_url}}">
+    <div class="basic-info-sub-wrapper">
+      <h1 class="profile-name">{{character.full_name}}</h1>
+      <span class="profile-title">{{character.current_job.title}}</span>
+    </div>
+  </div>
+  <!-- Application Buttons -->
+  <!-- application_status_id -->
+  <div *ngIf="hrRights && character.application.application_status_id < 6">
+    <ion-button *ngIf="character.application.application_status_id == 5" expand="full" color="success" (click)="advanceApplication()">CEO Accept</ion-button>
+    <ion-button *ngIf="character.application.application_status_id < 5" expand="full" color="success" (click)="advanceApplication()">Advance Application</ion-button>
+    <ion-button expand="full" color="danger" (click)="rejectApplication()">Reject Application</ion-button>
+  </div>
+  <!-- <ion-item>Badges here</ion-item> -->
+  <!-- Profile Menu -->
+  <ion-item detail (click)="openProfileBackground()">Background</ion-item>
+  <ion-item detail (click)="openProfileServiceRecord()">Service Record</ion-item>
+  <ion-item detail>Ships</ion-item>
+  <ion-item detail>Application</ion-item>
+  <ion-item detail>Interview</ion-item>
+</ion-content>

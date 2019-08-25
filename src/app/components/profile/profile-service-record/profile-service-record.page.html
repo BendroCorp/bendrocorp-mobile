@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Service Record</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="character">
+  <div>
+    <!-- awards -->
+    <ion-grid>
+      <ion-row *ngFor="let chunk of awardChunks">
+        <ion-col text-center *ngFor="let award of chunk">
+          <img src="{{award.image_url}}" alt="">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-list>
+    <ion-list-header>
+      Position History
+    </ion-list-header>
+    <ion-item *ngFor="let job of character.jobs">
+      {{job.title}}
+    </ion-item>
+    <ion-list-header>
+      Other Informations
+    </ion-list-header>
+    <ion-item>
+      Event(s) Attended: {{attendedEvents(character.attendences).length}}
+    </ion-item>
+  </ion-list>
+</ion-content>

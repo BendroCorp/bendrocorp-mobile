@@ -12,32 +12,34 @@ export class Character {
     full_name?:string;
     description?:string;
     background?:string;
+    awards?: Award[];
 
-    avatar_url?:string;
-    current_job_level?: number
-    current_job?:Job
-    jobs?:Job[]
+    avatar_url?: string;
+    current_job_level?: number;
+    current_job?: Job;
+    jobs?: Job[];
 
-    owned_ships?:OwnedShip[]
+    owned_ships?: OwnedShip[];
 
-    new_avatar?:Base64Upload
+    new_avatar?: Base64Upload;
 
-    application?:CharacterApplication
+    application?: CharacterApplication;
 
-    rsi_handle?:string
+    rsi_handle?: string;
 }
 
 export class Job {
-    id?: number
-    title?: string
-    description?: string
-    hiring_description?: string
-    recruit_job_id?: number
-    next_job_id?: number
-    division_id?: number
-    hiring?: boolean
-    job_level_id?: number
-    max?: number
+    id?: number;
+    title?: string;
+    description?: string;
+    hiring_description?: string;
+    recruit_job_id?: number;
+    next_job_id?: number;
+    division_id?: number;
+    hiring?: boolean;
+    job_level_id?: number;
+    max?: number;
+    ordinal?: number;
 }
 
 export class Division {

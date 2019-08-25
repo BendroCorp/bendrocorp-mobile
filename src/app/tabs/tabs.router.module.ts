@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { DashboardPage } from '../components/dashboard/dashboard.page';
-import { AuthGuardService } from '../guards/auth-guard.guard';
+import { MemberGuard } from '../guards/member.guard';
 
 const routes: Routes = [
   {
@@ -17,7 +17,7 @@ const routes: Routes = [
             loadChildren: '../components/dashboard/dashboard.module#DashboardPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'event',
@@ -27,7 +27,7 @@ const routes: Routes = [
             loadChildren: '../components/event/event.module#EventPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'event/add-update',
@@ -37,7 +37,7 @@ const routes: Routes = [
             loadChildren: '../components/event/event-add-update/event-add-update.module#EventAddUpdatePageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'event/details',
@@ -47,7 +47,7 @@ const routes: Routes = [
             loadChildren: '../components/event/event-details/event-details.module#EventDetailsPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'event/details/:event_id',
@@ -57,7 +57,7 @@ const routes: Routes = [
             loadChildren: '../components/event/event-details/event-details.module#EventDetailsPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'job',
@@ -67,7 +67,7 @@ const routes: Routes = [
             loadChildren: '../components/job/job.module#JobPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'job/details',
@@ -77,7 +77,7 @@ const routes: Routes = [
             loadChildren: '../components/job/job-details/job-details.module#JobDetailsPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'job/details/:job_id',
@@ -87,7 +87,7 @@ const routes: Routes = [
             loadChildren: '../components/job/job-details/job-details.module#JobDetailsPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'job/add-update',
@@ -97,7 +97,7 @@ const routes: Routes = [
             loadChildren: '../components/job/add-update-job/add-update-job.module#AddUpdateJobPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'more',
@@ -107,7 +107,77 @@ const routes: Routes = [
             loadChildren: '../components/more-menu/more-menu.module#MoreMenuPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/profile',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/profile/profile.module#ProfilePageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/profile/profile-details',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/profile/profile-details/profile-details.module#ProfileDetailsPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/profile/profile-details/profile-background',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/profile/profile-background/profile-background.module#ProfileBackgroundPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/profile/profile-details/profile-service-record',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/profile/profile-service-record/profile-service-record.module#ProfileServiceRecordPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/profile/profile-details/profile-ships',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/profile/profile-ships/profile-ships.module#ProfileShipsPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/profile/profile-details/profile-application',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/profile/profile-application/profile-application.module#ProfileApplicationPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/profile/profile-details/profile-interview',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/profile/profile-interview/profile-interview.module#ProfileInterviewPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
       },
       {
         path: 'more/approval',
@@ -117,7 +187,7 @@ const routes: Routes = [
             loadChildren: '../components/approval/approval.module#ApprovalPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'more/approval/details/:approval_id',
@@ -127,7 +197,7 @@ const routes: Routes = [
             loadChildren: '../components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'more/flight-log',
@@ -137,7 +207,7 @@ const routes: Routes = [
             loadChildren: '../components/flight-log/flight-log.module#FlightLogPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'more/flight-log/add-update',
@@ -147,7 +217,7 @@ const routes: Routes = [
             loadChildren: '../components/flight-log/add-update-flight-log/add-update-flight-log.module#AddUpdateFlightLogPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
       {
         path: 'more/flight-log/details/:flight_log_id',
@@ -157,7 +227,7 @@ const routes: Routes = [
             loadChildren: '../components/flight-log/flight-log-details/flight-log-details.module#FlightLogDetailsPageModule'
           }
         ],
-        canActivate: [AuthGuardService]
+        canActivate: [MemberGuard]
       },
     ]
   },

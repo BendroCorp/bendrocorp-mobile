@@ -1,0 +1,30 @@
+ion-content {
+  // --background: url('')
+  --background: url(../../../../assets/app-background.png);
+  background-size: cover;
+}
+
+.basic-info-wrapper {
+  margin-bottom: 4px;
+}
+
+.basic-info-sub-wrapper {
+  background: #fff;
+}
+
+.profile-avatar {
+  margin: 8px;
+  border: 4px solid #fff;
+  border-radius: 50%; 
+  max-width:200px;
+  box-shadow: 2px 2px 4px rgba(0,0,0,.5);
+}
+
+.profile-name {
+  color: #000;
+  // font-weight: 800;
+}
+
+.profile-title {
+  color: #666;
+}

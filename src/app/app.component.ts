@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -10,15 +10,19 @@ import { UserService } from './services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PushRegistarService } from './services/push-registar.service';
 import { AppBadgeService } from './services/app-badge.service';
+import { Subscription, Observable, interval } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   // NOTES: Push notifications
   // https://medium.com/@ankushaggarwal/push-notifications-in-ionic-2-658461108c59
   // https://ionicframework.com/docs/native/push
+  authRefreshTicker: Observable<number> = interval(1000 * 60 * 3); // every 3 minutes. Access token expires every 6
+  authRefreshSubscription: Subscription;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -35,10 +39,25 @@ export class AppComponent {
       Keyboard.hideFormAccessoryBar(false);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      // if (this.authService.isLoggedIn()) {
-      //   this.pushRegistar.initPushNotifications();
-      // }
+
+      this.authRefreshTicker.subscribe((tick) => {
+        console.log('Starting access token refresh...');
+        this.authService.refreshLogin(this.authService.retrieveSecureStoreLogin()).subscribe((results) => {
+          if (!(results instanceof HttpErrorResponse)) {
+            this.authService.setSession(results.id_token);
+            console.log('Access token refreshed!');
+          } else {
+            console.log('Access token refresh failed!');
+          }
+        });
+      });
     });
+  }
+
+  ngOnDestroy() {
+    if (this.authRefreshSubscription) {
+      this.authRefreshSubscription.unsubscribe();
+    }
   }
 
 }
