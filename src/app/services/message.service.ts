@@ -10,7 +10,11 @@ export class MessageService {
   constructor(private toastController: ToastController, private dialogs: Dialogs, private platform: Platform) { }
 
   alert(message: string, title: string = null) {
-    this.dialogs.alert(message, title);
+    if (this.platform.is('cordova')) {
+      this.dialogs.alert(message, title);
+    } else {
+      alert(message);
+    }
   }
 
   /**

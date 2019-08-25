@@ -4,6 +4,7 @@ import { RequestsService } from 'src/app/services/requests.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MyApproval } from 'src/app/models/approval.model';
 import { NavController, LoadingController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-approval',
@@ -18,8 +19,10 @@ export class ApprovalPage implements OnInit {
   totalApprovalCount: number;
   initialDataLoaded: boolean;
   loadingIndicator: any;
+  currentUserId: number = this.authService.retrieveUserSession().id;
 
   constructor(
+    private authService: AuthService,
     private userService: UserService,
     private requestService: RequestsService,
     private nav: NavController,
@@ -57,7 +60,7 @@ export class ApprovalPage implements OnInit {
         }
       }
     });
-  };
+  }
 
   openEvent(my_approval: MyApproval) {
     this.nav.navigateForward(`/tabs/event/details/${my_approval.id}`);
