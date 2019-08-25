@@ -40,13 +40,16 @@ export class ProfileShipsPage implements OnInit, OnDestroy {
   }
 
   async addUpdateShip(ownedShip?: OwnedShip) {
-    const modal = await this.modalController.create({
-      component: ProfileShipsAddUpdatePage,
-      componentProps: {
-        ownedShip
-      }
-    });
-    return await modal.present();
+    if (this.canEdit) {
+      const modal = await this.modalController.create({
+        component: ProfileShipsAddUpdatePage,
+        componentProps: {
+          ownedShip,
+          character: this.character
+        }
+      });
+      return await modal.present();
+    }
   }
 
   async archiveShip(ownedShip: OwnedShip) {

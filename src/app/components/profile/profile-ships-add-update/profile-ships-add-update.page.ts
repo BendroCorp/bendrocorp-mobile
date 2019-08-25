@@ -4,6 +4,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { ModalController } from '@ionic/angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MessageService } from 'src/app/services/message.service';
+import { Character } from 'src/app/models/character.model';
 
 @Component({
   selector: 'app-profile-ships-add-update',
@@ -12,6 +13,7 @@ import { MessageService } from 'src/app/services/message.service';
 })
 export class ProfileShipsAddUpdatePage implements OnInit {
   ownedShip: OwnedShip;
+  character: Character;
   shipTypes: Ship[] = [];
   formAction: string;
   dataSubmitted: boolean = false;
@@ -52,7 +54,7 @@ export class ProfileShipsAddUpdatePage implements OnInit {
     });
 
     if (!this.ownedShip) {
-      this.ownedShip = { } as OwnedShip;
+      this.ownedShip = { character_id: this.character.id } as OwnedShip;
       this.formAction = 'Create';
     } else {
       this.formAction = 'Update';
