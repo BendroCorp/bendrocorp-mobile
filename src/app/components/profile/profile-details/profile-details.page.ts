@@ -68,6 +68,28 @@ export class ProfileDetailsPage implements OnInit, OnDestroy{
     this.router.navigate(['profile-service-record'], navigationExtras);
   }
 
+  openProfileApplication() {
+    const navigationExtras: NavigationExtras = {
+      relativeTo: this.route,
+      state: {
+        character: this.character
+      }
+    };
+
+    this.router.navigate(['profile-application'], navigationExtras);
+  }
+
+  openProfileInterview() {
+    const navigationExtras: NavigationExtras = {
+      relativeTo: this.route,
+      state: {
+        character: this.character
+      }
+    };
+
+    this.router.navigate(['profile-interview'], navigationExtras);
+  }
+
   openProfileShips() {
     const navigationExtras: NavigationExtras = {
       relativeTo: this.route,

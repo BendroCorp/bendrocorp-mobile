@@ -1,9 +1,58 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>ProfileApplication</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Application</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="character">
+  <ion-grid style="color: #fff;">
+    <ion-row>
+      <ion-col>
+        <div>
+          <h2>Tell us about the real you...</h2>
+          {{character.application.tell_us_about_the_real_you}}
+        </div>
+        <div>
+          <h2>Why do want to join BendroCorp?</h2>
+          {{character.application.why_do_want_to_join}}
+        </div>
+        <div>
+          <h2>How did you hear about us?</h2>
+          {{character.application.how_did_you_hear_about_us}}
+        </div>
+        <div>
+          <h2>Application is for the position:</h2>
+          {{character.application.job.title}}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
+  <!-- app comments -->
+  <ion-list>
+    <ion-list-header>
+      Application Comments
+    </ion-list-header>
+    <ion-item *ngIf="character.application.comments == 0">No application comments</ion-item>
+    <ion-item *ngFor="let comment of character.application.comments">
+      <ion-avatar slot="start">
+        <img src="{{comment.avatar_url}}" alt="">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{comment.commenter_name}}</h2>
+        <p style="word-wrap: break-word !important; white-space: pre-line !important;">{{comment.comment}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Application comments -->
+  <ion-item *ngIf="character.application.application_status_id < 5">
+    <ion-label position="floating">Add Comment</ion-label>
+    <ion-textarea rows="6" placeholder="Application Comment" [(ngModel)]="newComment.comment"></ion-textarea>
+  </ion-item>
+  <!-- *ngIf="character.application.application_status_id < 5" -->
+  <ion-button *ngIf="character.application.application_status_id < 5" expand="full" color="primary" (click)="addApplicationComment()">Add Comment</ion-button>
 </ion-content>
