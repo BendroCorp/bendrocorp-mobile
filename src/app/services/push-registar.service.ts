@@ -105,10 +105,14 @@ export class PushRegistarService {
             });
           } else if (this.platform.is('android')) {
             // Android will eventually by 3 for dev, 4 for prod
-            console.error('Android is currently not supported.');
-            // this.userService.registerForPushNotifications(registration.registrationId, 2).subscribe((results) => {
-
-            // });
+            // console.error('Android is currently not supported.');
+            this.userService.registerForPushNotifications(regId, 3, registration).subscribe((results) => {
+              if (!(results instanceof HttpErrorResponse)) {
+                // save back in local storage
+                localStorage.setItem('pushRegistrationId', regId);
+                console.log('Device registered with BendroCorp API', registration);
+              }
+            });
           } else {
             console.warn('Device not currently supported for push notifications.');
           }
