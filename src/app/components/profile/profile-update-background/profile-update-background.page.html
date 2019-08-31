@@ -12,12 +12,12 @@
 
 <ion-content *ngIf="character">
   <ion-item class="profile-field-wrapper">
-    <ion-label position="floating">Physical Description{{character.description.length}}</ion-label>
+    <ion-label position="floating">Physical Description</ion-label>
     <ion-textarea #charDescription placeholder="Description" autoGrow="true" [(ngModel)]="character.description"></ion-textarea>
   </ion-item>
 
   <ion-item class="profile-field-wrapper">
-    <ion-label position="floating">Background{{character.background.length}}</ion-label>
+    <ion-label position="floating">Background</ion-label>
     <ion-textarea #charBackground placeholder="Background" autoGrow="true" [(ngModel)]="character.background"></ion-textarea>
   </ion-item>
 </ion-content>
