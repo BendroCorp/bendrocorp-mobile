@@ -19,6 +19,8 @@ export class ProfileUpdateBackgroundPage implements OnInit {
   //                     (this.character.description.length === 0 || this.character.background.length === 0)
   //                     );
 
+  dataSubmitted: boolean = false;
+
   // perms - probably over protective... but ¯\_(ツ)_/¯
   userIsOwner: boolean;
   hrRights: boolean = (this.authService.hasClaim(12) || this.authService.hasClaim(9));
@@ -33,10 +35,12 @@ export class ProfileUpdateBackgroundPage implements OnInit {
 
   saveProfileBackground() {
     if (this.character && this.character.id) {
+      this.dataSubmitted = true;
       this.profileService.update(this.character).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.messageService.toast('Character updated!');
           this.profileService.refreshData();
+          this.dataSubmitted = false;
           this.dismiss();
         }
       });
