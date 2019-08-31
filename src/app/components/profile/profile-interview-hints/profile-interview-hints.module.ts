@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProfileInterviewPage } from './profile-interview.page';
-import { ProfileInterviewHintsPage } from '../profile-interview-hints/profile-interview-hints.page';
+import { ProfileInterviewHintsPage } from './profile-interview-hints.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfileInterviewPage
+    component: ProfileInterviewHintsPage
   }
 ];
 
@@ -22,7 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ProfileInterviewPage, ProfileInterviewHintsPage],
-  entryComponents: [ProfileInterviewHintsPage]
+  declarations: []
 })
-export class ProfileInterviewPageModule {}
+export class ProfileInterviewHintsPageModule {}

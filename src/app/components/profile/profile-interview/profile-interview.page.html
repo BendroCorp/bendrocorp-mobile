@@ -4,9 +4,107 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Interview</ion-title>
+    <ion-buttons *ngIf="character" slot="end">
+      <ion-button [disabled]="character.application.interview.locked_for_review"  color="primary" (click)="updateInterview()">Update</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  
+<ion-content *ngIf="character">
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <div style="color: #fff;">
+          <h2>Interview</h2>
+          The application interview is one of the most vital parts of admission to BendroCorp. Every applicant must demonstrate that they will uplift the community and be a valuable part of it.
+        </div>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+  <ion-item detail (click)="openInterviewHints()">Interview Hints</ion-item>
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <div style="color: #fff;">
+          <h2>Interview Questions</h2>
+        </div>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+  <!-- 
+    applicant_agrees_to_follow_all_policies: true
+    applicant_agrees_to_respect_for_leadership: true
+    applicant_agrees_to_roleplay_style: true
+    applicant_agrees_to_understands_participation: true
+    applicant_agrees_to_voice_policy: true
+    applicant_has_read_soc: true
+    applicant_questions: "None"
+    interview_consensous: "Great guy! ;)"
+    locked_for_review: true
+    other_questions: null
+    tell_us_about_yourself: "Great guy!"
+    why_join_bendrocorp: "Again...Im the boss..."
+    why_selected_division: "Because Im the boss..."
+   -->
+  <ion-item>
+    <ion-label position="floating">Tell us about yourself</ion-label>
+    <ion-textarea [disabled]="character.application.interview.locked_for_review" rows="6" placeholder="Tell us about yourself" [(ngModel)]="character.application.interview.tell_us_about_yourself"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label text-wrap>Applicant has read and agrees to follow the Standards of Conduct</ion-label>
+    <ion-checkbox [disabled]="character.application.interview.locked_for_review" slot="start" [(ngModel)]="character.application.interview.applicant_has_read_soc"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label text-wrap><p>Any attempt by an member to sow seeds of discord between other BendroCorp members and the officers or managers of BendroCorp will result in an immediate discharge. Any employee trying to create a "coup-d'etat" against organization leadership will be subject to immediate discharge. No drama.</p> Applicant agrees to follow respect for leadership policy?</ion-label>
+    <ion-checkbox [disabled]="character.application.interview.locked_for_review" slot="start" [(ngModel)]="character.application.interview.applicant_agrees_to_respect_for_leadership"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label text-wrap><p>Discord is BendroCorp's primary communication platform. When using voice features members are expected to be as respectful as possible. If the member has a noisy background the member is expected if possible to use push-to-talk only.</p> Applicant agrees to FoIP/VoIP policy?</ion-label>
+    <ion-checkbox [disabled]="character.application.interview.locked_for_review" slot="start" [(ngModel)]="character.application.interview.applicant_agrees_to_voice_policy"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label text-wrap><p>BendroCorp is an immersion roleplay organization. Otherwise known as "light" roleplay. Interactions are often both in and out of character.</p> Applicant agrees to roleplay style?</ion-label>
+    <ion-checkbox [disabled]="character.application.interview.locked_for_review" slot="start" [(ngModel)]="character.application.interview.applicant_agrees_to_roleplay_style"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label text-wrap>Applicant agrees to follow all policies current and future? (*)</ion-label>
+    <ion-checkbox [disabled]="character.application.interview.locked_for_review" slot="start" [(ngModel)]="character.application.interview.applicant_agrees_to_follow_all_policies"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label text-wrap><p>Our goal is to make your experience with our guild as fun as possible while still encouraging a community atmosphere where people participate and help each other. No member will ever be removed from the guild for inactivity. All we ask is that if a member knows that they will be absent for a long period of time that they make the rest of the guild community aware of it through our forum. If a member has been in-active for 6 months or more they will be moved to the inactive roster.</p> Applicant understands participation policy?</ion-label>
+    <ion-checkbox [disabled]="character.application.interview.locked_for_review" slot="start" [(ngModel)]="character.application.interview.applicant_agrees_to_understands_participation"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Why did you select the division that you did?</ion-label>
+    <ion-textarea [disabled]="character.application.interview.locked_for_review" rows="6" placeholder="Why did you select the division that you did?" [(ngModel)]="character.application.interview.why_selected_division"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Why do you want to join BendroCorp?</ion-label>
+    <ion-textarea [disabled]="character.application.interview.locked_for_review" rows="6" placeholder="Why do you want to join BendroCorp?" [(ngModel)]="character.application.interview.why_join_bendrocorp"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Any applicant questions for interviewers?</ion-label>
+    <ion-textarea [disabled]="character.application.interview.locked_for_review" rows="6" placeholder="Any applicant questions for interviewers?" [(ngModel)]="character.application.interview.applicant_questions"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Other Questions (by interviewers not listed above)</ion-label>
+    <ion-textarea [disabled]="character.application.interview.locked_for_review" rows="6" placeholder="Other interviewer questions" [(ngModel)]="character.application.interview.other_questions"></ion-textarea>
+  </ion-item>
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <div style="color: #fff;">
+          <h4>Before continuing to the following question the applicant should be thanks for the interview and excused.</h4>
+        </div>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+  <ion-item>
+    <ion-label position="floating">Interview Consensous</ion-label>
+    <ion-textarea [disabled]="character.application.interview.locked_for_review" rows="6" placeholder="Interview consensous" [(ngModel)]="character.application.interview.interview_consensous"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label text-wrap><p>By checking the box you are signaling that the interview is complete and can no longer be edited. You can update content at any time but by checking this box and updating you make the content of the interview read-only.</p>Lock for final review?</ion-label>
+    <ion-checkbox [disabled]="character.application.interview.locked_for_review"  slot="start" [(ngModel)]="lockForReview"></ion-checkbox>
+  </ion-item>
 </ion-content>
