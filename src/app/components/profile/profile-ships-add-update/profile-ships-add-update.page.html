@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="dark" (click)="addUpdateOwnedShip()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
-    </ion-buttons>
-    <ion-title slot="">{{formAction}} Ship</ion-title>
-    <ion-buttons slot="end">
       <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    </ion-buttons>
+    <ion-title>{{formAction}} Ship</ion-title>    
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="addUpdateOwnedShip()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

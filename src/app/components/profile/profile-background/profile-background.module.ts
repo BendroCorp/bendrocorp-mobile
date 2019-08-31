@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ProfileBackgroundPage } from './profile-background.page';
+import { ProfileUpdateBackgroundPage } from '../profile-update-background/profile-update-background.page';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ProfileBackgroundPage]
+  declarations: [ProfileBackgroundPage, ProfileUpdateBackgroundPage],
+  entryComponents: [ProfileUpdateBackgroundPage]
 })
 export class ProfileBackgroundPageModule {}

@@ -1,18 +1,18 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="dark" (click)="addUpdateEvent()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
-    </ion-buttons>
+      <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    </ion-buttons>    
     <ion-title slot="">{{formAction}} Event</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+      <ion-button color="primary" (click)="addUpdateEvent()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!-- Event Name -->
-  <ion-item>
+  <ion-item class="test">
     <ion-label position="floating">Event Name <span color="danger">*</span></ion-label>
     <ion-input placeholder="Name" [(ngModel)]="event.name"></ion-input>
   </ion-item>

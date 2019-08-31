@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    </ion-buttons>
     <ion-title>Complete Job</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="doComplete()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,6 +24,4 @@
     <ion-label position="floating">Job Description</ion-label>
     <ion-textarea placeholder="Completion Message" [(ngModel)]="completion.completion_message"></ion-textarea>
   </ion-item>
-  <ion-button expand="full" color="dark" (click)="doComplete()">Complete Job</ion-button>
-  <ion-button expand="full" color="medium" (click)="dismiss()">Cancel</ion-button>
 </ion-content>

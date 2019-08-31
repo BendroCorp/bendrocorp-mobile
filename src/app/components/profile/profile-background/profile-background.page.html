@@ -4,6 +4,9 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Background</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="openUpdateBackground()" *ngIf="canEdit">Edit</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

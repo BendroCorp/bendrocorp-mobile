@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="dark" (click)="addUpdateFlightLog()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
-    </ion-buttons>
-    <ion-title slot="">{{formAction}} Flight Log</ion-title>
-    <ion-buttons slot="end">
       <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    </ion-buttons>
+    <ion-title>{{formAction}} Flight Log</ion-title>    
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="addUpdateFlightLog()" [disabled]="dataSubmitted">{{formAction}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
