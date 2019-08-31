@@ -141,6 +141,16 @@
 }
 
 @media (prefers-color-scheme: dark) {
+    :root {
+        --ion-color-dark: #606268;
+        --ion-color-dark-rgb: 34, 34, 34;
+        --ion-color-dark-contrast: #ffffff;
+        --ion-color-dark-contrast-rgb: 255, 255, 255;
+        --ion-color-dark-shade: #252629;
+        --ion-color-dark-tint: #434547;
+    }
+
+
     ion-toolbar, ion-tab-bar, ion-card, ion-list, ion-card-header, ion-item, ion-modal, ion-picker {
         --ion-background-color: #333 !important;
         --color: #ffffff !important;
