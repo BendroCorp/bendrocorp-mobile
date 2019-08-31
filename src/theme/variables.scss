@@ -46,6 +46,10 @@
     src:url('/assets/fonts/univia-pro-800.woff2') format('woff2')
 }
 
+ion-card {
+    background: #fff;
+}
+
 /** Ionic CSS Variables **/
 :root {
 
@@ -134,11 +138,16 @@
   --refresher-border-color: #fff;
 }
 
-@media (prefers-color-scheme: light) {
+ion-card {
+    background: #fff !important;
+}
+
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference)  {
     ion-card {
         background: #fff !important;
     }
 }
+
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -221,4 +230,4 @@
     ion-icon.menu, .alert-radio-label.sc-ion-alert-md, [aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
         color: #fff;
     }
-  }
+}
