@@ -251,7 +251,17 @@ const routes: Routes = [
         canActivate: [MemberGuard]
       },
       {
-        path: 'more/offender/details/:offender_id',
+        path: 'more/offender/report/detail',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/offender/offender-report-detail/offender-report-detail.module#OffenderReportPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/offender/details/',
         children: [
           {
             path: '',

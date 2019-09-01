@@ -6,7 +6,7 @@ import { NavController, ModalController, LoadingController } from '@ionic/angula
 import { MessageService } from 'src/app/services/message.service';
 import { EventAddUpdatePage } from '../event/event-add-update/event-add-update.page';
 import { Subscription } from 'rxjs';
-import { Offender } from 'src/app/models/offender.model';
+import { Offender, OffenderReport } from 'src/app/models/offender.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AddUpdateOffenderReportPage } from './add-update-offender-report/add-update-offender-report.page';
 
@@ -17,6 +17,9 @@ import { AddUpdateOffenderReportPage } from './add-update-offender-report/add-up
 })
 export class OffenderPage implements OnInit, OnDestroy {
   offenders: Offender[];
+  myReports: OffenderReport[] = [];
+  unAnsweredReports: OffenderReport[] = [];
+  adminReports: OffenderReport[] = [];
   offenderSubscription: Subscription;
   initialDataLoaded: boolean = false;
   loadingIndicator: any;
@@ -54,6 +57,26 @@ export class OffenderPage implements OnInit, OnDestroy {
     });
   }
 
+  async fetchOffenderReports() {
+
+    if (this.isAdmin) {
+      // then get all of the reports
+      this.offenderService.list_admin().subscribe((results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.adminReports = results;
+          this.unAnsweredReports = results.filter(x => !x.report_approved && x.submitted_for_approval);
+          this.myReports = results.filter(x => x.created_by.id === this.authService.retrieveUserSession().id);
+        }
+      });
+    } else {
+      this.offenderService.list_mine().subscribe((results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.myReports = results;
+        }
+      });
+    }
+  }
+
   async addOffenderReport(event?: Event) {
     const modal = await this.modalController.create({
       component: AddUpdateOffenderReportPage
@@ -63,9 +86,7 @@ export class OffenderPage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.fetchOffenders();
-    if (this.isAdmin) {
-      // this.fetchExpiredEvents();
-    }
+    this.fetchOffenderReports();
   }
 
   async ngOnInit() {
