@@ -19,6 +19,7 @@ export class AddUpdateOffenderReportPage implements OnInit {
   offenderReport: OffenderReport;
   formAction: string;
   dataSubmitted: boolean = false;
+  submitForApproval: boolean = false;
 
   // type arrays
   systemData: StarSystem[] = [];
@@ -40,11 +41,16 @@ export class AddUpdateOffenderReportPage implements OnInit {
 
   addUpdateOffenderReport() {
     console.log(this.offenderReport);
+    if (this.submitForApproval) {
+      this.offenderReport.submitted_for_approval = true;
+    }
     if (this.offenderReport && this.offenderReport.id && !this.offenderReport.report_approved) {
       this.offenderService.update(this.offenderReport).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.offenderService.refreshData();
           this.dismiss();
+        } else {
+          this.offenderReport.submitted_for_approval = false;
         }
       });
     } else {
@@ -52,6 +58,8 @@ export class AddUpdateOffenderReportPage implements OnInit {
         if (!(results instanceof HttpErrorResponse)) {
           this.offenderService.refreshData();
           this.dismiss();
+        } else {
+          this.offenderReport.submitted_for_approval = false;
         }
       });
     }
