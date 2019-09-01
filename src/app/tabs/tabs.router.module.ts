@@ -229,6 +229,37 @@ const routes: Routes = [
         ],
         canActivate: [MemberGuard]
       },
+      //
+      {
+        path: 'more/offender',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/offender/offender.module#OffenderPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/offender/report',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/offender/offender-report/offender-report.module#OffenderReportPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/offender/details/:offender_id',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/offender/detail/offender-detail.module#OffenderDetailPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
     ]
   },
   {

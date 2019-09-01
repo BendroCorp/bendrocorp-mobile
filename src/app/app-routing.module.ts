@@ -22,6 +22,11 @@ const routes: Routes = [
   { path: 'profile-update-background', loadChildren: './components/profile/profile-update-background/profile-update-background.module#ProfileUpdateBackgroundPageModule' },
   { path: 'profile-ships-add-update', loadChildren: './components/profile/profile-ships-add-update/profile-ships-add-update.module#ProfileShipsAddUpdatePageModule' },
   { path: 'profile-interview-hints', loadChildren: './components/profile/profile-interview-hints/profile-interview-hints.module#ProfileInterviewHintsPageModule' },
+  { path: 'offender', loadChildren: './components/offender/offender.module#OffenderPageModule' },
+  { path: 'offender-report', loadChildren: './components/offender/offender-report/offender-report.module#OffenderReportPageModule' },
+  { path: 'offender-detail', loadChildren: './components/offender/offender-detail/offender-detail.module#OffenderDetailPageModule' },
+  { path: 'add-update-offender-report', loadChildren: './components/offender/add-update-offender-report/add-update-offender-report.module#AddUpdateOffenderReportPageModule' },
+  { path: 'offender-report-detail', loadChildren: './components/offender/offender-report-detail/offender-report-detail.module#OffenderReportDetailPageModule' },
   // { path: 'approval', loadChildren: './components/approval/approval.module#ApprovalPageModule' },
   // { path: 'approval-details', loadChildren: './components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule' }
 ];

@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    </ion-buttons>
+    <ion-title>{{formAction}} Offender Report</ion-title>    
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="addUpdateOffenderReport()" [disabled]="dataSubmitted || !offenderReportFormInvalid()">{{formAction}}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Offender Handle <ion-text color="danger">*</ion-text></ion-label>
+    <ion-input required placeholder="Offender Handle" [(ngModel)]="offenderReport.offender_attributes.offender_handle" name="offender_handle"></ion-input>
+    <p><small>* Handles are verified againt public RSI data.</small></p>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Occured When <ion-text color="danger">*</ion-text></ion-label>
+    <ion-datetime placeholder="Occured Date/Time" displayFormat="D MMM YYYY H:mm" [(ngModel)]="offenderReport.occured_when" (ionChange)="occuredWhenChanged($event)"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Occured Where <ion-text color="danger">*</ion-text></ion-label>
+    <ion-label><p (click)="showSystemPicker()">{{offenderSelectedSystem()}}</p></ion-label>
+    <ion-label><p (click)="showPlanetPicker()">{{offenderSelectedPlanet()}}</p></ion-label>
+    <ion-label><p (click)="showMoonPicker()">{{offenderSelectedMoon()}}</p></ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Force Used Against Offender <ion-text color="danger">*</ion-text></ion-label>
+    <ion-select okText="Select" cancelText="Cancel" [(ngModel)]="offenderReport.force_level_applied_id">
+      <ion-select-option *ngFor="let force of forceLevels" [value]="force.id">{{force.title}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Incident Description <ion-text color="danger">*</ion-text></ion-label>
+    <ion-textarea [(ngModel)]="offenderReport.description" placeholder="Describe the event/offense in detail. Please describe how the incident that occured. Any force used by employees during the incident. Etc." rows="10"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label>Infractions <ion-text color="danger">*</ion-text></ion-label>
+    <ion-select multiple okText="Select" cancelText="Cancel" [(ngModel)]="offenderReport.infractions" (ionChange)="checkInfractions($event)">
+      <ion-select-option *ngFor="let infraction of infractions" [value]="infraction.id">{{infraction.title}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item (click)="showShipPicker()">
+    <ion-label>Ship Used</ion-label>
+    <ion-label slot="end"><p>{{offenderSelectedShip()}}</p></ion-label>
+  </ion-item>
+  <ion-item (click)="showViolencePicker()">
+    <ion-label>Violence Rating <ion-text color="danger">*</ion-text></ion-label>
+    <ion-label slot="end"><p>{{offenderSelectedViolenceRating()}}</p></ion-label>
+  </ion-item>
+</ion-content>

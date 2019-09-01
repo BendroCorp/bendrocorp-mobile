@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Offenders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-card>
+    <div class="offender-topper"></div>
+    <ion-card-header>
+      <ion-card-title>Offenders</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Offenders are those who have committed violations of UEE law directed at BendroCorp and its employees. Offenders are permanently barred from direct association with BendroCorp and should be treated with caution.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-item *ngIf="isAdmin" detail>Unapproved Reports (Admin)</ion-item>
+    <ion-item *ngIf="isAdmin" detail>All Reports (Admin)</ion-item>
+    <ion-item detail>My Reports</ion-item>
+  </ion-card>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Offenders</ion-label>
+    </ion-list-header>
+    <ion-item detail *ngFor="let offender of offenders">
+      <ion-avatar slot="start">
+        <img src="{{offender.offender_rsi_avatar}}" alt="">
+      </ion-avatar>
+      <ion-label>{{offender.offender_handle}}<p>{{offender.offender_rating.title}}</p></ion-label>
+      
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addOffenderReport()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
