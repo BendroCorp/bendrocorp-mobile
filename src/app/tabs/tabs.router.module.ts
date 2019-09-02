@@ -251,11 +251,21 @@ const routes: Routes = [
         canActivate: [MemberGuard]
       },
       {
-        path: 'more/offender/report-detail',
+        path: 'more/offender/detail/report-detail',
         children: [
           {
             path: '',
-            loadChildren: '../components/offender/offender-report-detail/offender-report-detail.module#OffenderReportPageModule'
+            loadChildren: '../components/offender/offender-report-detail/offender-report-detail.module#OffenderReportDetailPageModule'
+          }
+        ],
+        canActivate: [MemberGuard]
+      },
+      {
+        path: 'more/offender/report/report-detail',
+        children: [
+          {
+            path: '',
+            loadChildren: '../components/offender/offender-report-detail/offender-report-detail.module#OffenderReportDetailPageModule'
           }
         ],
         canActivate: [MemberGuard]

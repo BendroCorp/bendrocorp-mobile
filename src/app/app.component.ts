@@ -21,7 +21,9 @@ export class AppComponent implements OnDestroy {
   // https://medium.com/@ankushaggarwal/push-notifications-in-ionic-2-658461108c59
   // https://ionicframework.com/docs/native/push
   authRefreshTicker: Observable<number> = interval(1000 * 60 * 2); // every 2 minutes. Access token expires every 6
+  badgeRefreshTicker: Observable<number> = interval(1000 * 60 * 0.5); // every 30 seconds
   authRefreshSubscription: Subscription;
+  badgeRefreshSubscription: Subscription;
 
   constructor(
     private platform: Platform,
@@ -40,6 +42,10 @@ export class AppComponent implements OnDestroy {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
+      this.badgeRefreshTicker.subscribe((tick) => {
+        this.badgeService.fetchBadgeCount();
+      });
+
       this.authRefreshTicker.subscribe((tick) => {
         console.log('Starting access token refresh...');
         this.authService.refreshLogin(this.authService.retrieveSecureStoreLogin()).subscribe((results) => {
@@ -57,6 +63,10 @@ export class AppComponent implements OnDestroy {
   ngOnDestroy() {
     if (this.authRefreshSubscription) {
       this.authRefreshSubscription.unsubscribe();
+    }
+
+    if (this.badgeRefreshSubscription) {
+      this.badgeRefreshSubscription.unsubscribe();
     }
   }
 

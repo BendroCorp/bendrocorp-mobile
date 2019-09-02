@@ -46,6 +46,7 @@ export class OffenderReport
     ship_id?: number;
     violence_rating_id?: number;
     offender_attributes?: Offender;
+    created_by_id?: number;
 }
 
 export class OffenderOrg

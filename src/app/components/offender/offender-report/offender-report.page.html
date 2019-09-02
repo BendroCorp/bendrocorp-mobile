@@ -1,9 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>OffenderReport</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Offender Reports</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content *ngIf="reports">
+  <ion-list>
+    <ion-item detail *ngFor="let report of reports" (click)="openReport(report)">
+      <ion-label>
+        <span *ngIf="report.full_location">{{report.full_location}}</span>
+        <p><strong>Offender: </strong> {{report.offender.offender_handle}}</p>
+        <p><strong>Occured:</strong> {{report.occured_when | date:'MM/dd/yyyy' }}</p>
+        <p><strong>Infraction(s):</strong> {{report.infractions.length}}</p>
+      </ion-label>
+      <ion-label *ngIf="!report.submitted_for_approval" slot="end">
+        <ion-badge>Not Submitted</ion-badge>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

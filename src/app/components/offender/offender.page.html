@@ -27,9 +27,9 @@
   </ion-card>
 
   <ion-card>
-    <ion-item *ngIf="isAdmin" detail>Unapproved Reports (Admin) &nbsp;<ion-badge color="danger">{{unAnsweredReports.length}}</ion-badge></ion-item>
-    <ion-item *ngIf="isAdmin" detail>All Reports (Admin)&nbsp;<ion-badge color="primary">{{adminReports.length}}</ion-badge></ion-item>
-    <ion-item detail>My Reports&nbsp;<ion-badge color="primary">{{myReports.length}}</ion-badge></ion-item>
+    <ion-item (click)="openReportList(unAnsweredReports, 'unanswered')" *ngIf="isAdmin" detail>Unapproved Reports (Admin) &nbsp;<ion-badge color="danger">{{unAnsweredReports.length}}</ion-badge></ion-item>
+    <ion-item (click)="openReportList(adminReports, 'admin')" *ngIf="isAdmin" detail>All Reports (Admin)&nbsp;<ion-badge color="primary">{{adminReports.length}}</ion-badge></ion-item>
+    <ion-item (click)="openReportList(myReports, 'mine')" detail>My Reports&nbsp;<ion-badge color="primary">{{myReports.length}}</ion-badge></ion-item>
   </ion-card>
 
   <ion-list>

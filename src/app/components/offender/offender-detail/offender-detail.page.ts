@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Offender } from 'src/app/models/offender.model';
+import { Offender, OffenderReport } from 'src/app/models/offender.model';
 import { OffenderService } from 'src/app/services/offender.service';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,7 +29,18 @@ export class OffenderDetailPage implements OnInit, OnDestroy {
     this.offenderSubscription = this.offenderService.dataRefreshAnnounced$.subscribe(() => {
       this.fetchOffender();
     });
-   }
+  }
+
+  openReport(report: OffenderReport) {
+    const navigationExtras: NavigationExtras = {
+      relativeTo: this.route,
+      state: {
+        report
+      }
+    };
+
+    this.router.navigate(['report-detail'], navigationExtras);
+  }
 
   fetchOffender() {
     if (this.offender && this.offender.id) {

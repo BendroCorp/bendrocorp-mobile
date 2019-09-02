@@ -44,9 +44,9 @@
     <h2><ion-text color="light">Reports</ion-text></h2>
   </div>
   <ion-list>
-    <ion-item detail>
-      <ion-label *ngFor="let report of offender.offender_reports">
-        {{report.full_location}}
+    <ion-item detail *ngFor="let report of offender.offender_reports" (click)="openReport(report)">
+      <ion-label>
+        <span *ngIf="report.full_location">{{report.full_location}}</span>
         <p><strong>Occured:</strong> {{report.occured_when | date:'MM/dd/yyyy' }}</p>
         <p><strong>Infraction(s):</strong> {{report.infractions.length}}</p>
       </ion-label>

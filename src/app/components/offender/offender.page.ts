@@ -47,6 +47,29 @@ export class OffenderPage implements OnInit, OnDestroy {
     this.router.navigate(['detail'], navigationExtras);
   }
 
+  openReportList(reports: OffenderReport[], reportListKind: 'mine'|'unanswered'|'all') {
+    // no reports guard
+    if ((reportListKind === 'mine' || reportListKind === 'unanswered') && reports.length === 0) {
+      if (reportListKind === 'mine') {
+        this.messageService.alert('You current do not have any offender reports!');
+      } else if (reportListKind === 'unanswered') {
+        this.messageService.alert('There are no unanswered reports!');
+      }
+      
+      // exit
+      return;
+    }
+
+    const navigationExtras: NavigationExtras = {
+      relativeTo: this.route,
+      state: {
+        reports
+      }
+    };
+
+    this.router.navigate(['report'], navigationExtras);
+  }
+
   doRefresh(event: any) {
     this.fetchOffenders(event);
   }
@@ -77,7 +100,7 @@ export class OffenderPage implements OnInit, OnDestroy {
         if (!(results instanceof HttpErrorResponse)) {
           this.adminReports = results;
           this.unAnsweredReports = results.filter(x => !x.report_approved && x.submitted_for_approval);
-          this.myReports = results.filter(x => x.created_by.id === this.authService.retrieveUserSession().id);
+          this.myReports = results.filter(x => x.created_by_id === this.authService.retrieveUserSession().id);
         }
       });
     } else {
