@@ -36,12 +36,11 @@
     <ion-list-header>
       <ion-label>Offenders</ion-label>
     </ion-list-header>
-    <ion-item detail *ngFor="let offender of offenders">
+    <ion-item detail *ngFor="let offender of offenders" (click)="openOffenderDetails(offender)">
       <ion-avatar slot="start">
         <img src="{{offender.offender_rsi_avatar}}" alt="">
       </ion-avatar>
       <ion-label>{{offender.offender_handle}}<p>{{offender.offender_rating.title}}</p></ion-label>
-      
     </ion-item>
   </ion-list>
 

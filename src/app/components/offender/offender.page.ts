@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OffenderService } from 'src/app/services/offender.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { NavController, ModalController, LoadingController } from '@ionic/angular';
 import { MessageService } from 'src/app/services/message.service';
 import { EventAddUpdatePage } from '../event/event-add-update/event-add-update.page';
@@ -32,8 +32,20 @@ export class OffenderPage implements OnInit, OnDestroy {
     private nav: NavController,
     private modalController: ModalController,
     private messageService: MessageService,
-    private loading: LoadingController
+    private loading: LoadingController,
+    private route: ActivatedRoute
   ) { }
+
+  openOffenderDetails(offender: Offender) {
+    const navigationExtras: NavigationExtras = {
+      relativeTo: this.route,
+      state: {
+        offender
+      }
+    };
+
+    this.router.navigate(['detail'], navigationExtras);
+  }
 
   doRefresh(event: any) {
     this.fetchOffenders(event);
