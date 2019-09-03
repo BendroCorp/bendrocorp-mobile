@@ -4,9 +4,45 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Report Detail</ion-title>
+    <ion-buttons *ngIf="canEdit" slot="end">
+      <ion-button color="primary" (click)="updateOffenderReport()">Edit</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="report">
-  
+  <div class="offender-avatar">
+    <img src="{{report.offender.offender_rsi_avatar}}" alt="">
+  </div>
+  <div style="text-align: center;">
+    <ion-badge color="success" *ngIf="report.submitted_for_approval && report.report_approved">ACCEPTED</ion-badge>
+    <ion-badge color="danger" *ngIf="!report.submitted_for_approval && report.report_approved">SUBMITTED</ion-badge>
+    <ion-badge color="primary" *ngIf="!report.submitted_for_approval && !report.report_approved">NOT SUBMITTED</ion-badge>
+  </div>
+  <div style="text-align: center; color: #fff;">
+    <h2>{{report.offender.offender_handle}}</h2>
+  </div>
+  <ion-item>
+    <ion-label>
+      Description
+      <p>{{report.description}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <p><strong>Location: </strong>{{report.full_location}}</p>
+      <p><strong>Occured: </strong>{{report.occured_when | date}}</p>
+      <p><strong>Submitted: </strong>{{report.created_at | date}}</p>
+      <p><strong>Submitted By: </strong>{{report.created_by.main_character.first_name}}</p>
+      <p *ngIf="report.force_level_applied"><strong>Force Applied: </strong>{{report.force_level_applied.name}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    Infractions
+  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" text-center *ngFor="let item of report.infractions">{{item.title}}</ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

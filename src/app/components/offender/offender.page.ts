@@ -55,7 +55,7 @@ export class OffenderPage implements OnInit, OnDestroy {
       } else if (reportListKind === 'unanswered') {
         this.messageService.alert('There are no unanswered reports!');
       }
-      
+
       // exit
       return;
     }

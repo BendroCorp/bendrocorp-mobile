@@ -65,6 +65,12 @@ export class AddUpdateOffenderReportPage implements OnInit {
     }
   }
 
+  fetchInfractionIds(): number[] {
+    if (this.offenderReport) {
+      return this.offenderReport.infractions.map(x => x.id);
+    }
+  }
+
   checkInfractions(event) {
     console.log(event);
     console.log(event.detail.value);
@@ -288,23 +294,23 @@ export class AddUpdateOffenderReportPage implements OnInit {
   }
 
   offenderSelectedSystem() {
-    return (this.offenderReport && this.offenderReport.system_id) ? this.systemData.find(x => x.id === this.offenderReport.system_id).title : 'System';
+    return (this.offenderReport && this.offenderReport.system_id && this.systemData.find(x => x.id === this.offenderReport.system_id)) ? this.systemData.find(x => x.id === this.offenderReport.system_id).title : 'System';
   }
 
   offenderSelectedPlanet() {
-    return (this.offenderReport && this.offenderReport.planet_id) ? this.systemDataPlanets.find(x => x.id === this.offenderReport.planet_id).title : 'Planet';
+    return (this.offenderReport && this.offenderReport.planet_id && this.systemDataPlanets.find(x => x.id === this.offenderReport.planet_id)) ? this.systemDataPlanets.find(x => x.id === this.offenderReport.planet_id).title : 'Planet';
   }
 
   offenderSelectedMoon() {
-    return (this.offenderReport && this.offenderReport.moon_id) ? this.systemDataMoon.find(x => x.id === this.offenderReport.moon_id).title : 'Moon';
+    return (this.offenderReport && this.offenderReport.moon_id && this.systemDataMoon.find(x => x.id === this.offenderReport.moon_id)) ? this.systemDataMoon.find(x => x.id === this.offenderReport.moon_id).title : 'Moon';
   }
 
   offenderSelectedViolenceRating() {
-    return (this.offenderReport && this.offenderReport.violence_rating_id) ? this.violenceRatings.find(x => x.id === this.offenderReport.violence_rating_id).title : 'None';
+    return (this.offenderReport && this.offenderReport.violence_rating_id && this.violenceRatings.find(x => x.id === this.offenderReport.violence_rating_id)) ? this.violenceRatings.find(x => x.id === this.offenderReport.violence_rating_id).title : 'None';
   }
 
   offenderSelectedShip() {
-    return (this.offenderReport && this.offenderReport.ship_id) ? this.shipData.find(x => x.id === this.offenderReport.ship_id).name : 'None';
+    return (this.offenderReport && this.offenderReport.ship_id && this.shipData.find(x => x.id === this.offenderReport.ship_id)) ? this.shipData.find(x => x.id === this.offenderReport.ship_id).name : 'None';
   }
 
   occuredWhenChanged(event) {
@@ -325,16 +331,28 @@ export class AddUpdateOffenderReportPage implements OnInit {
     // console.log(`violence_rating_id ${this.offenderReport.violence_rating_id}`);
     // console.log(`force_level_applied_id ${this.offenderReport.force_level_applied_id}`);
 
-    return (
-      this.offenderReport &&
-      (!this.offenderReport.offender_attributes || (this.offenderReport.offender_attributes.offender_handle && this.offenderReport.offender_attributes.offender_handle.length > 1)) &&
-      (this.offenderReport.description && this.offenderReport.description.length > 20) &&
-      (this.offenderReport.occured_when_ms) &&
-      // (this.offenderReport.system_id) &&
-      (this.offenderReport.infractions && this.offenderReport.infractions.length > 0) &&
-      (this.offenderReport.violence_rating_id) &&
-      (this.offenderReport.force_level_applied_id)
-    ) ? true : false;
+    if (this.offenderReport && this.offenderReport.id) {
+      return (
+        this.offenderReport &&
+        (this.offenderReport.description && this.offenderReport.description.length > 20) &&
+        (this.offenderReport.occured_when_ms) &&
+        // (this.offenderReport.system_id) &&
+        (this.offenderReport.infractions && this.offenderReport.infractions.length > 0) &&
+        (this.offenderReport.violence_rating_id) &&
+        (this.offenderReport.force_level_applied_id)
+      ) ? true : false;
+    } else {
+      return (
+        this.offenderReport &&
+        (!this.offenderReport.offender_attributes || (this.offenderReport.offender_attributes.offender_handle && this.offenderReport.offender_attributes.offender_handle.length > 1)) &&
+        (this.offenderReport.description && this.offenderReport.description.length > 20) &&
+        (this.offenderReport.occured_when_ms) &&
+        // (this.offenderReport.system_id) &&
+        (this.offenderReport.infractions && this.offenderReport.infractions.length > 0) &&
+        (this.offenderReport.violence_rating_id) &&
+        (this.offenderReport.force_level_applied_id)
+      ) ? true : false;
+    }
   }
 
   dismiss() {

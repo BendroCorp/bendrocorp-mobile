@@ -22,7 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [OffenderPage, AddUpdateOffenderReportPage],
-  entryComponents: [AddUpdateOffenderReportPage]
+  declarations: [OffenderPage]
 })
 export class OffenderPageModule {}

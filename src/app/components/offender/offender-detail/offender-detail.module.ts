@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { OffenderDetailPage } from './offender-detail.page';
+import { AddUpdateOffenderReportPage } from '../add-update-offender-report/add-update-offender-report.page';
 
 const routes: Routes = [
   {

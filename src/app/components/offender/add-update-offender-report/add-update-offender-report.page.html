@@ -10,18 +10,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item>
+<ion-content *ngIf="offenderReport">
+  <ion-item *ngIf="!offenderReport.id">
     <ion-label position="floating">Offender Handle <ion-text color="danger">*</ion-text></ion-label>
     <ion-input required placeholder="Offender Handle" [(ngModel)]="offenderReport.offender_attributes.offender_handle" name="offender_handle"></ion-input>
     <p><small>* Handles are verified againt public RSI data.</small></p>
   </ion-item>
+  <ion-item *ngIf="offenderReport.id">
+    <ion-label>
+      Offender Handle
+      <p>{{offenderReport.offender.offender_handle}}</p>
+    </ion-label>
+  </ion-item>
   <ion-item>
-    <ion-label position="floating">Occured When <ion-text color="danger">*</ion-text></ion-label>
+    <ion-label position="floating">When <ion-text color="danger">*</ion-text></ion-label>
     <ion-datetime placeholder="Occured Date/Time" displayFormat="D MMM YYYY H:mm" [(ngModel)]="offenderReport.occured_when" (ionChange)="occuredWhenChanged($event)"></ion-datetime>
   </ion-item>
   <ion-item>
-    <ion-label>Occured Where <ion-text color="danger">*</ion-text></ion-label>
+    <ion-label>Where <ion-text color="danger">*</ion-text></ion-label>
     <ion-label><p (click)="showSystemPicker()">{{offenderSelectedSystem()}}</p></ion-label>
     <ion-label><p (click)="showPlanetPicker()">{{offenderSelectedPlanet()}}</p></ion-label>
     <ion-label><p (click)="showMoonPicker()">{{offenderSelectedMoon()}}</p></ion-label>
