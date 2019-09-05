@@ -35,9 +35,10 @@ export class OffenderReport
     force_level_applied?:ForceLevel
     force_level_applied_id?:number
     infractions?:Infraction[]
+    original_infractions?: Infraction[]; // for form use only. Does not exist on API
     new_infractions?:Infraction[] // only used when creating an offender report
     remove_infractions?:Infraction[]
-    
+
     system_id?: number
     planet_id?: number
     moon_id?: number

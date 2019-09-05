@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { OffenderService } from 'src/app/services/offender.service';
 import { OffenderReport, Offender, ViolenceRating, Infraction, ForceLevel } from 'src/app/models/offender.model';
 import { ModalController, PickerController } from '@ionic/angular';
@@ -9,6 +9,7 @@ import { StarSystem, Planet, Moon } from 'src/app/models/system-map.model';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { SystemMapService } from 'src/app/services/system-map.service';
 import { MessageService } from 'src/app/services/message.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-add-update-offender-report',
@@ -30,20 +31,32 @@ export class AddUpdateOffenderReportPage implements OnInit {
   infractions: Infraction[];
   forceLevels: ForceLevel[] = [];
 
+  // mapped infraction ids
+  mappedInfractionIds: number[] = [];
+
   constructor(
     private offenderService: OffenderService,
     private profileService: ProfileService,
     private systemMapService: SystemMapService,
     private modalController: ModalController,
     private pickerCtrl: PickerController,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private ref: ChangeDetectorRef //
   ) { }
 
-  addUpdateOffenderReport() {
-    console.log(this.offenderReport);
+  async addUpdateOffenderReport() {
     if (this.submitForApproval) {
-      this.offenderReport.submitted_for_approval = true;
+      if (await this.messageService.confirmation_alt('Are you sure you want to submit this report for approval?')) {
+        this.offenderReport.submitted_for_approval = true;
+      } else {
+        this.submitForApproval = false;
+        this.ref.detectChanges();
+        return;
+      }
     }
+
+    console.log(this.offenderReport);
+
     if (this.offenderReport && this.offenderReport.id && !this.offenderReport.report_approved) {
       this.offenderService.update(this.offenderReport).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
@@ -65,35 +78,90 @@ export class AddUpdateOffenderReportPage implements OnInit {
     }
   }
 
-  fetchInfractionIds(): number[] {
-    if (this.offenderReport) {
-      return this.offenderReport.infractions.map(x => x.id);
+  // DEPRECATED. REMOVE.
+  fetchInfractionIds() {
+    if (this.offenderReport && this.offenderReport.infractions) {
+      return this.offenderReport.infractions; // .map(x => x.id);
+    } else {
+      return [];
     }
   }
 
+  // DEPRECATED. REMOVE.
   checkInfractions(event) {
-    console.log(event);
     console.log(event.detail.value);
-    console.log(this.offenderReport.infractions);
 
-    this.offenderReport.new_infractions = [];
-    this.offenderReport.remove_infractions = [];
+    if (!this.offenderReport.new_infractions) {
+      this.offenderReport.new_infractions = [];
+    }
 
+    if (!this.offenderReport.remove_infractions) {
+      this.offenderReport.remove_infractions = [];
+    }
+
+    // event.detail.value == [3]
+    /*
+     does the infractions change list equal the current infraction ids
+     the value from the change is the authority
+    */
     event.detail.value.forEach(infractionId => {
+      // this is based on the authority of the passed change event
       const infraction = this.infractions.find(x => x.id === infractionId);
 
-      if (this.offenderReport.infractions.find(x => x.id === infraction.id)) {
-        // then remove it
-        this.offenderReport.remove_infractions.push(infraction);
-      } else {
-        // then add it
-        this.offenderReport.new_infractions.push(infraction);
+      if (infraction) {
+
+
+        // this.infractions.map(x => x.id).forEach(element => {
+          
+        //   if (condition) {
+            
+        //   }
+        // });
+
+        // console.log(this.offenderReport.original_infractions);
+
+        // const foundInfraction = this.offenderReport.original_infractions.find(x => x.id === infraction.id);
+        // if (foundInfraction != null) {
+        //   // then remove it
+        //   console.log(`we removed ${infraction.title}`);
+        //   // remove from the rolling infractions list
+        //   this.offenderReport.infractions.splice(this.offenderReport.infractions.findIndex(x => x.id === infraction.id), 1);
+        //   this.ref.detectChanges();
+        //   this.offenderReport.remove_infractions.push(infraction);
+        //   this.ref.detectChanges();
+        // } else {
+        //   // then add it
+        //   console.log(`we added ${infraction.title}`);
+        //   // add to the rolling infractions list
+        //   this.offenderReport.infractions.push(infraction);
+        //   this.ref.detectChanges();
+        //   this.offenderReport.new_infractions.push(infraction);
+        //   this.ref.detectChanges();
+        // }
       }
     });
 
+    // this.mappedInfractionIds = this.offenderReport.infractions.map((val) => {
+    //   return val.id;
+    // });
+
+    // this.offenderReport.new_infractions = this.offenderReport.new_infractions.map((val, index, self) => {
+    //   if (self.filter(x => x.id === val.id) == null) {
+    //     return val;
+    //   }
+    // });
+
+    // this.offenderReport.remove_infractions = this.offenderReport.remove_infractions.map((val, index, self) => {
+    //   if (self.filter(x => x.id === val.id) == null) {
+    //     return val;
+    //   }
+    // });
+
+    console.log('add infractions');
     console.log(this.offenderReport.new_infractions);
+    console.log('remove infractions');
     console.log(this.offenderReport.remove_infractions);
-  }
+  } // deprecated clean this up
 
   async showShipPicker() {
     // https://ionicacademy.com/how-to-ion-picker-component/
@@ -318,7 +386,7 @@ export class AddUpdateOffenderReportPage implements OnInit {
     // console.log(this.offenderReport.occured_when_ms);
   }
 
-  offenderReportFormInvalid() {
+  offenderReportFormInvalid(): boolean /*Observable<boolean>*/ {
     // Infractions committed can't be blank,
     // Violence rating must exist,
     // Force level applied must exist,
@@ -330,6 +398,10 @@ export class AddUpdateOffenderReportPage implements OnInit {
     // console.log(`infractions ${this.offenderReport.infractions && this.offenderReport.infractions.length > 0}`);
     // console.log(`violence_rating_id ${this.offenderReport.violence_rating_id}`);
     // console.log(`force_level_applied_id ${this.offenderReport.force_level_applied_id}`);
+
+
+    // temp for debug
+    // return true;
 
     if (this.offenderReport && this.offenderReport.id) {
       return (
@@ -423,6 +495,7 @@ export class AddUpdateOffenderReportPage implements OnInit {
     // deal with the actual report object
     if (this.offenderReport && this.offenderReport.id) {
       console.log(this.offenderReport);
+      this.offenderReport.original_infractions = this.offenderReport.infractions;
       this.formAction = 'Update';
     } else {
       this.offenderReport = { offender_attributes: { } as Offender, new_infractions: [], remove_infractions: [], infractions: [] } as OffenderReport;
