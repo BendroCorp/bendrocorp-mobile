@@ -62,6 +62,8 @@ export class AppBadgeService implements OnDestroy {
               } else {
                 this.badge.clear();
               }
+
+              console.log(`User should have ${badgeCount} badge(s)!`);
             });
           }
         });

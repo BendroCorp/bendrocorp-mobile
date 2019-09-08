@@ -43,6 +43,7 @@ export class AppComponent implements OnDestroy {
       this.splashScreen.hide();
 
       this.badgeRefreshTicker.subscribe((tick) => {
+        console.log('Fetching badge count');
         this.badgeService.fetchBadgeCount();
       });
 

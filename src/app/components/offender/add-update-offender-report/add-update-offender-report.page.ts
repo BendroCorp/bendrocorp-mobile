@@ -60,8 +60,17 @@ export class AddUpdateOffenderReportPage implements OnInit {
     if (this.offenderReport && this.offenderReport.id && !this.offenderReport.report_approved) {
       this.offenderService.update(this.offenderReport).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
-          this.offenderService.refreshData();
-          this.dismiss();
+          if (this.submitForApproval) {
+            this.offenderService.submit(results).subscribe((submitResults) => {
+              if (!(submitResults instanceof HttpErrorResponse)) {
+                this.offenderService.refreshData();
+                this.dismiss();
+              }
+            });
+          } else {
+            this.offenderService.refreshData();
+            this.dismiss();
+          }
         } else {
           this.offenderReport.submitted_for_approval = false;
         }
@@ -69,8 +78,17 @@ export class AddUpdateOffenderReportPage implements OnInit {
     } else {
       this.offenderService.create(this.offenderReport).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
-          this.offenderService.refreshData();
-          this.dismiss();
+          if (this.submitForApproval) {
+            this.offenderService.submit(results).subscribe((submitResults) => {
+              if (!(submitResults instanceof HttpErrorResponse)) {
+                this.offenderService.refreshData();
+                this.dismiss();
+              }
+            });
+          } else {
+            this.offenderService.refreshData();
+            this.dismiss();
+          }
         } else {
           this.offenderReport.submitted_for_approval = false;
         }
