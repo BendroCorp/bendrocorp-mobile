@@ -39,7 +39,7 @@ export class AppBadgeService implements OnDestroy {
     /**
      * Tally the total number of badgable items and set the app badge
      */
-    fetchBadgeCount() {
+    async fetchBadgeCount() {
       // get the events
       if (this.authService.isLoggedIn()) {
         this.eventService.list().subscribe((eventsList) => {
@@ -52,13 +52,16 @@ export class AppBadgeService implements OnDestroy {
             const userAttending = merged.filter(x => x.user_id === this.authService.retrieveUserSession().id);
             // subtract the number of events that the user is attending from the total number of upcoming events
             const unansweredEvents = eventsList.length - userAttending.length;
+            console.log(`Unanswered events: ${unansweredEvents}`);
 
             // fetch the pending approvals count
-            this.userService.fetchPendingApprovalsCount().subscribe((pendingApprovalCount) => {
+            this.userService.fetchPendingApprovalsCount().subscribe(async (pendingApprovalCount) => {
               // add them together and set the badge
+              console.log(`Pending Approval Count: ${pendingApprovalCount}`);
               const badgeCount = unansweredEvents + pendingApprovalCount;
               if (badgeCount > 0) {
-                this.badge.set(badgeCount);
+                await this.badge.set(badgeCount);
+                console.log(`${await this.badge.get()} current set!`);
               } else {
                 this.badge.clear();
               }

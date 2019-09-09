@@ -3,7 +3,7 @@
     <name>BendroCorp</name>
     <description>Welcome to BendroCorp! BendroCorp is a community of gamers for the game Star Citizen (we also play a few others too). Our app allows BendroCorp members to use various parts of our services right from their mobile device. Please note you must currently be a member of BendroCorp to use this app.</description>
     <author email="dale@daleslab.com" href="https://bendrocorp.com/">BendroCorp Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -101,4 +101,5 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.1.0" />
     <plugin name="phonegap-plugin-push" spec="^2.2.3" />
+    <allow-navigation href="http://localhost:8100" sessionid="6a7a9e6b" />
 </widget>
