@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MyApproval } from 'src/app/models/approval.model';
 import { NavController, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-approval',
@@ -21,12 +22,18 @@ export class ApprovalPage implements OnInit {
   loadingIndicator: any;
   currentUserId: number = this.authService.retrieveUserSession().id;
 
+  userServiceSubscription: Subscription;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private requestService: RequestsService,
     private nav: NavController,
-    private loading: LoadingController) { }
+    private loading: LoadingController) {
+      this.userServiceSubscription = this.userService.approvalsDataRefreshAnnounced$.subscribe(() => {
+        this.fetchApprovalRange(this.dataLoadTake, this.dataLoadSkip);
+      });
+    }
 
   loadData(event) {
     // do the increases
