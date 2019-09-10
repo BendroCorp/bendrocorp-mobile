@@ -64,6 +64,9 @@ export class AddUpdateOffenderReportPage implements OnInit {
         }
       }
 
+      // pop the loader
+      this.showLoadingIndicator();
+
       // populate report actual infractions array ✊
       this.offenderReport.infractions = this.infractions.filter((infraction) => {
         if (this.formInfractionIds.find(x => x === infraction.id)) {
@@ -360,13 +363,14 @@ export class AddUpdateOffenderReportPage implements OnInit {
     // Violence rating must exist,
     // Force level applied must exist,
     // Offender offender handle can't be blank
-    // console.log(this.offenderReport);
-    // console.log('');
-    // console.log(`Description ${this.offenderReport.description && this.offenderReport.description.length > 20}`);
-    // console.log(`Occured ${this.offenderReport.occured_when_ms}`);
-    // console.log(`infractions ${this.offenderReport.infractions && this.offenderReport.infractions.length > 0}`);
-    // console.log(`violence_rating_id ${this.offenderReport.violence_rating_id}`);
-    // console.log(`force_level_applied_id ${this.offenderReport.force_level_applied_id}`);
+    console.log(this.offenderReport);
+    console.log('');
+    console.log(`Offender: ${(!this.offenderReport.offender_attributes || (this.offenderReport.offender_attributes.offender_handle && this.offenderReport.offender_attributes.offender_handle.length > 1))}`);
+    console.log(`Description ${this.offenderReport.description && this.offenderReport.description.length > 20}`);
+    console.log(`Occured ${this.offenderReport.occured_when_ms}`);
+    console.log(`infractions ${this.formInfractionIds && this.formInfractionIds.length > 0}`);
+    console.log(`violence_rating_id ${this.offenderReport.violence_rating_id}`);
+    console.log(`force_level_applied_id ${this.offenderReport.force_level_applied_id}`);
 
 
     // temp for debug
@@ -378,7 +382,7 @@ export class AddUpdateOffenderReportPage implements OnInit {
         (this.offenderReport.description && this.offenderReport.description.length > 20) &&
         (this.offenderReport.occured_when_ms) &&
         // (this.offenderReport.system_id) &&
-        (this.offenderReport.infractions && this.offenderReport.infractions.length > 0) &&
+        (this.formInfractionIds && this.formInfractionIds.length > 0) &&
         (this.offenderReport.violence_rating_id) &&
         (this.offenderReport.force_level_applied_id)
       ) ? true : false;
