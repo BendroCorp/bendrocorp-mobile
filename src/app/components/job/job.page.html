@@ -44,7 +44,7 @@
     </ion-item>
     <ion-item-sliding *ngFor="let job of jobs">
       <ion-item detail (click)="openJob(job)">
-          <ion-label>{{job.title}}</ion-label>
+          <ion-label>{{job.title}} <p>{{job.mission_status.title}}</p></ion-label>
           <ion-label><small>{{job.completion_criteria.title}}</small></ion-label>
           <ion-label *ngIf="job.expires_when"><small>Expires: {{(job.expires_when | date:'MM/dd/yyyy @ h:mma')}}</small></ion-label>
       </ion-item>

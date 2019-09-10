@@ -21,6 +21,12 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
+        <!-- Status -->
+        <ion-row *ngIf="job.mission_status">
+            <ion-col>
+              <small>Status: {{job.mission_status.title}}</small>
+            </ion-col>
+          </ion-row>
         <!-- Expires -->
         <ion-row *ngIf="job.expires_when">
           <ion-col>
