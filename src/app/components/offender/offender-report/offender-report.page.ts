@@ -39,6 +39,9 @@ export class OffenderReportPage implements OnInit {
         console.log(this.router.getCurrentNavigation().extras.state);
 
         this.reports = this.router.getCurrentNavigation().extras.state.reports;
+        this.reports.sort((a, b) => {
+          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        });
         console.log(this.reports);
         // if (this.report && this.report.id) {
         //   // this.fetchOffender();
