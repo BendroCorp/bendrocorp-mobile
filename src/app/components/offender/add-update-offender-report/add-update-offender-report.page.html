@@ -44,9 +44,9 @@
   </ion-item>
   <ion-item>
     <ion-label>Infractions <ion-text color="danger">*</ion-text></ion-label>
-    <!--  (ionChange)="checkInfractions($event)"-->
-    <ion-select multiple okText="Select" cancelText="Cancel" [(ngModel)]="offenderReport.infractions" [value]="fetchInfractionIds()" >
-      <ion-select-option *ngFor="let infraction of infractions" [value]="infraction">{{infraction.title}}</ion-select-option>
+    <!--  [(ngModel)]="offenderReport.infractions"  [value]="fetchInfractionIds()" (ionChange)="checkInfractions($event)"-->
+    <ion-select multiple okText="Select" cancelText="Cancel" [(ngModel)]="formInfractionIds">
+      <ion-select-option *ngFor="let infraction of infractions" [value]="infraction.id">{{infraction.title}}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item (click)="showShipPicker()">
