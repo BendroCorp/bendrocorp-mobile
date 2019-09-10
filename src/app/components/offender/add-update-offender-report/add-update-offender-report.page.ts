@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { OffenderService } from 'src/app/services/offender.service';
 import { OffenderReport, Offender, ViolenceRating, Infraction, ForceLevel } from 'src/app/models/offender.model';
-import { ModalController, PickerController } from '@ionic/angular';
+import { ModalController, PickerController, LoadingController } from '@ionic/angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Ship } from 'src/app/models/ship.models';
@@ -10,6 +10,7 @@ import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { SystemMapService } from 'src/app/services/system-map.service';
 import { MessageService } from 'src/app/services/message.service';
 import { Observable, of } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-update-offender-report',
@@ -34,6 +35,9 @@ export class AddUpdateOffenderReportPage implements OnInit {
   // mapped infraction ids
  formInfractionIds: number[] = [];
 
+ //
+ loadingIndicator: any;
+
   constructor(
     private offenderService: OffenderService,
     private profileService: ProfileService,
@@ -41,6 +45,8 @@ export class AddUpdateOffenderReportPage implements OnInit {
     private modalController: ModalController,
     private pickerCtrl: PickerController,
     private messageService: MessageService,
+    private userService: UserService,
+    private loading: LoadingController,
     private ref: ChangeDetectorRef //
   ) { }
 
@@ -65,17 +71,25 @@ export class AddUpdateOffenderReportPage implements OnInit {
         }
       });
 
-      this.offenderService.update(this.offenderReport).subscribe((results) => {
+      this.offenderService.update(this.offenderReport).subscribe(async (results) => {
         if (!(results instanceof HttpErrorResponse)) {
           if (this.submitForApproval) {
-            this.offenderService.submit(results).subscribe((submitResults) => {
+            this.offenderService.submit(results).subscribe(async (submitResults) => {
               if (!(submitResults instanceof HttpErrorResponse)) {
                 this.offenderService.refreshData();
+                this.userService.refreshData();
+                if (this.loadingIndicator) {
+                  await this.loading.dismiss();
+                }
                 this.dismiss();
               }
             });
           } else {
             this.offenderService.refreshData();
+            this.userService.refreshData();
+            if (this.loadingIndicator) {
+              await this.loading.dismiss();
+            }
             this.dismiss();
           }
         } else {
@@ -83,17 +97,25 @@ export class AddUpdateOffenderReportPage implements OnInit {
         }
       });
     } else {
-      this.offenderService.create(this.offenderReport).subscribe((results) => {
+      this.offenderService.create(this.offenderReport).subscribe(async (results) => {
         if (!(results instanceof HttpErrorResponse)) {
           if (this.submitForApproval) {
-            this.offenderService.submit(results).subscribe((submitResults) => {
+            this.offenderService.submit(results).subscribe(async (submitResults) => {
               if (!(submitResults instanceof HttpErrorResponse)) {
                 this.offenderService.refreshData();
+                this.userService.refreshData();
+                if (this.loadingIndicator) {
+                  await this.loading.dismiss();
+                }
                 this.dismiss();
               }
             });
           } else {
             this.offenderService.refreshData();
+            this.userService.refreshData();
+            if (this.loadingIndicator) {
+              await this.loading.dismiss();
+            }
             this.dismiss();
           }
         } else {
@@ -101,6 +123,13 @@ export class AddUpdateOffenderReportPage implements OnInit {
         }
       });
     }
+  }
+
+  async showLoadingIndicator() {
+    this.loadingIndicator = await this.loading.create({
+      message: (this.offenderReport && this.offenderReport.id) ? 'Updating' : 'Creating'
+    });
+    await this.loadingIndicator.present();
   }
 
   async showShipPicker() {
@@ -360,7 +389,7 @@ export class AddUpdateOffenderReportPage implements OnInit {
         (this.offenderReport.description && this.offenderReport.description.length > 20) &&
         (this.offenderReport.occured_when_ms) &&
         // (this.offenderReport.system_id) &&
-        (this.offenderReport.infractions && this.offenderReport.infractions.length > 0) &&
+        (this.formInfractionIds && this.formInfractionIds.length > 0) &&
         (this.offenderReport.violence_rating_id) &&
         (this.offenderReport.force_level_applied_id)
       ) ? true : false;
