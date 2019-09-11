@@ -1,0 +1,9 @@
+p {
+  color: inherit !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  p {
+    color: #fff !important;
+  }
+}

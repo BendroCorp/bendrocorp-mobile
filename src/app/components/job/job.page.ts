@@ -52,13 +52,13 @@ export class JobPage implements OnInit, OnDestroy {
     }
   }
 
-  async addUpdateJob(job?: JobBoardMission) {
-    if (job) {
-      this.jobBoardService.setPassData(job);  
-    }
-    
+  async addUpdateJob(passedJob?: JobBoardMission) {
+    console.log(passedJob);
     const modal = await this.modalController.create({
-      component: AddUpdateJobPage
+      component: AddUpdateJobPage,
+      componentProps: {
+        job: passedJob
+      }
     });
     return await modal.present();
   }
@@ -66,7 +66,12 @@ export class JobPage implements OnInit, OnDestroy {
   fetchJobs(event?: any) {
     this.jobBoardService.list().subscribe(async (results) => {
       if (!(results instanceof HttpErrorResponse)) {
-        this.jobs = results;
+        if (this.isAdmin) {
+          this.jobs = results;
+        } else {
+          this.jobs = results.filter(x => x.mission_status_id < 3);
+        }
+
         this.initialDataLoad = true;
         await this.loadingIndicator.dismiss();
         if (event) {
@@ -81,7 +86,6 @@ export class JobPage implements OnInit, OnDestroy {
       const result = await this.messageService.confirmation(`Are you sure you want to archive '${job.title}'?`);
       console.log(result);
       console.error('Archive not fully implemented! Do that :)');
-      
     }
   }
 

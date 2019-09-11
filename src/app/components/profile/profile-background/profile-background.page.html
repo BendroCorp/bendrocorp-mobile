@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Background</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="openUpdateBackground()" *ngIf="canEdit">Edit</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="character">
+  <ion-grid class="job-info">
+    <ion-row>
+      <ion-col>
+        <div>
+          <h2>{{character.current_job.title}}</h2>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div>
+          {{character.current_job.description}}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list>
+    <ion-list-header>
+      Physical Description
+    </ion-list-header>
+    <ion-item>
+      <span style="white-space: pre-line;">{{character.description}}</span>
+    </ion-item>
+
+    <ion-list-header>
+      Background
+    </ion-list-header>
+    <ion-item>
+      <span style="white-space: pre-line;">{{character.background}}</span>
+    </ion-item>
+  </ion-list>
+</ion-content>

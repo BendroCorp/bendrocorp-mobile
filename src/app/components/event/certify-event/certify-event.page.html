@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="submitForCertification()" [disabled]="attendenceSubmitting">Submit</ion-button>
-    </ion-buttons>
+      <ion-button (click)="dismiss()" [disabled]="attendenceSubmitting">Close</ion-button>
+    </ion-buttons>    
     <ion-title>Certify Event</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()" [disabled]="attendenceSubmitting">Close</ion-button>
+      <ion-button (click)="submitForCertification()" [disabled]="attendenceSubmitting">Submit</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

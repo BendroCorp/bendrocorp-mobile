@@ -1,0 +1,28 @@
+<ion-header>  
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profiles</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div *ngFor="let division of divisions">
+      <ion-list-header>
+        {{division.name}}
+      </ion-list-header>
+
+      <ion-item detail *ngFor="let member of sortDivision(division)" (click)="openProfileDetails(member)">
+        <ion-avatar slot="start">
+          <img src="{{member.avatar_url}}">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{member.full_name}}</h2>
+          <p>{{member.current_job.title}}</p>
+        </ion-label>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>

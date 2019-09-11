@@ -6,12 +6,20 @@
 
 <ion-content>
   <ion-list>
+    <ion-item detail [routerLink]="['profile']">
+      <ion-icon class="menu" name="contacts"></ion-icon>
+      <ion-label>Profiles</ion-label>
+    </ion-item>
     <ion-item detail [routerLink]="['flight-log']">
-      <ion-icon name="recording"></ion-icon>
+      <ion-icon class="menu" name="recording"></ion-icon>
       <ion-label>Flight Logs</ion-label>
     </ion-item>
+    <ion-item detail [routerLink]="['offender']">
+      <ion-icon class="menu" name="document"></ion-icon>
+      <ion-label>Offender Reports</ion-label>
+    </ion-item>
     <ion-item detail [routerLink]="['approval']">
-      <ion-icon name="today"></ion-icon>
+      <ion-icon class="menu" name="today"></ion-icon>
       <ion-label>Approvals<span *ngIf="pendingApprovals > 0"><ion-badge color="danger">{{pendingApprovals}}</ion-badge></span></ion-label>
     </ion-item>
   </ion-list>

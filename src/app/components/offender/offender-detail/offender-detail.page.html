@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Offender Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="offender">
+  <div class="offender-avatar">
+    <img src="{{offender.offender_rsi_avatar}}" alt="">
+  </div>
+  <div style="text-align: center; color: #fff;">
+    <h2>{{offender.offender_handle}}</h2>
+  </div>
+  <h3><ion-text color="light">Affiliations</ion-text></h3>
+  <ion-item *ngIf="offender.offender_report_org">
+    <ion-avatar slot="end">
+      <img src="{{offender.offender_report_org.logo}}" alt="">
+    </ion-avatar>
+    <ion-label>
+      {{offender.offender_report_org.title}} ({{offender.offender_report_org.model}})
+      <p>{{offender.offender_report_org.primary_activity}}&nbsp;{{offender.offender_report_org.secondary_activity}}</p>
+      <p><!--empty--></p>
+      <p><strong>Title:</strong> {{offender.offender_report_org.title}}</p>
+      <p><strong>Rank:</strong> {{offender.offender_org_rank}} out of 5</p>
+      <p><strong>Member Count:</strong> {{offender.offender_report_org.member_count}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>Criminal Associate(s): {{fetchOrgAssociatesString()}}</ion-item>
+  <div>
+    <h2><ion-text color="light">Contact Summary</ion-text></h2>
+  </div>
+  <ion-item><strong>{{offender.offender_reports.length}} x valid offender report(s)</strong></ion-item>
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4" text-center *ngFor="let item of offenderInfractionHistogram | keyvalue">{{item.value}} x {{item.key}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <div>
+    <h2><ion-text color="light">Reports</ion-text></h2>
+  </div>
+  <ion-list>
+    <ion-item detail *ngFor="let report of offender.offender_reports" (click)="openReport(report)">
+      <ion-label>
+        <span *ngIf="report.full_location">{{report.full_location}}</span>
+        <p><strong>Occured:</strong> {{report.occured_when | date:'MM/dd/yyyy' }}</p>
+        <p><strong>Infraction(s):</strong> {{report.infractions.length}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

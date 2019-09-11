@@ -21,6 +21,12 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
+        <!-- Status -->
+        <ion-row *ngIf="job.mission_status">
+            <ion-col>
+              <small>Status: {{job.mission_status.title}}</small>
+            </ion-col>
+          </ion-row>
         <!-- Expires -->
         <ion-row *ngIf="job.expires_when">
           <ion-col>
@@ -53,7 +59,7 @@
       </ion-grid>
     </ion-card-content>
   
-    <ion-button *ngIf="!isAcceptor() && !isExpired()" expand="full" color="success" (click)="acceptMission()">Accept Mission</ion-button>
+    <ion-button *ngIf="!isAcceptor() && !isExpired() && !job.on_mission.length >= job.max_acceptors" expand="full" color="success" (click)="acceptMission()">Accept Mission</ion-button>
     <ion-button *ngIf="isAcceptor() && !isExpired()" expand="full" color="danger" (click)="abandonMission()">Abandon Mission</ion-button>
     <ion-button *ngIf="isAcceptor() && !isExpired()" expand="full" color="dark" (click)="completeJob()">Complete</ion-button>
   </ion-card>

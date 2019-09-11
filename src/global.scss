@@ -23,7 +23,7 @@ body {
 }
 
 ion-card {
-  background: #fff !important;
+  --background: #fff;
 }
 
 ion-refresher-content, .refresher-active {

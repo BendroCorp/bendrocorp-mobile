@@ -14,14 +14,17 @@ import { FlightLog } from 'src/app/models/flight-log.model';
 export class CompleteJobPage implements OnInit {
   job: JobBoardMission;
   flightLogs: FlightLog[];
-  completion:  JobBoardMissionCompletionRequest = {} as JobBoardMissionCompletionRequest;
+  completion: JobBoardMissionCompletionRequest = {} as JobBoardMissionCompletionRequest;
+  dataSubmitted: boolean = false;
 
   constructor(private jobBoardService: JobBoardService, private flightLogService: FlightLogService, private modalController: ModalController) { }
 
   doComplete() {
     if (this.completion.mission_id && this.completion.flight_log_id && this.completion.completion_message) {
+      this.dataSubmitted = true;
       this.jobBoardService.complete(this.completion).subscribe((results => {
         if (!(results instanceof HttpErrorResponse)) {
+          this.dataSubmitted = false;
           this.dismiss();
         }
       }));
@@ -32,7 +35,7 @@ export class CompleteJobPage implements OnInit {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     this.modalController.dismiss({
-      'dismissed': true
+      dismissed: true
     });
   }
 

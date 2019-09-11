@@ -5,7 +5,7 @@ import { AuthGuardService } from './guards/auth-guard.guard';
 import { MemberGuard } from './guards/member.guard';
 
 const routes: Routes = [
-  { path: '', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [AuthGuardService, MemberGuard] },
+  { path: '', loadChildren: './tabs/tabs.module#TabsPageModule', canActivate: [MemberGuard] },
   { path: 'auth', loadChildren: './auth/auth.module#AuthPageModule', canActivate: [NoAuthGuardGuard] },
   { path: 'job-details', loadChildren: './components/job/job-details/job-details.module#JobDetailsPageModule' },
   { path: 'event-add-update', loadChildren: './components/event/event-add-update/event-add-update.module#EventAddUpdatePageModule' },
@@ -19,6 +19,14 @@ const routes: Routes = [
   { path: 'settings', loadChildren: './components/settings/settings.module#SettingsPageModule' },
   { path: 'news-detail', loadChildren: './components/news-detail/news-detail.module#NewsDetailPageModule' },
   { path: 'event-details-modal', loadChildren: './components/event/event-details-modal/event-details-modal.module#EventDetailsModalPageModule' },
+  { path: 'profile-update-background', loadChildren: './components/profile/profile-update-background/profile-update-background.module#ProfileUpdateBackgroundPageModule' },
+  { path: 'profile-ships-add-update', loadChildren: './components/profile/profile-ships-add-update/profile-ships-add-update.module#ProfileShipsAddUpdatePageModule' },
+  { path: 'profile-interview-hints', loadChildren: './components/profile/profile-interview-hints/profile-interview-hints.module#ProfileInterviewHintsPageModule' },
+  { path: 'offender', loadChildren: './components/offender/offender.module#OffenderPageModule' },
+  { path: 'offender-report', loadChildren: './components/offender/offender-report/offender-report.module#OffenderReportPageModule' },
+  { path: 'offender-detail', loadChildren: './components/offender/offender-detail/offender-detail.module#OffenderDetailPageModule' },
+  { path: 'add-update-offender-report', loadChildren: './components/offender/add-update-offender-report/add-update-offender-report.module#AddUpdateOffenderReportPageModule' },
+  { path: 'offender-report-detail', loadChildren: './components/offender/offender-report-detail/offender-report-detail.module#OffenderReportDetailPageModule' },
   // { path: 'approval', loadChildren: './components/approval/approval.module#ApprovalPageModule' },
   // { path: 'approval-details', loadChildren: './components/approval/approval-details/approval-details.module#ApprovalDetailsPageModule' }
 ];

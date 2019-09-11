@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="dismiss()" [disabled]="dataSubmitted">Close</ion-button>
+    </ion-buttons>
+    <ion-title>Update Background</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="saveProfileBackground()" [disabled]="dataSubmitted || (this.character == null || (this.character.description.length === 0 || this.character.background.length === 0))">Update</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="character">
+  <ion-item class="profile-field-wrapper">
+    <ion-label position="floating">Physical Description</ion-label>
+    <ion-textarea #charDescription placeholder="Description" autoGrow="true" [(ngModel)]="character.description"></ion-textarea>
+  </ion-item>
+
+  <ion-item class="profile-field-wrapper">
+    <ion-label position="floating">Background</ion-label>
+    <ion-textarea #charBackground placeholder="Background" autoGrow="true" [(ngModel)]="character.background"></ion-textarea>
+  </ion-item>
+</ion-content>

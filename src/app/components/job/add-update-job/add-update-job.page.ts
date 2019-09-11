@@ -55,11 +55,12 @@ export class AddUpdateJobPage implements OnInit {
   ngOnInit() {
     this.fetchCriteria();
 
-    this.job = this.jobBoardService.fetchAndClearPassedData();
-    if (this.job && this.job.id) {      
-      this.formAction = "Update";
+    if (this.job && this.job.id) {
+      console.log(this.job);
+      this.formAction = 'Update';
     } else {
-      this.formAction = "Create";
+      this.formAction = 'Create';
+      console.log('Job not passed to modal. Assuming create!');
       this.job = {} as JobBoardMission;
     }
   }

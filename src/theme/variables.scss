@@ -46,6 +46,10 @@
     src:url('/assets/fonts/univia-pro-800.woff2') format('woff2')
 }
 
+ion-card {
+    background: #fff;
+}
+
 /** Ionic CSS Variables **/
 :root {
 
@@ -132,4 +136,102 @@
   --refresher-icon-color: #fff;
   --refresher-text-color: #fff;
   --refresher-border-color: #fff;
+}
+
+ion-card {
+    background: #fff !important;
+}
+
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference)  {
+    ion-card {
+        background: #fff !important;
+    }
+}
+
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ion-color-dark: #606268;
+        --ion-color-dark-rgb: 34, 34, 34;
+        --ion-color-dark-contrast: #ffffff;
+        --ion-color-dark-contrast-rgb: 255, 255, 255;
+        --ion-color-dark-shade: #252629;
+        --ion-color-dark-tint: #434547;
+    }
+
+
+    ion-toolbar, ion-tab-bar, ion-card, ion-list, ion-card-header, ion-item, ion-modal, ion-picker {
+        --ion-background-color: #333 !important;
+        --color: #ffffff !important;
+    }
+
+    ion-card, ion-card-header, ion-card-content {
+        background-color: #333 !important;
+        --background-color: #333 !important;
+        --color: #ffffff !important;
+    }
+
+    ion-label, ion-card-title {
+        --color: #ffffff !important;
+    }
+
+    .alert-checkbox-label.sc-ion-alert-md {
+        color: #fff;
+    }
+
+    small, ion-card-subtitle {
+        --color: #cccccc !important;
+        color: #cccccc !important;
+    }
+
+    .ion-detail-icon, ion-list-header, ion-label > p {
+        --color: #cccccc !important;
+        color: #cccccc !important;
+        // --ion-color-step-600: #cccccc;
+    }
+
+    // deal with buttons
+    ion-button {
+        background-color: #333 !important;
+        --background-color: #333 !important;
+        --ion-background-color: #333 !important;
+        --background: #333 !important;
+        background: #333 !important;
+    }
+
+    .basic-info-sub-wrapper {
+        background-color: #333 !important;
+    }
+
+    .profile-name {
+        color: #cccccc !important;
+    }
+
+    .profile-title {
+        color: #cccccc !important;
+    }
+
+    ion-checkbox > button {
+        --border-color: rgba(199, 199, 199, 0.54);
+    }
+
+    .picker-opt {
+        --color: #ffffff !important;
+        color: #ffffff !important;
+    }
+
+    .picker-opt-selected {
+        color: var(--ion-color-primary) !important;
+    }
+
+    alert-wrapper, .sc-ion-alert-md-h, alert-radio-label {
+        --ion-text-color: #fff;
+        --color: #fff;
+        color: var(--ion-color,#fff) !important;
+        --background: #333 !important;
+    }
+
+    ion-icon.menu, .alert-radio-label.sc-ion-alert-md, [aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+        color: #fff;
+    }
 }

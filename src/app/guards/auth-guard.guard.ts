@@ -8,35 +8,35 @@ import { AuthService } from '../services/auth.service';
 })
 @Injectable()
 export class AuthGuardService implements CanActivate {
-  constructor(private router: Router, private authService:AuthService) { }
+  constructor(private router: Router, private authService: AuthService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.authService.isLoggedIn()) {
       return true
     } else {
-      this.authService.refreshData()
+      this.authService.refreshData();
 
       // get the base path
-      let path = `/${route.url.join('/')}`
+      let path = `/${route.url.join('/')}`;
 
       // handle params
-      let paramLength = Object.keys(route.queryParams).length
+      let paramLength = Object.keys(route.queryParams).length;
       if (paramLength > 0) {
-        path = `${path}?`
+        path = `${path}?`;
       }
 
       // Iterate through any params which may also be in the url
       let i = 0
       for (var key in route.queryParams) {
         if (route.queryParams.hasOwnProperty(key)) {
-          i++
-          let param = key + "=" + route.queryParams[key]
-          path = `${path}${param}`
+          i++;
+          let param = key + "=" + route.queryParams[key];
+          path = `${path}${param}`;
           if (i < paramLength) {
-            path = `${path}&`
+            path = `${path}&`;
           }
         }
       }
-      localStorage.setItem("authRedirect", path)
+      localStorage.setItem('authRedirect', path);
       this.router.navigate(['/auth']);
       return false;
     }
