@@ -53,26 +53,30 @@ export class AddUpdateOffenderReportPage implements OnInit {
   async addUpdateOffenderReport() {
     console.log(this.offenderReport);
 
-    if (this.offenderReport && this.offenderReport.id && !this.offenderReport.report_approved) {
-      if (this.submitForApproval) {
-        if (await this.messageService.confirmation_alt('Are you sure you want to submit this report for approval?')) {
-          this.offenderReport.submitted_for_approval = true;
-        } else {
-          this.submitForApproval = false;
-          this.ref.detectChanges();
-          return;
-        }
+    // if we are submitting for approval then confirm
+    if (this.submitForApproval) {
+      if (await this.messageService.confirmation_alt('Are you sure you want to submit this report for approval?')) {
+        this.offenderReport.submitted_for_approval = true;
+        this.ref.detectChanges();
+      } else {
+        this.submitForApproval = false;
+        this.ref.detectChanges();
+        return;
       }
+    }
 
-      // pop the loader
-      this.showLoadingIndicator();
+    // populate the actual report infractions array ✊
+    this.offenderReport.infractions = this.infractions.filter((infraction) => {
+      if (this.formInfractionIds.find(x => x === infraction.id)) {
+        return infraction;
+      }
+    });
 
-      // populate report actual infractions array ✊
-      this.offenderReport.infractions = this.infractions.filter((infraction) => {
-        if (this.formInfractionIds.find(x => x === infraction.id)) {
-          return infraction;
-        }
-      });
+    // pop the loader
+    this.showLoadingIndicator();
+
+    // determine if we should call create or update
+    if (this.offenderReport && this.offenderReport.id && !this.offenderReport.report_approved) {
 
       this.offenderService.update(this.offenderReport).subscribe(async (results) => {
         if (!(results instanceof HttpErrorResponse)) {
@@ -97,6 +101,9 @@ export class AddUpdateOffenderReportPage implements OnInit {
           }
         } else {
           this.offenderReport.submitted_for_approval = false;
+          if (this.loadingIndicator) {
+            await this.loading.dismiss();
+          }
         }
       });
     } else {
@@ -123,6 +130,9 @@ export class AddUpdateOffenderReportPage implements OnInit {
           }
         } else {
           this.offenderReport.submitted_for_approval = false;
+          if (this.loadingIndicator) {
+            await this.loading.dismiss();
+          }
         }
       });
     }

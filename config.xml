@@ -3,7 +3,7 @@
     <name>BendroCorp</name>
     <description>Welcome to BendroCorp! BendroCorp is a community of gamers for the game Star Citizen (we also play a few others too). Our app allows BendroCorp members to use various parts of our services right from their mobile device. Please note you must currently be a member of BendroCorp to use this app.</description>
     <author email="dale@daleslab.com" href="https://bendrocorp.com/">BendroCorp Team</author>
-    <content original-src="index.html" src="http://localhost:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
